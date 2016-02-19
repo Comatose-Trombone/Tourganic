@@ -1,4 +1,7 @@
-class searchApp extends React.Component {
+ import React from 'react'
+ import {Link} from 'react-router'
+
+ class searchApp extends React.Component {
 	constructor(props) {
 		super(props)
 	}
