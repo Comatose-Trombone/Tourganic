@@ -1,6 +1,12 @@
+/*****************************
+This is a functional router, with some bugs. Code is very un-clean right now. 
+******************************/
+
+
+
 import React from 'react'
-import {}
-import { Router, Route, Link } from 'react-router'
+import { render } from 'react-dom'
+import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 
 class App extends React.Component {
 	constructor(props) {
@@ -9,18 +15,51 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<h1>Tour-Allure</h1>
-			<div><Link to="/search">Search</Link></div>
-			<Nav />
+			<div>
+				<div><Link to="/search">Search</Link></div>
+		 	{/****** what does the line below do? ****/}
+				{this.props.children}
+			</div>
+		)
+	}
+}
+
+// ReactDOM.render(<App />, document.getElementById('app'));
+
+
+{/* Code is copied here because we were having issues referencing them from separate files */}
+class searchApp extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+	render() {
+		return (
+			<div>
+				This is the search page
+			</div>
+		)
+	}
+}
+
+class welcome extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+	render() {
+		return (
+			<div>
+				This is the welcome
+			</div>
 		)
 	}
 }
 
 render((
-	<Router>
+	<Router history={hashHistory}>
 		<Route path="/" component={App}>
-			<IndexRoute component={Welcome} />
-			<Route path="/search" component={Search} />
+			<IndexRoute component= { welcome } />
+			<Route path="/search" component={searchApp} />
 		</Route>
 	</Router>
-), document.body);
+), document.getElementById('app'));
+
