@@ -25,35 +25,6 @@ class App extends React.Component {
 }
 
 // ReactDOM.render(<App />, document.getElementById('app'));
-
-
-{/* Code is copied here because we were having issues referencing them from separate files */}
-class searchApp extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-	render() {
-		return (
-			<div>
-				This is the search page
-			</div>
-		)
-	}
-}
-
-class welcome extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-	render() {
-		return (
-			<div>
-				This is the welcome
-			</div>
-		)
-	}
-}
-
 render((
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>

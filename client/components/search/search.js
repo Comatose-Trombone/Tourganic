@@ -1,6 +1,6 @@
  import React from 'react'
- import Search_Bar from 'Search_Bar'
- import Search_List from 'Search_List'
+ import SearchBar from 'SearchBar'
+ import SearchList from 'SearchList'
  import {Link} from 'react-router'
 
  class searchApp extends React.Component {
@@ -16,8 +16,8 @@
 	render() {
 		return (
 			<div>
-				<Search_Bar />
-				<Search_List tours={this.state.tours}/>
+				<SearchBar />
+				<SearchList tours={this.state.tours}/>
 			</div>
 		)
 	}
