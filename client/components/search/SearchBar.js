@@ -23,9 +23,4 @@ var SearchBar = ({handleSearch}) => (
       <input class="searchLocation" placeholder="Put Location">
     </form>
 	</div>
-
-
-
-
-
 )
