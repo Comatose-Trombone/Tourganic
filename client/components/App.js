@@ -16,7 +16,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div><Link to="/search">Search</Link></div>
+				<div><Link to="/search">Search For Tours</Link></div>
 		 	{/****** what does the line below do? ****/}
 				{this.props.children}
 			</div>
