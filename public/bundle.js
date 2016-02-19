@@ -56,6 +56,8 @@
 
 	var _reactRouter = __webpack_require__(303);
 
+	var _searchApp = __webpack_require__(372);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,8 +67,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*****************************
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               This is a functional router, with some bugs. Code is very un-clean right now. 
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ******************************/
-
-	// import { searchApp } from './search/searchApp.js'
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -103,33 +103,21 @@
 	// ReactDOM.render(<App />, document.getElementById('app'));
 
 	/* Code is copied here because we were having issues referencing them from separate files */
+	// class searchApp extends React.Component {
+	// 	constructor(props) {
+	// 		super(props)
+	// 	}
+	// 	render() {
+	// 		return (
+	// 			<div>
+	// 				This is the search page
+	// 			</div>
+	// 		)
+	// 	}
+	// }
 
-
-	var searchApp = function (_React$Component2) {
-		_inherits(searchApp, _React$Component2);
-
-		function searchApp(props) {
-			_classCallCheck(this, searchApp);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(searchApp).call(this, props));
-		}
-
-		_createClass(searchApp, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					'This is the search page'
-				);
-			}
-		}]);
-
-		return searchApp;
-	}(_react2.default.Component);
-
-	var welcome = function (_React$Component3) {
-		_inherits(welcome, _React$Component3);
+	var welcome = function (_React$Component2) {
+		_inherits(welcome, _React$Component2);
 
 		function welcome(props) {
 			_classCallCheck(this, welcome);
@@ -158,7 +146,7 @@
 			_reactRouter.Route,
 			{ path: '/', component: App },
 			_react2.default.createElement(_reactRouter.IndexRoute, { component: welcome }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/search', component: searchApp })
+			_react2.default.createElement(_reactRouter.Route, { path: '/search', component: _searchApp.searchApp })
 		)
 	), document.getElementById('app'));
 
@@ -44282,6 +44270,49 @@
 
 	exports['default'] = _createRouterHistory2['default'](_historyLibCreateHashHistory2['default']);
 	module.exports = exports['default'];
+
+/***/ },
+/* 372 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var searchApp = function (_React$Component) {
+		_inherits(searchApp, _React$Component);
+
+		function searchApp(props) {
+			_classCallCheck(this, searchApp);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(searchApp).call(this, props));
+		}
+
+		_createClass(searchApp, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					'This is the search page'
+				);
+			}
+		}]);
+
+		return searchApp;
+	}(_react2.default.Component);
 
 /***/ }
 /******/ ]);

@@ -7,7 +7,7 @@ This is a functional router, with some bugs. Code is very un-clean right now.
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
-// import { searchApp } from './search/searchApp.js'
+import { searchApp } from './search/searchApp.js'
 
 class App extends React.Component {
 	constructor(props) {
@@ -29,18 +29,18 @@ class App extends React.Component {
 
 
 /* Code is copied here because we were having issues referencing them from separate files */
-class searchApp extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-	render() {
-		return (
-			<div>
-				This is the search page
-			</div>
-		)
-	}
-}
+// class searchApp extends React.Component {
+// 	constructor(props) {
+// 		super(props)
+// 	}
+// 	render() {
+// 		return (
+// 			<div>
+// 				This is the search page
+// 			</div>
+// 		)
+// 	}
+// }
 
 class welcome extends React.Component {
 	constructor(props) {
