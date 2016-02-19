@@ -10,6 +10,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<h1>Tour-Allure</h1>
+			<div><Link to="/search">Search</Link></div>
 			<Nav />
 		)
 	}
@@ -19,6 +20,7 @@ render((
 	<Router>
 		<Route path="/" component={App}>
 			<IndexRoute component={Welcome} />
+			<Route path="/search" component={Search} />
 		</Route>
 	</Router>
-	), document.body);
+), document.body);
