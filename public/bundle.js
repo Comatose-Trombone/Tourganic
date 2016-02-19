@@ -62,7 +62,11 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*****************************
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               This is a functional router, with some bugs. Code is very un-clean right now. 
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ******************************/
+
+	// import { searchApp } from './search/searchApp.js'
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -97,6 +101,9 @@
 	}(_react2.default.Component);
 
 	// ReactDOM.render(<App />, document.getElementById('app'));
+
+	/* Code is copied here because we were having issues referencing them from separate files */
+
 
 	var searchApp = function (_React$Component2) {
 		_inherits(searchApp, _React$Component2);

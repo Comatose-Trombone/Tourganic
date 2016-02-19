@@ -1,7 +1,9 @@
+var path = require('path');
+
 module.exports = {
-  entry:  __dirname + "/client/components/App.js",
+  entry: path.resolve(__dirname, 'client/components/App.js'),
   output: {
-    path: __dirname + "/public",
+    path: path.resolve(__dirname, 'public'),
     filename: "bundle.js"
   },
 
@@ -16,7 +18,7 @@ module.exports = {
         }
       }
     ]
-  },
+  }
 
 }
     
