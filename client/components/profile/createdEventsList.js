@@ -1,14 +1,16 @@
 import React from 'react'
-import EventEntry from './EventEntry'
+import CreatedEventsEntry from './EventEntry'
 
-class createdEventsList extends React.Component {
+export default class CreatedEventsList extends React.Component {
   constructor(props) {
     super(props);
+    this.props = props;
+    this.tours = props.tours;
   }
 
   render() {
-    var eventListEntries = props.results.map((result) =>
-      <EventEntry result = {result} />
+    var eventListEntries = this.tours.map((userMadeEvent) =>
+      <CreatedEventsEntry userMadeEvent={userMadeEvent} />
     );
 
     return (
