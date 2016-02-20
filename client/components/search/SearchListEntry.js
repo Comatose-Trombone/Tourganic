@@ -8,16 +8,9 @@ export default class SearchListEntry extends React.Component {
 	render() {
 		return (
 			<div>
-				This is the tour!
 				{this.props.tour}
 			</div>
 		)
 	}
-}
+};
 
-// export SearchListEntry = ({tour}) => (
-// 	<div>
-// 		This is the tour!
-// 		{tour}
-// 	</div>
-// );

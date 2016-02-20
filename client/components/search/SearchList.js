@@ -15,21 +15,5 @@ export default class SearchList extends React.Component {
 			</div>
 		)
 	}
-}
+};
 
-
-// export SearchList = ({tours}) => {
-// 	console.log("Made it to SearchList");
-// 	var SearchListEntries = tours.map((tour) =>
-// 		<SearchListEntry 
-// 			tour= {tour}
-// 		/>
-// );
-
-// 	return (
-// 		<div >
-// 			{SearchListEntries}
-// 		</div>
-
-// 	)
-// };
