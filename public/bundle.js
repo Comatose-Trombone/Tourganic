@@ -44385,7 +44385,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        ' user '
+	        ' Here is the AboutMe Page! '
 	      );
 	    }
 	  }]);
@@ -44411,9 +44411,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _EventEntry = __webpack_require__(376);
+	var _CreatedEventsEntry = __webpack_require__(377);
 
-	var _EventEntry2 = _interopRequireDefault(_EventEntry);
+	var _CreatedEventsEntry2 = _interopRequireDefault(_CreatedEventsEntry);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44440,12 +44440,17 @@
 	    key: 'render',
 	    value: function render() {
 	      var eventListEntries = this.tours.map(function (userMadeEvent) {
-	        return _react2.default.createElement(_EventEntry2.default, { userMadeEvent: userMadeEvent });
+	        return _react2.default.createElement(_CreatedEventsEntry2.default, { userMadeEvent: userMadeEvent });
 	      });
 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Here is the Created Events List Page! '
+	        ),
 	        eventListEntries
 	      );
 	    }
@@ -44457,7 +44462,8 @@
 	exports.default = CreatedEventsList;
 
 /***/ },
-/* 376 */
+/* 376 */,
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44486,7 +44492,10 @@
 	  function CreatedEventsEntry(props) {
 	    _classCallCheck(this, CreatedEventsEntry);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsEntry).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsEntry).call(this, props));
+
+	    _this.props = props;
+	    return _this;
 	  }
 
 	  _createClass(CreatedEventsEntry, [{
@@ -44498,7 +44507,7 @@
 	          'div',
 	          null,
 	          ' ',
-	          props.userMadeEvent,
+	          this.props.userMadeEvent.Name,
 	          ' '
 	        )
 	      );

@@ -8,7 +8,7 @@ export default class AboutMe extends React.Component {
   render() {
 
     return (
-        <div> user </div>
+        <div> Here is the AboutMe Page! </div>
     )
   }
 }

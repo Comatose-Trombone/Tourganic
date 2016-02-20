@@ -1,5 +1,5 @@
 import React from 'react'
-import CreatedEventsEntry from './EventEntry'
+import CreatedEventsEntry from './CreatedEventsEntry'
 
 export default class CreatedEventsList extends React.Component {
   constructor(props) {
@@ -14,7 +14,9 @@ export default class CreatedEventsList extends React.Component {
     );
 
     return (
+
       <div>
+        <p>Here is the Created Events List Page! </p>
         {eventListEntries}
       </div>
     )
