@@ -7,7 +7,7 @@ This is a functional router, with some bugs. Code is very un-clean right now.
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
-import { searchApp } from './search/searchApp.js'
+import Search  from './search/Search'
 
 class App extends React.Component {
 	constructor(props) {
@@ -25,22 +25,6 @@ class App extends React.Component {
 	}
 }
 
-// ReactDOM.render(<App />, document.getElementById('app'));
-
-
-/* Code is copied here because we were having issues referencing them from separate files */
-// class searchApp extends React.Component {
-// 	constructor(props) {
-// 		super(props)
-// 	}
-// 	render() {
-// 		return (
-// 			<div>
-// 				This is the search page
-// 			</div>
-// 		)
-// 	}
-// }
 
 class welcome extends React.Component {
 	constructor(props) {
@@ -59,7 +43,7 @@ render((
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute component= { welcome } />
-			<Route path="/search" component={searchApp} />
+			<Route path="/search" component={Search} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));

@@ -1,31 +1,27 @@
 import React from 'react'
 
-// class Search extends React.Component {
-// 	constructor (props) {
-// 		super(props);
-// 		this.state = {
-// 			value: ""
-// 		}
-// 	}
+export default class SearchBar extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+      value: ""
+    }
+	}
 
-// 	render () {
-// 		return (
-// 			<div>
-// 				<input
-// 			</div>
-// 		)
-// 	}
-// }
+	handleInputChange(e) {
+    this.setState({
+      value: e.target.value
+    });
+  }
 
-var SearchBar = ({handleSearch}) => (
-	<div>
-	 <form class="searchForm" onSubmit >
-      <input class="searchLocation" placeholder="Put Location">
-    </form>
-	</div>
-
-
-
-
-
-)
+	render() {
+		return (
+			<div>
+				 <form class="searchForm" >
+		      <input class="searchLocation" placeholder="Put Location" onChange = {this.handleInputChange.bind(this)}/>
+		      <input type="submit" onClick = { (e) => this.props.getToursFromDatabase(this.state.value)}/>
+			   </form>
+			</div>
+		)
+	}
+};
