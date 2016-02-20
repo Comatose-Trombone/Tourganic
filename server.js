@@ -4,15 +4,11 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require("mongoose");
 var db = require('./config/db.js');
-require('./app/routes')(app);
 
 var Tour = require('./app/models/tour.js');
 
-var port = process.env.PORT || 8080;
-
 
 // app.use(express.bodyParser());
-app.use(express.static(__dirname + '/public'));
 
 var tour1 = Tour({
   name: "Golden Gate Tour",
@@ -21,9 +17,12 @@ var tour1 = Tour({
 
 tour1.save(function(err){
   if (err) throw err;
-  console.log("tour1 is saved")
 });
 
+require('./app/routes')(app);
+app.use(express.static(__dirname + '/public'));
+
+var port = process.env.PORT || 8080;
 
 app.listen(port);
 

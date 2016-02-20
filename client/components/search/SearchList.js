@@ -1,19 +1,20 @@
 import React from 'react'
-import Search_List_Entry from 'SearchListEntry'
-import underbar from 'underbar'
+import SearchListEntry from './SearchListEntry'
+import underscore from 'underscore'
 
- 
-var SearchList = ({tours}) => {
-	var SearchListEntries = tours.map((tour) =>
-		<SearchListEntry 
-			tour= {tour}
-		/>
-);
+export default class SearchList extends React.Component {
+	constructor(props) {
+		super(props)
+	}
 
-	return (
-		<div >
-			{SearchListEntries}
-		</div>
-
-	)
+	render() {
+		return (
+			<div>
+				{this.props.tours.map(tour =>
+				<SearchListEntry tour={tour} />)}
+			</div>
+		)
+	}
 };
+
+
