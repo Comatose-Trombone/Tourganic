@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default class SearchListEntry extends React.Component {
 	constructor(props) {
 		super(props)
@@ -13,4 +14,3 @@ export default class SearchListEntry extends React.Component {
 		)
 	}
 };
-

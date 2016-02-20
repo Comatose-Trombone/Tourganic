@@ -1,39 +1,21 @@
-/*****************************
-This is a functional router, with some bugs. Code is very un-clean right now. 
-******************************/
-
-
-
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+import Profile from './profile/Profile'
 import Search  from './search/Search'
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+
 	}
 
 	render() {
 		return (
 			<div>
-				<div><Link to="/search">Search</Link></div>
-		 	{/****** what does the line below do? ****/}
+				<div ><Link to="/search">Search</Link></div>
+				<div><Link to="/profile">Profile</Link></div>
 				{this.props.children}
-			</div>
-		)
-	}
-}
-
-
-class welcome extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-	render() {
-		return (
-			<div>
-				This is the welcome
 			</div>
 		)
 	}
@@ -43,7 +25,8 @@ render((
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute component= { welcome } />
-			<Route path="/search" component={Search} />
+			 <Route path='/profile' component={Profile} />
+  		 <Route path="/search" component={Search} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));
