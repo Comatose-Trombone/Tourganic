@@ -1,7 +1,23 @@
 import React from 'react'
 
-var SearchListEntry = ({tour}) => (
-	<div>
-		{tour}
-	</div>
-);
+export default class SearchListEntry extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+
+	render() {
+		return (
+			<div>
+				This is the tour!
+				{this.props.tour}
+			</div>
+		)
+	}
+}
+
+// export SearchListEntry = ({tour}) => (
+// 	<div>
+// 		This is the tour!
+// 		{tour}
+// 	</div>
+// );
