@@ -19,12 +19,13 @@
 	  	{data: options}
 	  )
 	  .done(data => {
-	  	console.log(data)
+	  	console.log(data);
 	   this.setState ({
 	  			tours: [data.name]
 	  		})
 	  })
 	  .fail(({responseJSON}) => {
+	  	console.log(responseJSON);
 	    responseJSON.error.errors.forEach((err) =>
 	      console.error(err)
 	    )
