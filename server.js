@@ -7,9 +7,6 @@ var db = require('./config/db.js');
 
 var Tour = require('./app/models/tour.js');
 
-
-// app.use(express.bodyParser());
-
 var tour1 = Tour({
   name: "Golden Gate Tour",
   location: "San Francisco"
