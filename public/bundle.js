@@ -89,8 +89,12 @@
 					null,
 					_react2.default.createElement(
 						'div',
-						null,
-						' Welcome to Tour Allure! '
+						{ className: 'jumbotron' },
+						_react2.default.createElement(
+							'span',
+							{ className: 'welcomeText' },
+							'Welcome To Tour-Allure'
+						)
 					),
 					_react2.default.createElement(
 						'div',
@@ -44318,7 +44322,6 @@
 	        console.log('successful getProfile', data);
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);
-	        //   res.send(404);
 	      });
 	    }
 	  }, {
@@ -44382,14 +44385,22 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'aboutMe' },
+	        { className: 'aboutMeParentContainer' },
 	        _react2.default.createElement(
 	          'div',
 	          null,
 	          'Here is the AboutMe Page!'
 	        ),
-	        _react2.default.createElement('div', { className: 'profilePicture' }),
-	        _react2.default.createElement('div', { className: 'profileDescription' })
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'profilePicture' },
+	          ' picture '
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'profileDescription' },
+	          ' description '
+	        )
 	      );
 	    }
 	  }]);
@@ -44449,7 +44460,7 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'createdEventsList' },
+	        { className: 'createdEventsListParentContainer' },
 	        _react2.default.createElement(
 	          'p',
 	          null,

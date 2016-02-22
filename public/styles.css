@@ -1,6 +1,25 @@
 body {
   overflow-x: scroll; 
   overflow-y: scroll; 
+  font-family: sans-serif;
+}
+
+.jumbotron {
+  width: 100%;
+  height: 400px;
+  background: url('./brooklynSkyline.jpg');
+  margin: 0px auto;
+  background-size: 100%;
+  text-align: center;
+  line-height: 400px;
+  vertical-align: middle;
+  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+
+.welcomeText {
+  font-weight: bolder;
+  font-size: 65px;
+  color: white;
 }
 
 .nav ul {
@@ -18,25 +37,28 @@ body {
 }
 
 /*EVENTS*/
-.eventContainer {
-  width: 150px;
-  height: 150px;
-  border: 1px solid black;
-  display: inline-block;
-  margin-left: 2px;
-  text-align: middle;
-}
-
-.createdEventsList {
-  margin-top: 10px;
+.createdEventsListParentContainer {
+  margin-top: 10px;`
   border: 1px solid black;
   padding: 5px;
   width: 800px;
+  margin: 5px auto;
+}
+
+.eventContainer {
+  width: 780px;
+  height: 150px;
+  border: 1px solid black;
+  /*display: inline-block;*/
+  margin: 5px 5px;
+  text-align: middle;
 }
 
 
+
 /*PROFILE*/
-.aboutMe {
+.aboutMeParentContainer {
+  margin: 5px auto;
   border: 1px solid black;
   padding: 5px;
   width: 800px;
@@ -51,7 +73,7 @@ body {
 }
 
 .profileDescription {
-  width: 500px;
+  width: 530px;
   border: 1px solid black;
   margin-left: 10px;
   height: 250px;

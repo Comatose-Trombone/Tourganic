@@ -13,7 +13,9 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div> Welcome to Tour Allure! </div>
+				<div className='jumbotron'>
+					<span className='welcomeText'>Welcome To Tour-Allure</span>
+				</div>
 				<div className='nav'>
 					<ul> 
 						<li><Link to="/search">Search</Link></li>

@@ -23,7 +23,6 @@ export default class Profile extends React.Component {
     })
     .fail( (err) => {
       console.log('error getProfile', err);
-    //   res.send(404);
     })
   }
 

@@ -14,7 +14,7 @@ export default class CreatedEventsList extends React.Component {
     );
 
     return (
-      <div className='createdEventsList'>
+      <div className='createdEventsListParentContainer'>
         <p>Here is the Created Events List Page! </p>
         {eventListEntries}
       </div>
