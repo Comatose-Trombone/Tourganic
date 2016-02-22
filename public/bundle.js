@@ -93,8 +93,8 @@
 						' Welcome to Tour Allure! '
 					),
 					_react2.default.createElement(
-						'nav',
-						{ 'class': 'nav' },
+						'div',
+						{ className: 'nav' },
 						_react2.default.createElement(
 							'ul',
 							null,
@@ -44314,7 +44314,7 @@
 	  _createClass(Profile, [{
 	    key: 'getProfile',
 	    value: function getProfile() {
-	      _jquery2.default.post('http://localhost:8080/search', { some: 'sample data' }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/search', { name: 'NAME', some: 'sample data' }).done(function (data) {
 	        console.log('successful getProfile', data);
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);

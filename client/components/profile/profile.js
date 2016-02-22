@@ -3,8 +3,7 @@ import React from 'react'
 import AboutMe from './AboutMe'
 import CreatedEventsList from './CreatedEventsList'
 import $ from 'jquery'
- import {Link} from 'react-router'
-
+import {Link} from 'react-router'
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -18,12 +17,10 @@ export default class Profile extends React.Component {
     }
   }
   getProfile() {
-    $.post('http://localhost:8080/search', 
-      {some: 'sample data'}
-    )
-      .done( (data) => {
-        console.log('successful getProfile', data);
-      })
+    $.post('http://localhost:8080/search', {name: 'NAME', some: 'sample data'})
+    .done( (data) => {
+      console.log('successful getProfile', data);
+    })
     .fail( (err) => {
       console.log('error getProfile', err);
     //   res.send(404);

@@ -3,6 +3,8 @@ var Tour = require('./models/tour.js');
 module.exports = function(app) {
 
   app.post('/search', function(req,res) {
+    console.log('data', req.body);
+
     Tour.findOne({"location": "San Francisco"}, function(err, data) {
       if (err) {
         console.log('error');

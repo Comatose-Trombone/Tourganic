@@ -14,12 +14,12 @@ class App extends React.Component {
 		return (
 			<div>
 				<div> Welcome to Tour Allure! </div>
-				<nav class='nav'>
+				<div className='nav'>
 					<ul> 
 						<li><Link to="/search">Search</Link></li>
 						<li><Link to="/profile">Profile</Link></li>
 					</ul> 
-				</nav>
+				</div>
 				{this.props.children}
 			</div>
 		)
