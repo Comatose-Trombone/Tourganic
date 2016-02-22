@@ -12,7 +12,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className='motherContainer'>
 				<div className='jumbotron'>
 					<span className='welcomeText'>Welcome To Tour-Allure</span>
 				</div>

@@ -86,7 +86,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'motherContainer' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'jumbotron' },
