@@ -1,3 +1,8 @@
+body {
+  overflow-x: scroll; 
+  overflow-y: scroll; 
+}
+
 .nav ul {
   list-style: none;
   padding: 0;
@@ -12,4 +17,43 @@
   padding-left: 5px;
 }
 
+/*EVENTS*/
+.eventContainer {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  display: inline-block;
+  margin-left: 2px;
+  text-align: middle;
+}
 
+.createdEventsList {
+  margin-top: 10px;
+  border: 1px solid black;
+  padding: 5px;
+  width: 800px;
+}
+
+
+/*PROFILE*/
+.aboutMe {
+  border: 1px solid black;
+  padding: 5px;
+  width: 800px;
+}
+
+.profilePicture {
+  width: 250px;
+  height: 250px;
+  border: 1px solid black;
+  display: inline-block;
+
+}
+
+.profileDescription {
+  width: 500px;
+  border: 1px solid black;
+  margin-left: 10px;
+  height: 250px;
+  display: inline-block;
+}

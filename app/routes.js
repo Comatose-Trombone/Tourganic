@@ -3,8 +3,7 @@ var Tour = require('./models/tour.js');
 module.exports = function(app) {
 
   app.post('/search', function(req,res) {
-    console.log('data', req.body);
-
+    console.log(req.body);
     Tour.findOne({"location": "San Francisco"}, function(err, data) {
       if (err) {
         console.log('error');
@@ -16,12 +15,8 @@ module.exports = function(app) {
 
   });
 
-  app.get('/profile', function(req,res) {
-    if (err) {
-      console.log('error', err);
-    } else {
-      console.log('getProfile post works');
+  app.post('/profile', function(req,res) {
+    console.log('profile data', req.body);
       res.send(200)
-    }
-  })
+  });
 };

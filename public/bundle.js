@@ -44314,7 +44314,7 @@
 	  _createClass(Profile, [{
 	    key: 'getProfile',
 	    value: function getProfile() {
-	      _jquery2.default.post('http://localhost:8080/search', { name: 'NAME', some: 'sample data' }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/profile', { name: 'NAME', some: 'sample data' }).done(function (data) {
 	        console.log('successful getProfile', data);
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);
@@ -44329,11 +44329,7 @@
 	        null,
 	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user }),
 	        _react2.default.createElement(_CreatedEventsList2.default, { tours: this.state.userMadeEvents }),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: this.getProfile.bind(this) },
-	          ' Get Profile '
-	        )
+	        _react2.default.createElement('input', { type: 'submit', onClick: this.getProfile.bind(this), value: 'Get Profile' })
 	      );
 	    }
 	  }]);
@@ -44386,8 +44382,14 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        ' Here is the AboutMe Page! '
+	        { className: 'aboutMe' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Here is the AboutMe Page!'
+	        ),
+	        _react2.default.createElement('div', { className: 'profilePicture' }),
+	        _react2.default.createElement('div', { className: 'profileDescription' })
 	      );
 	    }
 	  }]);
@@ -44447,7 +44449,7 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'createdEventsList' },
 	        _react2.default.createElement(
 	          'p',
 	          null,
@@ -44506,7 +44508,7 @@
 	        /* dummy data for now */
 	        _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'eventContainer' },
 	          ' ',
 	          this.props.userMadeEvent.Name,
 	          ' '

@@ -17,7 +17,7 @@ export default class Profile extends React.Component {
     }
   }
   getProfile() {
-    $.post('http://localhost:8080/search', {name: 'NAME', some: 'sample data'})
+    $.post('http://localhost:8080/profile', {name: 'NAME', some: 'sample data'})
     .done( (data) => {
       console.log('successful getProfile', data);
     })
@@ -33,7 +33,7 @@ export default class Profile extends React.Component {
       <div>
         <AboutMe user={this.state.user}/>
         <CreatedEventsList tours={this.state.userMadeEvents} />
-        <div onClick={this.getProfile.bind(this)} > Get Profile </div>
+        <input type='submit' onClick={this.getProfile.bind(this)} value='Get Profile' />
       </div>
     )
   }

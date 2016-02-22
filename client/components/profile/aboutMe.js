@@ -8,7 +8,11 @@ export default class AboutMe extends React.Component {
   render() {
 
     return (
-        <div> Here is the AboutMe Page! </div>
+        <div className='aboutMe'>
+          <div>Here is the AboutMe Page!</div>
+          <div className='profilePicture'></div>
+          <div className='profileDescription'></div>
+        </div>
     )
   }
 }
