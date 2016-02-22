@@ -23,9 +23,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(express.static(__dirname + '/public'));
 
 require('./app/routes')(app);
-app.use(express.static(__dirname + '/public'));
 
 var port = process.env.PORT || 8080;
 
