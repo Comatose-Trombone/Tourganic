@@ -1,22 +1,24 @@
 var Tour = require('./models/tour.js');
-var sessions = require('express-session');
+var session = require('express-session');
 
-app.use(session({ 
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true
-}));
 
 var restrict = function(req, res, next) {
   if (req.session.user !== undefined) {
     next();
   } else {
     console.log("Access denied!");
+    res.send({isAuth: false});
     // res.redirect('/login');
   }
 };
 
 module.exports = function(app) {
+
+  app.use(session({ 
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
+  }));
 
   app.post('/search', function(req,res) {
     console.log(req.body);
@@ -31,8 +33,7 @@ module.exports = function(app) {
 
   });
 
-  app.post('/profile', restrict, function(req,res) {
-    console.log('profile data', req.body);
+  app.get('/profile', restrict, function(req,res) {
       res.send(200)
   });
 };

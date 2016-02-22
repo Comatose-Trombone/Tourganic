@@ -56,11 +56,15 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _Profile = __webpack_require__(216);
+	var _Navigation = __webpack_require__(216);
+
+	var _Navigation2 = _interopRequireDefault(_Navigation);
+
+	var _Profile = __webpack_require__(217);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _Search = __webpack_require__(221);
+	var _Search = __webpack_require__(222);
 
 	var _Search2 = _interopRequireDefault(_Search);
 
@@ -96,32 +100,7 @@
 							'Welcome To Tour-Allure'
 						)
 					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'nav' },
-						_react2.default.createElement(
-							'ul',
-							null,
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: '/search' },
-									'Search'
-								)
-							),
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: '/profile' },
-									'Profile'
-								)
-							)
-						)
-					),
+					_react2.default.createElement(_Navigation2.default, null),
 					this.props.children
 				);
 			}
@@ -24774,6 +24753,112 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactRouter = __webpack_require__(159);
+
+	var _jquery = __webpack_require__(221);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Navigation = function (_React$Component) {
+		_inherits(Navigation, _React$Component);
+
+		function Navigation(props) {
+			_classCallCheck(this, Navigation);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
+
+			_this.state = {
+				showLoginReminder: false
+			};
+			return _this;
+		}
+
+		_createClass(Navigation, [{
+			key: 'handleProfileClick',
+			value: function handleProfileClick() {
+				var _this2 = this;
+
+				_jquery2.default.get('http://localhost:8080/profile').done(function (data) {
+					if (!data.isAuth) {
+						_this2.setState({
+							showLoginReminder: true
+						});
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this3 = this;
+
+				if (this.state.showLoginReminder === true) {
+					var loginReminder = _react2.default.createElement(
+						'div',
+						null,
+						'Please login first '
+					);
+				} else {
+					var loginReminder = _react2.default.createElement('div', null);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ className: 'nav' },
+					_react2.default.createElement(
+						'ul',
+						null,
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/search' },
+								'Search'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							{ onClick: function onClick() {
+									return _this3.handleProfileClick();
+								} },
+							'Profile'
+						)
+					),
+					loginReminder
+				);
+			}
+		}]);
+
+		return Navigation;
+	}(_react2.default.Component);
+
+	exports.default = Navigation;
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -24783,15 +24868,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AboutMe = __webpack_require__(217);
+	var _AboutMe = __webpack_require__(218);
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _CreatedEventsList = __webpack_require__(218);
+	var _CreatedEventsList = __webpack_require__(219);
 
 	var _CreatedEventsList2 = _interopRequireDefault(_CreatedEventsList);
 
-	var _jquery = __webpack_require__(220);
+	var _jquery = __webpack_require__(221);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -24848,7 +24933,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24863,7 +24948,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Profile = __webpack_require__(216);
+	var _Profile = __webpack_require__(217);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -24916,7 +25001,7 @@
 	exports.default = AboutMe;
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24931,7 +25016,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CreatedEventsEntry = __webpack_require__(219);
+	var _CreatedEventsEntry = __webpack_require__(220);
 
 	var _CreatedEventsEntry2 = _interopRequireDefault(_CreatedEventsEntry);
 
@@ -24982,7 +25067,7 @@
 	exports.default = CreatedEventsList;
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25039,7 +25124,7 @@
 	exports.default = CreatedEventsEntry;
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -34876,7 +34961,7 @@
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34891,17 +34976,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchBar = __webpack_require__(222);
+	var _SearchBar = __webpack_require__(223);
 
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 
-	var _SearchList = __webpack_require__(223);
+	var _SearchList = __webpack_require__(224);
 
 	var _SearchList2 = _interopRequireDefault(_SearchList);
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _jquery = __webpack_require__(220);
+	var _jquery = __webpack_require__(221);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -34965,7 +35050,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35036,7 +35121,7 @@
 	;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35051,11 +35136,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchListEntry = __webpack_require__(224);
+	var _SearchListEntry = __webpack_require__(225);
 
 	var _SearchListEntry2 = _interopRequireDefault(_SearchListEntry);
 
-	var _underscore = __webpack_require__(225);
+	var _underscore = __webpack_require__(226);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -35096,7 +35181,7 @@
 	;
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35146,7 +35231,7 @@
 	;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
