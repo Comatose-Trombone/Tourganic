@@ -13,8 +13,13 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div ><Link to="/search">Search</Link></div>
-				<div><Link to="/profile">Profile</Link></div>
+				<div> Welcome to Tour Allure! </div>
+				<nav class='nav'>
+					<ul> 
+						<li><Link to="/search">Search</Link></li>
+						<li><Link to="/profile">Profile</Link></li>
+					</ul> 
+				</nav>
 				{this.props.children}
 			</div>
 		)
@@ -24,9 +29,8 @@ class App extends React.Component {
 render((
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
-			<IndexRoute component= { welcome } />
-			 <Route path='/profile' component={Profile} />
-  		 <Route path="/search" component={Search} />
+			  <Route path='/profile' component={Profile} />
+  		  <Route path="/search" component={Search} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));

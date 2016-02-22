@@ -2,6 +2,8 @@
 import React from 'react'
 import AboutMe from './AboutMe'
 import CreatedEventsList from './CreatedEventsList'
+import $ from 'jquery'
+ import {Link} from 'react-router'
 
 
 export default class Profile extends React.Component {
@@ -15,6 +17,18 @@ export default class Profile extends React.Component {
       ]
     }
   }
+  getProfile() {
+    $.post('http://localhost:8080/search', 
+      {some: 'sample data'}
+    )
+      .done( (data) => {
+        console.log('successful getProfile', data);
+      })
+    .fail( (err) => {
+      console.log('error getProfile', err);
+    //   res.send(404);
+    })
+  }
 
 
   render() {
@@ -22,6 +36,7 @@ export default class Profile extends React.Component {
       <div>
         <AboutMe user={this.state.user}/>
         <CreatedEventsList tours={this.state.userMadeEvents} />
+        <div onClick={this.getProfile.bind(this)} > Get Profile </div>
       </div>
     )
   }
