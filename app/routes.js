@@ -21,19 +21,33 @@ module.exports = function(app) {
   }));
 
   app.post('/search', function(req,res) {
-    console.log(req.body);
-    Tour.findOne({"location": "San Francisco"}, function(err, data) {
+    var location = req.body.data
+    console.log(location)
+    Tour.findOne({"location": location}, function(err, data) {
       if (err) {
         console.log('error');
         res.send(err)
       } else {
+        console.log(data)
         res.send(data);
       }
     })
 
   });
 
-  app.get('/profile', restrict, function(req,res) {
-      res.send(200)
+
+
+
+  app.get('/profile', function(req,res) {
+    User.findOne({name: session.username}, function(err, data){
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        res.send(data);
+      }
+    })
   });
+
 };
+
