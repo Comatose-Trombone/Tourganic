@@ -9,9 +9,9 @@ export default class AboutMe extends React.Component {
 
     return (
         <div className='aboutMeParentContainer'>
-          <div>Here is the AboutMe Page!</div>
+          <div>{this.props.user}</div>
           <div className='profilePicture'> picture </div>
-          <div className='profileDescription'> description </div>
+          <div className='profileDescription'> {this.props.description} </div>
         </div>
     )
   }

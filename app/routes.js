@@ -17,9 +17,17 @@ module.exports = function(app) {
 
   });
 
-  app.post('/profile', function(req,res) {
-    console.log('profile data', req.body);
-      res.send(200)
+
+
+  app.get('/profile', function(req,res) {
+      User.findOne({name: session.username}, function(err, data){
+        if (err) {
+          console.log(err);
+          res.send(err);
+        } else {
+          res.send(data);
+        }
+      })
   });
 };
 

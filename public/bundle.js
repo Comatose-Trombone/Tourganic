@@ -24815,16 +24815,25 @@
 
 	    _this.state = {
 	      user: 'DANIELJOSH',
+	      description: "",
 	      userMadeEvents: [{ Name: "Event 1", Location: "Location 1" }, { Name: 'Event 2', Location: 'Location 2' }]
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Profile, [{
-	    key: 'getProfile',
-	    value: function getProfile() {
-	      _jquery2.default.post('http://localhost:8080/profile', { name: 'NAME', some: 'sample data' }).done(function (data) {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      console.log("get Profile is executed");
+	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
 	        console.log('successful getProfile', data);
+	        _this2.setState = {
+	          user: data.username,
+	          description: data.description,
+	          userMadeEvents: data.createdEvents
+	        };
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);
 	      });
@@ -24835,8 +24844,9 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user }),
+	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user, description: this.state.description }),
 	        _react2.default.createElement(_CreatedEventsList2.default, { tours: this.state.userMadeEvents }),
+	        '// ',
 	        _react2.default.createElement('input', { type: 'submit', onClick: this.getProfile.bind(this), value: 'Get Profile' })
 	      );
 	    }
@@ -24894,7 +24904,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          'Here is the AboutMe Page!'
+	          this.props.user
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -24904,7 +24914,9 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'profileDescription' },
-	          ' description '
+	          ' ',
+	          this.props.description,
+	          ' '
 	        )
 	      );
 	    }
