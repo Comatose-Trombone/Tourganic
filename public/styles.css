@@ -9,6 +9,7 @@ body {
   margin: 0px auto;
 }
 
+/*=========== THE JUMBOTRON CONTAINER ===========*/
 .jumbotron {
   width: 1000px;
   height: 350px;
@@ -26,6 +27,8 @@ body {
   font-size: 65px;
   color: white;
 }
+/*=========== THE NAV BAR CONTAINER =============*/
+
 
 .nav ul {
   list-style: none;
@@ -41,7 +44,34 @@ body {
   padding-left: 5px;
 }
 
-/*EVENTS*/
+/*================ PROFILE PAGE ==================*/
+
+/*About me*/
+.aboutMeParentContainer {
+  margin: 5px auto;
+  border: 1px solid black;
+  padding: 5px;
+  width: 800px;
+}
+
+    .profilePicture {
+      width: 250px;
+      height: 250px;
+      border: 1px solid black;
+      display: inline-block;
+
+    }
+
+    .profileDescription {
+      width: 530px;
+      border: 1px solid black;
+      margin-left: 10px;
+      height: 250px;
+      display: inline-block;
+    }
+
+
+/*User Made Events Events*/
 .createdEventsListParentContainer {
   margin-top: 10px;
   border: 1px solid black;
@@ -50,37 +80,11 @@ body {
   margin: 5px auto;
 }
 
-.eventContainer {
-  width: 780px;
-  height: 150px;
-  border: 1px solid black;
-  /*display: inline-block;*/
-  margin: 5px 5px;
-  text-align: middle;
-}
-
-
-
-/*PROFILE*/
-.aboutMeParentContainer {
-  margin: 5px auto;
-  border: 1px solid black;
-  padding: 5px;
-  width: 800px;
-}
-
-.profilePicture {
-  width: 250px;
-  height: 250px;
-  border: 1px solid black;
-  display: inline-block;
-
-}
-
-.profileDescription {
-  width: 530px;
-  border: 1px solid black;
-  margin-left: 10px;
-  height: 250px;
-  display: inline-block;
-}
+    .eventContainer {
+      width: 780px;
+      height: 150px;
+      border: 1px solid black;
+      /*display: inline-block;*/
+      margin: 5px 5px;
+      text-align: middle;
+    }
