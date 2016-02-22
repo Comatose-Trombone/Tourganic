@@ -19,6 +19,11 @@ tour1.save(function(err){
   if (err) throw err;
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 require('./app/routes')(app);
 app.use(express.static(__dirname + '/public'));
 

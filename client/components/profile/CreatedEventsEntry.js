@@ -9,7 +9,7 @@ export default class CreatedEventsEntry extends React.Component {
   render() {
     return (
       /* dummy data for now */
-      <div> {this.props.userMadeEvent.Name} </div>
+      <div className='eventContainer'> {this.props.userMadeEvent.Name} </div>
     )
   }
 
