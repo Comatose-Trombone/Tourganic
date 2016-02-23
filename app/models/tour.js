@@ -6,7 +6,8 @@ var tourSchema = new Schema({
  createdBy: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
  attendees: [],
  location: String,
- price: Number
+ price: Number,
+ description: String
 });
 
 module.exports = mongoose.model('Tour', tourSchema);
