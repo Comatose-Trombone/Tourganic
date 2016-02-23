@@ -16,7 +16,6 @@ module.exports = function(app) {
   // app.use(cookie('secret'));
 
   var restrict = function(req, res, next) {
-    console.log('inside restrict:  ', req.session.userId);
     if (req.session.userId !== undefined) {
       next();
     } else {
@@ -33,11 +32,25 @@ module.exports = function(app) {
         console.log('error');
         res.send(err)
       } else {
-        console.log(data)
         res.send(data);
       }
     })
   });
+
+  app.post('/createEvent', function(req,res) {
+    var events = {
+      name: req.body.name,
+      createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      location: req.body.location,
+      price: req.body.price,
+      date: req.body.date
+    };
+    Tour.create(events, function(err, events) {
+      if(err) return next(err);
+      res.redirect('/profile');
+    });
+
+  })
 
   app.get('/profile', restrict, function(req,res) {
     User.findOne({_id: req.session.userId}, function(err, data){
@@ -70,14 +83,12 @@ module.exports = function(app) {
     var name = req.body.data.username;
     var password = req.body.data.password;
 
-    User.findOne({username: name, password: password}, function(err, user) {
-      if(err) return next(err);
-      if(!user) return res.send('Incorrect username or password');
-      req.session.regenerate(function () {
-        req.session.userId = user._id;
-        console.log('Inside sign in  ', req.session.userId);
-        res.send(user);
-      });
+  User.findOne({username: name, password: password}, function(err, user) {
+    if(err) return next(err);
+    if(!user) return res.send('Incorrect username or password');
+    req.session.regenerate(function () {
+      req.session.userId = user._id;
+      res.send(user);
     });
   });
 
