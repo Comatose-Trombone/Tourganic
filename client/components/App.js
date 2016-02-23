@@ -4,6 +4,8 @@ import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 import Navigation from './Navigation'
 import Profile from './profile/Profile'
 import Search  from './search/Search'
+import SignIn from './account/SignIn'
+import SignUp from './account/SignUp'
 
 class App extends React.Component {
 	constructor(props) {
@@ -29,6 +31,8 @@ render((
 		<Route path="/" component={App}>
 			  <Route path='/profile' component={Profile} />
   		  <Route path="/search" component={Search} />
+  		  <Route path='/signin' component={SignIn} />
+  		  <Route path='/signup' component={SignUp} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));

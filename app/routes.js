@@ -1,17 +1,9 @@
 var Tour = require('./models/tour.js');
 var User = require('./models/user.js');
+var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 
-var restrict = function(req, res, next) {
-  if (req.session.userId !== undefined) {
-    next();
-  } else {
-    console.log("Access denied!");
-    res.send({isAuth: false});
-    // res.redirect('/login');
-  }
-};
 
 module.exports = function(app) {
 
@@ -21,15 +13,25 @@ module.exports = function(app) {
     saveUninitialized: true
   }));
 
+  // app.use(cookie('secret'));
+
+  var restrict = function(req, res, next) {
+    if (req.session.userId !== undefined) {
+      next();
+    } else {
+      console.log("Access denied!");
+      res.send({isAuth: false});
+      // res.redirect('/login');
+    }
+  };
+
   app.post('/search', function(req,res) {
     var location = req.body.data
-    console.log(location)
     Tour.findOne({"location": location}, function(err, data) {
       if (err) {
         console.log('error');
         res.send(err)
       } else {
-        console.log(data)
         res.send(data);
       }
     })
@@ -61,32 +63,32 @@ module.exports = function(app) {
     })
   });
 
+
   app.post('/signup', function (req, res, next) {
     var user = {
-        name: req.body.username,
-        email: req.body.email,
-        password: req.body.password
+        username: req.body.data.username,
+        email: req.body.data.email,
+        password: req.body.data.password
     };
     User.create(user, function(err, newUser) {
       if(err) return next(err);
       req.session.regenerate(function () {
         req.session.userId = newUser._id;
-        res.redirect('./profile');
+        res.send(user);
       });
     });
   });
 
-  app.post('/login', function (req, res, next) {
-    var name = req.body.username;
-    var password = req.body.password;
+  app.post('/signin', function (req, res, next) {
+    var name = req.body.data.username;
+    var password = req.body.data.password;
 
-    User.findOne({name: name, password: password}, function(err, user) {
-       if(err) return next(err);
-       if(!user) return res.send('Incorrect username or password');
-       req.session.regenerate(function () {
-         req.session.userId = user._id;
-         res.redirect('/profile');
-       });
+  User.findOne({username: name, password: password}, function(err, user) {
+    if(err) return next(err);
+    if(!user) return res.send('Incorrect username or password');
+    req.session.regenerate(function () {
+      req.session.userId = user._id;
+      res.send(user);
     });
   });
 

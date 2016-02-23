@@ -68,6 +68,14 @@
 
 	var _Search2 = _interopRequireDefault(_Search);
 
+	var _SignIn = __webpack_require__(227);
+
+	var _SignIn2 = _interopRequireDefault(_SignIn);
+
+	var _SignUp = __webpack_require__(228);
+
+	var _SignUp2 = _interopRequireDefault(_SignUp);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -116,7 +124,9 @@
 			_reactRouter.Route,
 			{ path: '/', component: App },
 			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/search', component: _Search2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/search', component: _Search2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/signin', component: _SignIn2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _SignUp2.default })
 		)
 	), document.getElementById('app'));
 
@@ -24798,10 +24808,15 @@
 				var _this2 = this;
 
 				_jquery2.default.get('http://localhost:8080/profile').done(function (data) {
-					if (!data.isAuth) {
+					if (data.isAuth === false) {
 						_this2.setState({
 							showLoginReminder: true
 						});
+					} else {
+						_this2.setState({
+							showLoginReminder: false
+						});
+						window.location = 'http://localhost:8080/#/profile';
 					}
 				});
 			}
@@ -24840,6 +24855,24 @@
 									return _this3.handleProfileClick();
 								} },
 							'Profile'
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/signin' },
+								'Sign In'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/signup' },
+								'Sing Up'
+							)
 						)
 					),
 					loginReminder
@@ -24899,7 +24932,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Profile).call(this, props));
 
 	    _this.state = {
-	      user: 'DANIELJOSH',
+	      user: '',
 	      description: "",
 	      userMadeEvents: [{ Name: "Event 1", Location: "Location 1" }, { Name: 'Event 2', Location: 'Location 2' }]
 	    };
@@ -24914,15 +24947,18 @@
 	      console.log("get Profile is executed");
 	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
 	        console.log('successful getProfile', data);
-	        _this2.setState = {
+	        _this2.setState({
 	          user: data.username,
 	          description: data.description,
 	          userMadeEvents: data.createdEvents
-	        };
+	        });
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);
 	      });
 	    }
+
+	    // <input type='submit' onClick={this.getProfile.bind(this)} value='Get Profile' />
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -24930,9 +24966,7 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user, description: this.state.description }),
-	        _react2.default.createElement(_CreatedEventsList2.default, { tours: this.state.userMadeEvents }),
-	        '// ',
-	        _react2.default.createElement('input', { type: 'submit', onClick: this.getProfile.bind(this), value: 'Get Profile' })
+	        _react2.default.createElement(_CreatedEventsList2.default, { tours: this.state.userMadeEvents })
 	      );
 	    }
 	  }]);
@@ -36795,6 +36829,179 @@
 	  }
 	}.call(this));
 
+
+/***/ },
+/* 227 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(221);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SignIn = function (_React$Component) {
+		_inherits(SignIn, _React$Component);
+
+		function SignIn(props) {
+			_classCallCheck(this, SignIn);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(SignIn).call(this, props));
+		}
+
+		_createClass(SignIn, [{
+			key: 'handleSignIn',
+			value: function handleSignIn() {
+				var user = {
+					username: this.refs.username.value,
+					password: this.refs.password.value
+				};
+				_jquery2.default.post('http://localhost:8080/signin', { data: user }).done(function (data) {
+					console.log('User signed in successfully');
+					window.location = 'http://localhost:8080/#/profile';
+				}).fail(function (_ref) {
+					var responseJSON = _ref.responseJSON;
+
+					responseJSON.error.errors.forEach(function (err) {
+						return console.error(err);
+					});
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{ id: 'signin' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Sign In'
+					),
+					_react2.default.createElement(
+						'form',
+						{ 'class': 'sign-', onSubmit: function onSubmit() {
+								return _this2.handleSignIn();
+							} },
+						_react2.default.createElement('input', { ref: 'username', 'class': 'username', placeholder: 'username', type: 'text' }),
+						_react2.default.createElement('input', { ref: 'password', 'class': 'password', placeholder: 'password', type: 'password' }),
+						_react2.default.createElement('input', { type: 'submit', value: 'Sign In' })
+					)
+				);
+			}
+		}]);
+
+		return SignIn;
+	}(_react2.default.Component);
+
+	exports.default = SignIn;
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(221);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SignUp = function (_React$Component) {
+		_inherits(SignUp, _React$Component);
+
+		function SignUp(props) {
+			_classCallCheck(this, SignUp);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUp).call(this, props));
+		}
+
+		_createClass(SignUp, [{
+			key: 'handleSignUp',
+			value: function handleSignUp() {
+				var user = {
+					username: this.refs.username.value,
+					password: this.refs.password.value,
+					email: this.refs.email.value
+				};
+				_jquery2.default.post('http://localhost:8080/signup', { data: user }).done(function (data) {
+					console.log('User added successfully');
+				}).fail(function (_ref) {
+					var responseJSON = _ref.responseJSON;
+
+					responseJSON.error.errors.forEach(function (err) {
+						return console.error(err);
+					});
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{ id: 'signup' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Sign Up'
+					),
+					_react2.default.createElement(
+						'form',
+						{ 'class': 'sign-', onSubmit: function onSubmit() {
+								return _this2.handleSignUp();
+							} },
+						_react2.default.createElement('input', { ref: 'username', 'class': 'username', placeholder: 'username', type: 'text' }),
+						_react2.default.createElement('input', { ref: 'password', 'class': 'password', placeholder: 'password', type: 'password' }),
+						_react2.default.createElement('input', { ref: 'email', 'class': 'email', placeholder: 'email', type: 'text' }),
+						_react2.default.createElement('input', { type: 'submit', value: 'Sign Up' })
+					)
+				);
+			}
+		}]);
+
+		return SignUp;
+	}(_react2.default.Component);
+
+	exports.default = SignUp;
 
 /***/ }
 /******/ ]);
