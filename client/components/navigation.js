@@ -42,7 +42,7 @@ export default class Navigation extends React.Component {
 						<li><Link to="/search">Search</Link></li>
 						<li onClick={ () => this.handleProfileClick() } >Profile</li>
 						<li><Link to="/signin">Sign In</Link></li>
-						<li><Link to="/signup">Sing Up</Link></li>
+						<li><Link to="/signup">Sign Up</Link></li>
 					</ul>
 					{loginReminder}
 				</div>
