@@ -4,7 +4,7 @@ var session = require('express-session');
 
 
 var restrict = function(req, res, next) {
-  if (req.session.user !== undefined) {
+  if (req.session.userId !== undefined) {
     next();
   } else {
     console.log("Access denied!");
@@ -33,11 +33,10 @@ module.exports = function(app) {
         res.send(data);
       }
     })
-
   });
 
-  app.get('/profile', function(req,res) {
-    User.findOne({name: session.username}, function(err, data){
+  app.get('/profile', restrict, function(req,res) {
+    User.findOne({_id: req.session.userId}, function(err, data){
       if (err) {
         console.log(err);
         res.send(err);
@@ -54,11 +53,13 @@ module.exports = function(app) {
         password: req.body.password
     };
     User.create(user, function(err, newUser) {
-       if(err) return next(err);
-       // req.session.user = email;
-       return res.redirect('./profile');
+      if(err) return next(err);
+      req.session.regenerate(function () {
+        req.session.userId = newUser._id;
+        res.redirect('./profile');
+      });
     });
-   });
+  });
 
   app.post('/login', function (req, res, next) {
     var name = req.body.username;
@@ -67,14 +68,16 @@ module.exports = function(app) {
     User.findOne({name: name, password: password}, function(err, user) {
        if(err) return next(err);
        if(!user) return res.send('Incorrect username or password');
-
-       // req.session.user = email;
-       return res.redirect('./profile');
+       req.session.regenerate(function () {
+         req.session.userId = user._id;
+         res.redirect('./profile');
+       });
     });
   });
 
   app.get('/logout', function (req, res) {
-    req.session.user = null;
-    res.redirect('./welcome')
+    req.session.destroy(function() {
+      res.redirect('./welcome');
+    });
   });
 };
