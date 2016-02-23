@@ -35,6 +35,21 @@ module.exports = function(app) {
     })
   });
 
+  app.post('/createEvent', function(req,res) {
+    var events = {
+      name: req.body.name,
+      createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      location: req.body.location,
+      price: req.body.price,
+      date: req.body.date
+    };
+    Tour.create(events, function(err, events) {
+      if(err) return next(err);
+      res.redirect('/profile');
+    });
+
+  })
+
   app.get('/profile', restrict, function(req,res) {
     User.findOne({_id: req.session.userId}, function(err, data){
       if (err) {
@@ -70,14 +85,14 @@ module.exports = function(app) {
        if(!user) return res.send('Incorrect username or password');
        req.session.regenerate(function () {
          req.session.userId = user._id;
-         res.redirect('./profile');
+         res.redirect('/profile');
        });
     });
   });
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
-      res.redirect('./welcome');
+      res.redirect('/welcome');
     });
   });
 };
