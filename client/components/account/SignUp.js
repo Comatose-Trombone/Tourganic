@@ -26,15 +26,14 @@ export default class SignUp extends React.Component {
 	render() {
 
 		return (
-			<div id='signin'>
-			  <h1>Sign In</h1>
-			  <form class="sign-" onClick={() => this.handleSignUp()}>
+			<div id='signup'>
+			  <h1>Sign Up</h1>
+			  <form class="sign-" onSubmit={() => this.handleSignUp()}>
 			    <input ref="username" class="username" placeholder="username" type='text'/>
 			    <input ref="password" class="password" placeholder="password" type="password"/>
 			    <input ref="email" class="email" placeholder="email" type="text"/>
-			    <input type="submit" value="Sign In"/>
+			    <input type="submit" value="Sign Up"/>
 			  </form>
-			  <a href="#/signup">Don't have an account yet? <strong>Sign Up</strong> ...</a>
 			</div>
 
 		)

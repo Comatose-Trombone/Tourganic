@@ -9,7 +9,7 @@ export default class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: 'DANIELJOSH',
+      user: '',
       description: "",
       userMadeEvents: [
         { Name: "Event 1", Location: "Location 1" }, 
@@ -22,7 +22,7 @@ export default class Profile extends React.Component {
     $.get('http://localhost:8080/profile')
     .done( (data) => {
       console.log('successful getProfile', data);
-      this.setState = ({
+      this.setState({
         user : data.username,
         description : data.description,
         userMadeEvents : data.createdEvents
@@ -33,13 +33,13 @@ export default class Profile extends React.Component {
     })
   }
 
+        // <input type='submit' onClick={this.getProfile.bind(this)} value='Get Profile' />
 
   render() {
     return (
       <div>
         <AboutMe user={this.state.user} description={this.state.description}/>
         <CreatedEventsList tours={this.state.userMadeEvents} />
-        // <input type='submit' onClick={this.getProfile.bind(this)} value='Get Profile' />
       </div>
     )
   }
