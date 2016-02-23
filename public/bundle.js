@@ -56,15 +56,15 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _Navigation = __webpack_require__(226);
+	var _Navigation = __webpack_require__(216);
 
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 
-	var _Profile = __webpack_require__(216);
+	var _Profile = __webpack_require__(217);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _Search = __webpack_require__(221);
+	var _Search = __webpack_require__(222);
 
 	var _Search2 = _interopRequireDefault(_Search);
 
@@ -24753,6 +24753,112 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactRouter = __webpack_require__(159);
+
+	var _jquery = __webpack_require__(221);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Navigation = function (_React$Component) {
+		_inherits(Navigation, _React$Component);
+
+		function Navigation(props) {
+			_classCallCheck(this, Navigation);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
+
+			_this.state = {
+				showLoginReminder: false
+			};
+			return _this;
+		}
+
+		_createClass(Navigation, [{
+			key: 'handleProfileClick',
+			value: function handleProfileClick() {
+				var _this2 = this;
+
+				_jquery2.default.get('http://localhost:8080/profile').done(function (data) {
+					if (!data.isAuth) {
+						_this2.setState({
+							showLoginReminder: true
+						});
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this3 = this;
+
+				if (this.state.showLoginReminder === true) {
+					var loginReminder = _react2.default.createElement(
+						'div',
+						null,
+						'Please login first '
+					);
+				} else {
+					var loginReminder = _react2.default.createElement('div', null);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ className: 'nav' },
+					_react2.default.createElement(
+						'ul',
+						null,
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/search' },
+								'Search'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							{ onClick: function onClick() {
+									return _this3.handleProfileClick();
+								} },
+							'Profile'
+						)
+					),
+					loginReminder
+				);
+			}
+		}]);
+
+		return Navigation;
+	}(_react2.default.Component);
+
+	exports.default = Navigation;
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -24762,15 +24868,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AboutMe = __webpack_require__(217);
+	var _AboutMe = __webpack_require__(218);
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _CreatedEventsList = __webpack_require__(218);
+	var _CreatedEventsList = __webpack_require__(219);
 
 	var _CreatedEventsList2 = _interopRequireDefault(_CreatedEventsList);
 
-	var _jquery = __webpack_require__(220);
+	var _jquery = __webpack_require__(221);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -24837,7 +24943,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24852,7 +24958,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Profile = __webpack_require__(216);
+	var _Profile = __webpack_require__(217);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -24907,7 +25013,7 @@
 	exports.default = AboutMe;
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24922,7 +25028,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CreatedEventsEntry = __webpack_require__(219);
+	var _CreatedEventsEntry = __webpack_require__(220);
 
 	var _CreatedEventsEntry2 = _interopRequireDefault(_CreatedEventsEntry);
 
@@ -24973,7 +25079,7 @@
 	exports.default = CreatedEventsList;
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25030,11 +25136,11 @@
 	exports.default = CreatedEventsEntry;
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v2.2.1
+	 * jQuery JavaScript Library v2.2.0
 	 * http://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -25044,7 +25150,7 @@
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-02-22T19:11Z
+	 * Date: 2016-01-08T20:02Z
 	 */
 
 	(function( global, factory ) {
@@ -25100,7 +25206,7 @@
 
 
 	var
-		version = "2.2.1",
+		version = "2.2.0",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -29514,7 +29620,7 @@
 		if ( fn === false ) {
 			fn = returnFalse;
 		} else if ( !fn ) {
-			return elem;
+			return this;
 		}
 
 		if ( one === 1 ) {
@@ -30163,14 +30269,14 @@
 		rscriptTypeMasked = /^true\/(.*)/,
 		rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
-	// Manipulating tables requires a tbody
 	function manipulationTarget( elem, content ) {
-		return jQuery.nodeName( elem, "table" ) &&
-			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
+		if ( jQuery.nodeName( elem, "table" ) &&
+			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
 
-			elem.getElementsByTagName( "tbody" )[ 0 ] ||
-				elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
-			elem;
+			return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
+		}
+
+		return elem;
 	}
 
 	// Replace/restore the type attribute of script elements for safe DOM manipulation
@@ -30677,7 +30783,7 @@
 			// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 			var view = elem.ownerDocument.defaultView;
 
-			if ( !view || !view.opener ) {
+			if ( !view.opener ) {
 				view = window;
 			}
 
@@ -30826,18 +30932,15 @@
 			style = elem.style;
 
 		computed = computed || getStyles( elem );
-		ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
-
-		// Support: Opera 12.1x only
-		// Fall back to style even without computed
-		// computed is undefined for elems on document fragments
-		if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
-			ret = jQuery.style( elem, name );
-		}
 
 		// Support: IE9
 		// getPropertyValue is only needed for .css('filter') (#12537)
 		if ( computed ) {
+			ret = computed.getPropertyValue( name ) || computed[ name ];
+
+			if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
+				ret = jQuery.style( elem, name );
+			}
 
 			// A tribute to the "awesome hack by Dean Edwards"
 			// Android Browser returns percentage for some values,
@@ -32887,7 +32990,7 @@
 					// But now, this "simulate" function is used only for events
 					// for which stopPropagation() is noop, so there is no need for that anymore.
 					//
-					// For the 1.x branch though, guard for "click" and "submit"
+					// For the compat branch though, guard for "click" and "submit"
 					// events is still used, but was moved to jQuery.event.stopPropagation function
 					// because `originalEvent` should point to the original event for the constancy
 					// with other events and for more focused logic
@@ -34657,8 +34760,11 @@
 				}
 
 				// Add offsetParent borders
-				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
-				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
+				// Subtract offsetParent scroll positions
+				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ) -
+					offsetParent.scrollTop();
+				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true ) -
+					offsetParent.scrollLeft();
 			}
 
 			// Subtract parent offsets and element margins
@@ -34867,7 +34973,7 @@
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34882,17 +34988,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchBar = __webpack_require__(222);
+	var _SearchBar = __webpack_require__(223);
 
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 
-	var _SearchList = __webpack_require__(223);
+	var _SearchList = __webpack_require__(224);
 
 	var _SearchList2 = _interopRequireDefault(_SearchList);
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _jquery = __webpack_require__(220);
+	var _jquery = __webpack_require__(221);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -34956,7 +35062,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35027,7 +35133,7 @@
 	;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35042,11 +35148,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchListEntry = __webpack_require__(224);
+	var _SearchListEntry = __webpack_require__(225);
 
 	var _SearchListEntry2 = _interopRequireDefault(_SearchListEntry);
 
-	var _underscore = __webpack_require__(225);
+	var _underscore = __webpack_require__(226);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -35087,7 +35193,7 @@
 	;
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35137,7 +35243,7 @@
 	;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -36689,112 +36795,6 @@
 	  }
 	}.call(this));
 
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(158);
-
-	var _reactRouter = __webpack_require__(159);
-
-	var _jquery = __webpack_require__(220);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Navigation = function (_React$Component) {
-		_inherits(Navigation, _React$Component);
-
-		function Navigation(props) {
-			_classCallCheck(this, Navigation);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
-
-			_this.state = {
-				showLoginReminder: false
-			};
-			return _this;
-		}
-
-		_createClass(Navigation, [{
-			key: 'handleProfileClick',
-			value: function handleProfileClick() {
-				var _this2 = this;
-
-				_jquery2.default.get('http://localhost:8080/profile').done(function (data) {
-					if (!data.isAuth) {
-						_this2.setState({
-							showLoginReminder: true
-						});
-					}
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this3 = this;
-
-				if (this.state.showLoginReminder === true) {
-					var loginReminder = _react2.default.createElement(
-						'div',
-						null,
-						'Please login first '
-					);
-				} else {
-					var loginReminder = _react2.default.createElement('div', null);
-				}
-				return _react2.default.createElement(
-					'div',
-					{ className: 'nav' },
-					_react2.default.createElement(
-						'ul',
-						null,
-						_react2.default.createElement(
-							'li',
-							null,
-							_react2.default.createElement(
-								_reactRouter.Link,
-								{ to: '/search' },
-								'Search'
-							)
-						),
-						_react2.default.createElement(
-							'li',
-							{ onClick: function onClick() {
-									return _this3.handleProfileClick();
-								} },
-							'Profile'
-						)
-					),
-					loginReminder
-				);
-			}
-		}]);
-
-		return Navigation;
-	}(_react2.default.Component);
-
-	exports.default = Navigation;
 
 /***/ }
 /******/ ]);
