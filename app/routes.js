@@ -83,12 +83,13 @@ module.exports = function(app) {
     var name = req.body.data.username;
     var password = req.body.data.password;
 
-  User.findOne({username: name, password: password}, function(err, user) {
-    if(err) return next(err);
-    if(!user) return res.send('Incorrect username or password');
-    req.session.regenerate(function () {
-      req.session.userId = user._id;
-      res.send(user);
+    User.findOne({username: name, password: password}, function(err, user) {
+      if(err) return next(err);
+      if(!user) return res.send('Incorrect username or password');
+      req.session.regenerate(function () {
+        req.session.userId = user._id;
+        res.send(user);
+      });
     });
   });
 
