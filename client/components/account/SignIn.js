@@ -16,11 +16,9 @@ export default class SignIn extends React.Component {
 				console.log('User signed in successfully');
 				window.location = 'http://localhost:8080/#/profile';
 			})
-			.fail(({responseJSON}) => {
-			  responseJSON.error.errors.forEach((err) =>
-			    console.error(err)
-			  )
-			});
+			.fail((err) => {
+		    console.error('cannot signIn', err);
+		  });
 	}
 
 	render() {
