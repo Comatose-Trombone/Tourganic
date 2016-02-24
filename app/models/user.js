@@ -12,10 +12,10 @@ var userSchema = new Schema({
 });
 
 
+var User = mongoose.model('User', userSchema);
 
-
-
-userSchema.comparePassword = function(candidatePW, savedPW, cb) {
+//add a function to the User model to compare password
+User.comparePassword = function(candidatePW, savedPW, cb) {
   bcrypt.compare(candidatePW, savedPW, function(err, doesMatch) {
     if (err) {
       console.log('Username and/or password are invalid.');
@@ -42,4 +42,4 @@ userSchema.pre('save', function(next) {
 
 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = User;

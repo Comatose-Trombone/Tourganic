@@ -34781,7 +34781,6 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      console.log("get Profile is executed");
 	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
 	        console.log('successful getProfile', data);
 	        _this2.setState({
@@ -36877,12 +36876,8 @@
 				_jquery2.default.post('http://localhost:8080/signin', { data: user }).done(function (data) {
 					console.log('User signed in successfully');
 					window.location = 'http://localhost:8080/#/profile';
-				}).fail(function (_ref) {
-					var responseJSON = _ref.responseJSON;
-
-					responseJSON.error.errors.forEach(function (err) {
-						return console.error(err);
-					});
+				}).fail(function (err) {
+					console.error('cannot signIn', err);
 				});
 			}
 		}, {
@@ -36961,14 +36956,11 @@
 					password: this.refs.password.value,
 					email: this.refs.email.value
 				};
+				console.log('user', user);
 				_jquery2.default.post('http://localhost:8080/signup', { data: user }).done(function (data) {
 					console.log('User added successfully');
-				}).fail(function (_ref) {
-					var responseJSON = _ref.responseJSON;
-
-					responseJSON.error.errors.forEach(function (err) {
-						return console.error(err);
-					});
+				}).fail(function (err) {
+					console.log('error in signUp', err);
 				});
 			}
 		}, {

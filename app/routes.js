@@ -66,16 +66,17 @@ module.exports = function(app) {
 
 
   app.post('/signup', function (req, res, next) {
-    var username = req.body.username;
-    var password = req.body.password;
-    var email = req.body.email;
-    //check to see if a user exists already
+    var username = req.body.data.username;
+    var password = req.body.data.password;
+    var email = req.body.data.email;
+    //check to see if a user exists already:
     User.findOne({username: username})
       .exec(function(err, user) {
         if (user) {
           console.log('Account already exists');
           res.redirect('/signup');
         } else {
+          //if user does not exist, create and save the user:
           var newUser = User({
               username: username,
               email: email,
@@ -83,8 +84,10 @@ module.exports = function(app) {
           });
           newUser.save(function(err, newUser) {
             if(err) return next(err);
+            //generate a session for the user:
             req.session.regenerate(function () {
               req.session.userId = newUser._id;
+              console.log('newuser', newUser);
               res.send(user);
             });
           });
@@ -96,20 +99,22 @@ module.exports = function(app) {
     var name = req.body.data.username;
     var password = req.body.data.password;
 
-    //find the user first
+    //find the user first:
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
       if(!user) return res.send('Username does not exist in our records.');
+      //checks entered PW with the saved hashed/salted PW (defined in user.js)
+      //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {
-        if (err) {
-          console.log('Username and/or password is invalid.');
-          //not sure about the res.redirect
-          res.redirect('/');
-        } else {
+        if (err) { return next(err); }
+        else if (isMatch) {
           req.session.regenerate(function () {
             req.session.userId = user._id;
             res.send(user);
           });
+        } 
+        else {
+          res.redirect('/signin');
         }
       })
     });
