@@ -54,13 +54,22 @@ module.exports = function(app) {
       price: req.body.price,
       date: req.body.date
     };
-    Tour.create(events, function(err, events) {
+    Tour.create(events, function(err, event) {
       if(err) return next(err);
-      console.log('tour created!');
-      res.send(events);
-    });
+      console.log("req.session.userId is ", req.session.userId);
+      User.findOne({_id : req.session.userId}, function(err, user) {
+      if(err) return next(err);
+      user.createdEvents.push(event);
+      console.log("craetedEvents is", user.createdEvents);
+      user.save(function(err, user) {
+        if(err) return next(err);
+      console.log("User is in event", user);
+      res.send(user);
+      });
+      })
 
-  })
+    });
+  });
 
   app.get('/profile', restrict, function(req,res) {
     console.log('foobar');
@@ -90,7 +99,9 @@ module.exports = function(app) {
           var newUser = User({
               username: username,
               email: email,
-              password: password
+              password: password,
+              createdEvents: [],
+              attendingEvents: []
           });
           newUser.save(function(err, newUser) {
             if(err) return next(err);
@@ -103,7 +114,7 @@ module.exports = function(app) {
           });
         }
       })
-  });
+  })
 
   app.post('/signin', function (req, res, next) {
     var name = req.body.data.username;
@@ -127,14 +138,16 @@ module.exports = function(app) {
           res.redirect('/signin');
         }
       })
-    });
+    })
+  });
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
       res.send('hey');
   });
+});
 
-};
+}
 
 
 

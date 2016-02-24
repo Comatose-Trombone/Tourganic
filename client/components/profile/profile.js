@@ -12,10 +12,7 @@ export default class Profile extends React.Component {
     this.state = {
       user: '',
       description: '',
-      userMadeEvents: [
-        { Name: "Event 1", Location: "Location 1" }, 
-        { Name: 'Event 2', Location: 'Location 2' }
-      ],
+      userMadeEvents: [],
       showCreateForm: false,
       showCreateFormButtonValue: 'Create an Event'
     }
@@ -38,6 +35,9 @@ export default class Profile extends React.Component {
     // console.log(eventInfo);
     $.post('/createEvent', eventInfo)
     .done( (data) => {
+      this.setState({
+        userMadeEvents: data.createdEvents
+      })
       console.log('event created, page re-rendering..');
     })
     .fail( (err) => {
