@@ -58,17 +58,9 @@ export default class Navigation extends React.Component {
 		};
 
 		render() {
-			if (this.state.showLoginReminder === true) {
-				var loginReminder = <div>Please login first </div>
-			} else {
-				var loginReminder = <div></div>
-			};
-			if (this.state.logOut === true) {
-				var logOut = <li onClick={ () => this.endSession() } >Log Out</li>
-			} else {
-				var logOut = <li></li>
-			};
 
+			var logOut = <li onClick={ () => this.endSession() } >Log Out</li>
+			var loginReminder = <div>Please login first </div>
 
 			return (
 				<div className='nav'>
@@ -76,10 +68,10 @@ export default class Navigation extends React.Component {
 						<li><Link to="/search">Search</Link></li>
 						<li onClick={ () => this.handleProfileClick() } >Profile</li>
 						<li><Link to="/signin">Sign In</Link></li>
-						<li><Link to="/signup">Sing Up</Link></li>
-						 {logOut}
+						<li><Link to="/signup">Sign Up</Link></li>
+						 {this.state.logOut ? logOut : null}
 					</ul>
-					{loginReminder}
+					{this.state.showLoginReminder ? loginReminder : null}
 				</div>
 			)
 		}
