@@ -54,10 +54,18 @@ module.exports = function(app) {
       price: req.body.price,
       date: req.body.date
     };
-    Tour.create(events, function(err, events) {
+
+    Tour.create(events, function(err, event) {
       if(err) return next(err);
       console.log('tour created!');
-      res.send(events);
+      User.findOne({_id: req.session.userId}, function(err, user) {
+        if (err) return next(err);
+        user.createdEvents.push(event);
+        user.save(function(err, user) {
+          if (err) return next(err);
+          res.send(user);
+        });
+      })
     });
 
   })
@@ -90,7 +98,9 @@ module.exports = function(app) {
           var newUser = User({
               username: username,
               email: email,
-              password: password
+              password: password,
+              createdEvents: [],
+              attendingEvents: []
           });
           newUser.save(function(err, newUser) {
             if(err) return next(err);
@@ -128,12 +138,13 @@ module.exports = function(app) {
         }
       })
     });
+  });
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
       res.send('hey');
+    });
   });
-
 };
 
 
