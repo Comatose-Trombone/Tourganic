@@ -9,9 +9,12 @@ export default class CreatedEventsList extends React.Component {
   }
 
   render() {
-    var eventListEntries = this.tours.map((userMadeEvent) =>
-      <CreatedEventsEntry userMadeEvent={userMadeEvent} />
-    );
+
+    if (typeof this.tours !== 'undefined') {
+      var eventListEntries = this.tours.map((userMadeEvent) =>
+        <CreatedEventsEntry userMadeEvent={userMadeEvent} />
+      );
+    }
 
     return (
       <div className='createdEventsListParentContainer'>
