@@ -14,7 +14,8 @@ export default class SignUp extends React.Component {
 		};
 		$.post('http://localhost:8080/signup', {data: user})
 			.done(data => {
-				console.log('User added successfully')
+				console.log('User added successfully');
+				window.location = 'http://localhost:8080/#/profile';
 			})
 			.fail(({responseJSON}) => {
 			  responseJSON.error.errors.forEach((err) =>

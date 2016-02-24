@@ -37,6 +37,11 @@ module.exports = function(app) {
     })
   });
 
+  app.get('/session', restrict,  function(req,res) {
+    console.log("Iamstill here")
+    res.send({isAuth:true});
+  });
+
   app.post('/createEvent', function(req,res) {
     var events = {
       name: req.body.name,
@@ -74,7 +79,7 @@ module.exports = function(app) {
       if(err) return next(err);
       req.session.regenerate(function () {
         req.session.userId = newUser._id;
-        res.send(user);
+        res.send(newUser);
       });
     });
   });
@@ -95,7 +100,7 @@ module.exports = function(app) {
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
-      res.redirect('/welcome');
+      res.send('hey');
     });
   });
 };

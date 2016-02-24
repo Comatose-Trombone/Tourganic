@@ -10,9 +10,11 @@ export default class Navigation extends React.Component {
 		super(props);
 
 		this.state = {
-			showLoginReminder: false
+			showLoginReminder: false,
+			logOut: false
 		}
 	}
+	
 
 		handleProfileClick() {
 			$.get('http://localhost:8080/profile')
@@ -28,14 +30,46 @@ export default class Navigation extends React.Component {
 						window.location = 'http://localhost:8080/#/profile';
 					}
 				})
-		}
+		};
+
+		componentDidMount() {
+			$.get('http://localhost:8080/session')
+				.done( (data) => {
+					console.log("Iamthedataon session", data);
+					if (data.isAuth === false) {
+						this.setState({
+							logOut: false
+						})
+					} else {
+						this.setState({
+							logOut: true
+						})
+					}
+				});
+		};
+
+		endSession() {
+			$.get('http://localhost:8080/logout').done(() => {
+					this.setState({
+					logOut: false
+				})
+				window.location = 'http://localhost:8080/#/signin'
+			})
+		};
 
 		render() {
 			if (this.state.showLoginReminder === true) {
 				var loginReminder = <div>Please login first </div>
 			} else {
 				var loginReminder = <div></div>
-			}
+			};
+			if (this.state.logOut === true) {
+				var logOut = <li onClick={ () => this.endSession() } >Log Out</li>
+			} else {
+				var logOut = <li></li>
+			};
+
+
 			return (
 				<div className='nav'>
 					<ul> 
@@ -43,10 +77,11 @@ export default class Navigation extends React.Component {
 						<li onClick={ () => this.handleProfileClick() } >Profile</li>
 						<li><Link to="/signin">Sign In</Link></li>
 						<li><Link to="/signup">Sing Up</Link></li>
+						 {logOut}
 					</ul>
 					{loginReminder}
 				</div>
 			)
 		}
 
-	}
+}
