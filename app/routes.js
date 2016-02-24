@@ -38,6 +38,13 @@ module.exports = function(app) {
     })
   });
 
+
+  app.get('/session', restrict,  function(req,res) {
+    console.log("Iamstill here")
+    res.send({isAuth:true});
+  });
+
+ 
   app.post('/createEvent', function(req,res, next) {
     console.log('reqbody',req.body);
     var events = {
@@ -122,11 +129,9 @@ module.exports = function(app) {
       })
     });
 
-    app.get('/logout', function (req, res) {
-      req.session.destroy(function() {
-        res.redirect('/welcome');
-      });
-    });
+  app.get('/logout', function (req, res) {
+    req.session.destroy(function() {
+      res.send('hey');
   });
 
 };
