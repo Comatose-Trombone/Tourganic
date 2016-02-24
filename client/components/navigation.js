@@ -21,6 +21,10 @@ export default class Navigation extends React.Component {
 						this.setState({
 							showLoginReminder: true
 						})
+						var setState = this.setState.bind(this);
+						setTimeout(function(){
+							setState({showLoginReminder:false})
+						},2000);
 					} else {
 						this.setState({
 							showLoginReminder: false
@@ -32,7 +36,6 @@ export default class Navigation extends React.Component {
 
 		render() {
 			var loginReminder = <div>Please login first </div>
-
 			return (
 				<div className='nav'>
 					<ul> 
