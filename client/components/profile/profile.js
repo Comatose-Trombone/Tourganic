@@ -23,7 +23,6 @@ export default class Profile extends React.Component {
   componentDidMount () {
     $.get('http://localhost:8080/profile')
     .done( (data) => {
-      console.log('successful getProfile', data);
       this.setState({
         user : data.username,
         description : data.description,

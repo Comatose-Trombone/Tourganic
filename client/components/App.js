@@ -6,6 +6,7 @@ import Profile from './profile/Profile'
 import Search  from './search/Search'
 import SignIn from './account/SignIn'
 import SignUp from './account/SignUp'
+import Welcome from './welcome/Welcome'
 
 class App extends React.Component {
 	constructor(props) {
@@ -15,10 +16,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className='motherContainer'>
-				<div className='jumbotron'>
-					<span className='welcomeText'>Welcome To Tour-Allure</span>
-				</div>
+			<div>
 				<Navigation />
 				{this.props.children}
 			</div>
@@ -29,10 +27,12 @@ class App extends React.Component {
 render((
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
-			  <Route path='/profile' component={Profile} />
-  		  <Route path="/search" component={Search} />
-  		  <Route path='/signin' component={SignIn} />
-  		  <Route path='/signup' component={SignUp} />
+			<IndexRoute component={Welcome} />
+			<Route path='/welcome' component={Welcome} />
+		  <Route path='/profile' component={Profile} />
+		  <Route path="/search" component={Search} />
+		  <Route path='/signin' component={SignIn} />
+		  <Route path='/signup' component={SignUp} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));
