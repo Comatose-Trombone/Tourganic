@@ -52,6 +52,7 @@ body {
   border: 1px solid black;
   padding: 5px;
   width: 800px;
+  vertical-align: top;
 }
 
     .profilePicture {
@@ -59,6 +60,7 @@ body {
       height: 250px;
       border: 1px solid black;
       display: inline-block;
+      vertical-align: top;
 
     }
 
@@ -68,6 +70,8 @@ body {
       margin-left: 10px;
       height: 250px;
       display: inline-block;
+      vertical-align: top;
+
     }
 
 

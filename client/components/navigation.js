@@ -31,11 +31,8 @@ export default class Navigation extends React.Component {
 		}
 
 		render() {
-			if (this.state.showLoginReminder === true) {
-				var loginReminder = <div>Please login first </div>
-			} else {
-				var loginReminder = <div></div>
-			}
+			var loginReminder = <div>Please login first </div>
+
 			return (
 				<div className='nav'>
 					<ul> 
@@ -44,7 +41,7 @@ export default class Navigation extends React.Component {
 						<li><Link to="/signin">Sign In</Link></li>
 						<li><Link to="/signup">Sign Up</Link></li>
 					</ul>
-					{loginReminder}
+					{this.state.showLoginReminder ? loginReminder : null}
 				</div>
 			)
 		}
