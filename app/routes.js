@@ -38,7 +38,8 @@ module.exports = function(app) {
     })
   });
 
-  app.post('/createEvent', function(req,res) {
+  app.post('/createEvent', function(req,res, next) {
+    console.log('reqbody',req.body);
     var events = {
       name: req.body.name,
       createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -48,12 +49,14 @@ module.exports = function(app) {
     };
     Tour.create(events, function(err, events) {
       if(err) return next(err);
-      res.redirect('/profile');
+      console.log('tour created!');
+      res.send(events);
     });
 
   })
 
   app.get('/profile', restrict, function(req,res) {
+    console.log('foobar');
     User.findOne({_id: req.session.userId}, function(err, data){
       if (err) {
         console.log(err);

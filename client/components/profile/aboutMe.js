@@ -1,5 +1,4 @@
 import React from 'react'
-import Profile from './Profile'
 
 export default class AboutMe extends React.Component {
   constructor(props) {
@@ -8,11 +7,11 @@ export default class AboutMe extends React.Component {
   render() {
 
     return (
-        <div className='aboutMeParentContainer'>
-          <div>{this.props.user}</div>
-          <div className='profilePicture'> picture </div>
-          <div className='profileDescription'> {this.props.description} </div>
-        </div>
+      <div className='aboutMeParentContainer'>
+        <div>{this.props.user}</div>
+        <div className='profilePicture'> picture </div>
+        <div className='profileDescription'> {this.props.description} </div>
+      </div>
     )
   }
 }
