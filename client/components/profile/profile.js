@@ -35,7 +35,13 @@ export default class Profile extends React.Component {
     // console.log(eventInfo);
     $.post('/createEvent', eventInfo)
     .done( (data) => {
+      this.setState({
+        userMadeEvents: data.createdEvents
+      })
       console.log('event created, page re-rendering..');
+      console.log("daata is", data);
+      console.log('setstatefunc?', this.setState);
+      console.log("state is", this.state);
     })
     .fail( (err) => {
       console.log('err', err);
