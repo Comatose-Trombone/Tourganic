@@ -92,3 +92,26 @@ body {
       margin: 5px 5px;
       text-align: middle;
     }
+
+/*================ SEARCH PAGE ==================*/
+
+.searchTourEntry {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  display: inline-block;
+  padding: 2.5px;
+  margin: 2.5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
