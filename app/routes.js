@@ -3,6 +3,7 @@ var User = require('./models/user.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
+var bluebird = require('bluebird');
 
 
 
@@ -54,13 +55,19 @@ module.exports = function(app) {
       price: req.body.price,
       date: req.body.date
     };
-    Tour.create(events, function(err, events) {
+    Tour.create(events, function(err, event) {
       if(err) return next(err);
-      console.log('tour created!');
-      res.send(events);
-    });
+      User.findOne({_id : req.session.userId}, function(err, user) {
+      if(err) return next(err);
+      user.createdEvents.push(event);
+      user.save(function(err, user) {
+        if(err) return next(err);
+      res.send(user);
+      });
+      })
 
-  })
+    });
+  });
 
   app.get('/profile', restrict, function(req,res) {
     console.log('foobar');
@@ -91,20 +98,25 @@ module.exports = function(app) {
           var newUser = User({
               username: username,
               email: email,
-              password: password
+              password: password,
+              createdEvents: [],
+              attendingEvents: []
           });
-          newUser.save(function(err, newUser) {
+          User.hashPassword(password, function(hash) {
             if(err) return next(err);
-            //generate a session for the user:
-            req.session.regenerate(function () {
-              req.session.userId = newUser._id;
-              console.log('newuser', newUser);
-              res.send(user);
-            });
+            newUser.password = hash;
+            console.log(newUser)
+            newUser.save(function(err, newUser) {
+              req.session.regenerate(function () {
+                req.session.userId = newUser._id;
+                console.log('newuser', newUser);
+                res.send(newUser);
+              });
+            })
           });
         }
       })
-  });
+  })
 
   app.post('/signin', function (req, res, next) {
     var name = req.body.data.username;
@@ -114,6 +126,8 @@ module.exports = function(app) {
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
       if(!user) return res.send('Username does not exist in our records.');
+      console.log('user', user);
+      console.log('password', password);
       //checks entered PW with the saved hashed/salted PW (defined in user.js)
       //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {
@@ -128,14 +142,16 @@ module.exports = function(app) {
           res.redirect('/signin');
         }
       })
-    });
+    })
+  });
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
       res.send('hey');
   });
+});
 
-};
+}
 
 
 

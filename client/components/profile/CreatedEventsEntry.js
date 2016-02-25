@@ -3,13 +3,12 @@ import React from 'react'
 export default class CreatedEventsEntry extends React.Component {
   constructor(props) {
     super(props);
-    this.props = props;
   }
 
   render() {
+    console.log('propsusermadevent in createdeventsentry', this.props.tour.name);
     return (
-      /* dummy data for now */
-      <div className='eventContainer'> {this.props.userMadeEvent.Name} </div>
+      <div className='eventContainer'> {this.props.tour.name} </div>
     )
   }
 
