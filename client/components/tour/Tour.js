@@ -13,7 +13,7 @@ export default class Tour extends React.Component {
       createdBy: ""
     }
   }
-
+  // Get tour ID from the url, get information on that tour from server, and rerender page with the correct tour data via setState
   componentDidMount () {
     var urlSplit1 = window.location.href.split('/');
     var urlSplit2 = urlSplit1[urlSplit1.length-1].split('?');
@@ -35,15 +35,15 @@ export default class Tour extends React.Component {
 
   render() {
     return (
-        <div className='tourContainer'>
-          <ul>
-            <li>{this.state.name}</li>
-            <li>{this.state.location }</li>
-            <li>{this.state.price}</li>
-            <li>{this.state.description}</li>
-            <li>{this.state.createdBy}</li>
-          </ul>
-        </div>
+      <div className='tourContainer'>
+        <ul>
+          <li>{this.state.name}</li>
+          <li>{this.state.location }</li>
+          <li>{this.state.price}</li>
+          <li>{this.state.description}</li>
+          <li>{this.state.createdBy}</li>
+        </ul>
+      </div>
     )
   }
 }

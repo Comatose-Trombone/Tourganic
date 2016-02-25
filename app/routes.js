@@ -45,20 +45,20 @@ module.exports = function(app) {
   });
 
  
-  app.post('/createEvent', function(req,res, next) {
+  app.post('/createTour', function(req,res, next) {
     console.log('reqbody',req.body);
-    var events = {
+    var newTour = {
       name: req.body.name,
       createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       location: req.body.location,
       price: req.body.price,
       date: req.body.date
     };
-    Tour.create(events, function(err, event) {
+    Tour.create(newTour, function(err, tour) {
       if(err) return next(err);
       User.findOne({_id : req.session.userId}, function(err, user) {
       if(err) return next(err);
-      user.createdEvents.push(event);
+      user.createdTours.push(tour);
       user.save(function(err, user) {
         if(err) return next(err);
       res.send(user);
@@ -95,8 +95,8 @@ module.exports = function(app) {
               username: username,
               email: email,
               password: password,
-              createdEvents: [],
-              attendingEvents: []
+              createdTours: [],
+              attendingTours: []
           });
           User.hashPassword(password, function(hash) {
             if(err) return next(err);
@@ -147,6 +147,7 @@ module.exports = function(app) {
   // Fetch information for a specific tour, given its id
   app.post('/fetchTourInfo', function (req, res) {
     var id = req.body.data;
+    console.log(id);
     Tour.findOne({_id: id}, function(err, data) {
       if (err) {
         throw err;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class CreateEventForm extends React.Component {
+export default class CreateTourForm extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
@@ -16,7 +16,6 @@ export default class CreateEventForm extends React.Component {
 
   handleChange(prop, e) {
     var newState = {};
-    console.log(e.target.value);
     newState[prop] = e.target.value;
     this.setState(newState);
   }
@@ -36,7 +35,7 @@ export default class CreateEventForm extends React.Component {
           <input value={this.state.location} onChange={this.handleChange.bind(this, 'location')} onClick={this.reset.bind(this, 'location')}/><br/>
           <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
           <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
-          <input type='submit' value='Create Event' onClick={this.props.submitNewEvent.bind(this, this.state)}/>
+          <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
         </form>
       </div>
     )

@@ -25,7 +25,6 @@
 	  		})
 	  })
 	  .fail(({responseJSON}) => {
-	  	console.log(responseJSON);
 	    responseJSON.error.errors.forEach((err) =>
 	      console.error(err)
 	    )

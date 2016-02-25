@@ -1,10 +1,9 @@
-
 import React from 'react'
 import AboutMe from './AboutMe'
-import CreatedEventsList from './CreatedEventsList'
+import CreatedToursList from './CreatedToursList'
 import $ from 'jquery'
 import {Link} from 'react-router'
-import CreateEventForm from './createEventForm'
+import CreateTourForm from './CreateTourForm'
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -12,9 +11,9 @@ export default class Profile extends React.Component {
     this.state = {
       user: '',
       description: '',
-      userMadeEvents: [],
+      userMadeTours: [],
       showCreateForm: false,
-      showCreateFormButtonValue: 'Create an Event'
+      showCreateFormButtonValue: 'Create a Tour'
     }
   }
   componentWillMount () {
@@ -23,7 +22,7 @@ export default class Profile extends React.Component {
       this.setState({
         user : data.username,
         description : data.description,
-        userMadeEvents : data.createdEvents
+        userMadeTours : data.createdTours
       })
     })
     .fail( (err) => {
@@ -31,12 +30,11 @@ export default class Profile extends React.Component {
     })
   }
 
-  submitNewEvent(eventInfo) {
-    $.post('/createEvent', eventInfo)
+  submitNewTour(tourInfo) {
+    $.post('/createTour', tourInfo)
     .done( (data) => {
-
       this.setState({
-        userMadeEvents: data.createdEvents
+        userMadeTours: data.createdTours
       })
     })
     .fail( (err) => {
@@ -46,7 +44,7 @@ export default class Profile extends React.Component {
 
   toggleCreateForm() {
     var currentStatus = this.state.showCreateForm;
-    var tempState = this.state.showCreateFormButtonValue === 'Create an Event' ? 'Hide Form' : 'Create an Event';
+    var tempState = this.state.showCreateFormButtonValue === 'Create a Tour' ? 'Hide Form' : 'Create a Tour';
     this.setState({
       showCreateForm: !currentStatus,
       showCreateFormButtonValue: tempState
@@ -59,9 +57,9 @@ export default class Profile extends React.Component {
     return (
       <div>
         <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
-        {this.state.showCreateForm ? <CreateEventForm submitNewEvent={this.submitNewEvent}/> : null}
+        {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
         <AboutMe user={this.state.user} description={this.state.description}/>
-        <CreatedEventsList tours={this.state.userMadeEvents} />
+        <CreatedToursList tours={this.state.userMadeTours} />
       </div>
     )
   }
