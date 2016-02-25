@@ -33,7 +33,6 @@ export default class CreateEventForm extends React.Component {
       <div>
         <form>
           <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} onClick={this.reset.bind(this, 'name')}/><br/>
-          <input value={this.state.createdBy} onChange={this.handleChange.bind(this, 'createdBy')} onClick={this.reset.bind(this, 'createdBy')}/><br/>
           <input value={this.state.location} onChange={this.handleChange.bind(this, 'location')} onClick={this.reset.bind(this, 'location')}/><br/>
           <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
           <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
