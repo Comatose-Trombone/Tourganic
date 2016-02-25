@@ -5,20 +5,16 @@ export default class CreatedEventsList extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.tours = props.tours;
   }
 
   render() {
-
-    if (typeof this.tours !== 'undefined') {
-      var eventListEntries = this.tours.map((userMadeEvent) =>
-        <CreatedEventsEntry userMadeEvent={userMadeEvent} />
-      );
-    }
+    var eventListEntries = this.props.tours.map((userMadeEvent) =>
+      <CreatedEventsEntry userMadeEvent={userMadeEvent} />
+    );
 
     return (
       <div className='createdEventsListParentContainer'>
-        <p>Here is the Created Events List Page! </p>
+        <p>Here is the Created Events List Page!</p>
         {eventListEntries}
       </div>
     )
