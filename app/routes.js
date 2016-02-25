@@ -76,6 +76,7 @@ module.exports = function(app) {
         console.log(err);
         res.send(err);
       } else {
+        console.log(data);
         res.send(data);
       }
     })

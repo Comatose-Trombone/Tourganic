@@ -9,7 +9,7 @@
 		super(props)
 
 		this.state = {
-      tours: ["example tour 1"],
+      tours: ["example tour 1"]
     };
 
 	}
