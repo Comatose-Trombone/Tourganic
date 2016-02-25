@@ -136,6 +136,16 @@ module.exports = function(app) {
       res.send('hey');
     });
   });
+
+  app.post('/createdEventsEntry', function (req, res) {
+    var id = req.body.data;
+    Tour.findOne({_id: id}, function(err, data) {
+      if (err) {
+        throw err;
+      } else {
+        res.send(data);
+      }
+  })
 }
 
 

@@ -7,6 +7,7 @@ import Search  from './search/Search'
 import SignIn from './account/SignIn'
 import SignUp from './account/SignUp'
 import Welcome from './welcome/Welcome'
+import Tour from './tour/Tour'
 
 class App extends React.Component {
 	constructor(props) {
@@ -30,6 +31,7 @@ render((
 			<IndexRoute component={Welcome} />
 			<Route path='/welcome' component={Welcome} />
 		  <Route path='/profile' component={Profile} />
+		  <Route path='/profile/:id' component={Tour} />
 		  <Route path="/search" component={Search} />
 		  <Route path='/signin' component={SignIn} />
 		  <Route path='/signup' component={SignUp} />

@@ -15,9 +15,9 @@ export default class CreatedEventsEntry extends React.Component {
     $.post('http://localhost:8080/createdEventsEntry', {data: this.props.userMadeEvent})
     .done( (data) => {
       this.setState({
-        user : data.username,
-        description : data.description,
-        userMadeEvents : data.createdEvents
+        name : data.name,
+        location : data.location,
+        price : data.price
       })
     })
     .fail( (err) => {
