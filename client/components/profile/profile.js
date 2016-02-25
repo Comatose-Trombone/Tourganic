@@ -9,6 +9,7 @@ export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showProfile: false,
       user: '',
       description: '',
       userMadeTours: [],
@@ -19,11 +20,17 @@ export default class Profile extends React.Component {
   componentWillMount () {
     $.get('http://localhost:8080/profile')
     .done( (data) => {
-      this.setState({
-        user : data.username,
-        description : data.description,
-        userMadeTours : data.createdTours
-      })
+      if (data.isAuth === false) {
+        console.log('please login first. redirecting..');
+        window.location = 'http://localhost:8080/#/signin'
+      } else {
+        this.setState({
+          showProfile: true,
+          user : data.username,
+          description : data.description,
+          userMadeTours : data.createdTours
+        })
+      }
     })
     .fail( (err) => {
       console.log('error getProfile', err);
@@ -55,12 +62,21 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
-        {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
-        <AboutMe user={this.state.user} description={this.state.description}/>
-        <CreatedToursList tourIds={this.state.userMadeTours} />
-      </div>
+      // ComponentWillMount will change showProfile to true once that async call is complete. Before that happens,
+      // showProfile will be false. This prevents people from viewing the profile page before they log in (in fact,
+      // without this check, they see a ~0.5 second flash of the page because it renders before the ajax call is done )
+      this.state.showProfile ? <div>
+                                  <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
+                                  {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
+                                  <AboutMe user={this.state.user} description={this.state.description}/>
+                                  <CreatedToursList tourIds={this.state.userMadeTours} />
+                               </div>
+                             : null
     )
   }
+
+
+
+
+
 }
