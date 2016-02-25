@@ -10,16 +10,24 @@ export default class Tour extends React.Component {
       location : "",
       price : "",
       description: "",
-      createdBy: ""
+      createdBy: "",
+      isLoggedIn: true
     }
   }
-  // Get tour ID from the url, get information on that tour from server, and rerender page with the correct tour data via setState
-  componentDidMount () {
-    var urlSplit1 = window.location.href.split('/');
-    var urlSplit2 = urlSplit1[urlSplit1.length-1].split('?');
-    var id = urlSplit2[0];
-    $.post('http://localhost:8080/fetchTourInfo', {data: id})
+
+  // Isolate tour ID from the url
+  getID() {
+    var splitURL = window.location.href.split('/');
+    var id = splitURL[splitURL.length-1].split('?')[0];
+    return id;
+  }
+
+  // Fetch tour data from server using its ID, and setState to the correct tour information before initial render
+  componentWillMount() {
+    // Fetch specified tour data from server using its unique ID
+    $.post('http://localhost:8080/fetchTourInfo', {data: this.getID()})
     .done( (data) => {
+      // Change state properties to equal fetched tour data so page renders with correct information
       this.setState({
         name : data.name,
         location : data.location,
@@ -33,7 +41,27 @@ export default class Tour extends React.Component {
     })
   }
 
+  // Add tour ID to user's attendingTours array if user is logged in
+  handleJoinTourClick() {
+    $.post('http://localhost:8080/joinTour', {data: this.getID()})
+      .done( (data) => {
+        if (data.isAuth === false) {
+          this.setState({
+            isLoggedIn: false
+          })
+          var setState = this.setState.bind(this);
+          setTimeout(function(){
+            setState({isLoggedIn:true})
+          }, 2000);
+        } 
+      })
+      .fail( (err) => {
+        console.log('error joining tour');
+      })
+  }
+
   render() {
+    var loginReminder = <div>Please login first</div>
     return (
       <div className='tourContainer'>
         <ul>
@@ -43,6 +71,8 @@ export default class Tour extends React.Component {
           <li>{this.state.description}</li>
           <li>{this.state.createdBy}</li>
         </ul>
+        <input type="submit" value="Join Tour" onClick={ () => this.handleJoinTourClick() }/>
+        {this.state.isLoggedIn ? null : loginReminder}
       </div>
     )
   }

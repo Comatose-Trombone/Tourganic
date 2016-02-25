@@ -15,7 +15,6 @@ module.exports = function(app) {
     saveUninitialized: true
   }));
 
-  // app.use(cookie('secret'));
 
   var restrict = function(req, res, next) {
     if (req.session.userId !== undefined) {
@@ -26,6 +25,7 @@ module.exports = function(app) {
       // res.redirect('/login');
     }
   };
+  
 
   app.post('/search', function(req,res) {
     var location = req.body.data
@@ -66,6 +66,33 @@ module.exports = function(app) {
       })
     });
   });
+
+  // Add a tour's ID to the user's attendingTours property when the user "Joins" the tour
+  app.post('/joinTour', restrict, function(req, res) {
+    // Find the currently logged in user
+    User.findOne({_id: req.session.userId}, function(err, user){
+      if (err) {
+        res.send(err);
+      } else {
+        // Find the specified tour, given its ID
+        Tour.findOne({_id: req.body.data}, function(err, tour) {
+          if (err) {
+            res.send(err);
+          } else{
+            user.attendingTours.push(tour._id);
+            user.save(function(err, user) {
+              if(err) {
+                return next(err);
+              } else {
+                console.log(user);
+                res.send(user);
+              }
+            });
+          }
+        })
+      }
+    })
+  })
 
   app.get('/profile', restrict, function(req,res) {
     User.findOne({_id: req.session.userId}, function(err, data){
@@ -143,7 +170,7 @@ module.exports = function(app) {
   });
 
   // Fetch information for a specific tour, given its id
-  app.post('/fetchTourInfo', function (req, res) {
+  app.post('/fetchTourInfo', restrict, function (req, res) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
