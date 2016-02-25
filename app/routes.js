@@ -75,7 +75,6 @@ module.exports = function(app) {
     })
   });
 
-
   app.post('/signup', function (req, res, next) {
     var username = req.body.data.username;
     var password = req.body.data.password;
@@ -91,7 +90,8 @@ module.exports = function(app) {
           var newUser = User({
               username: username,
               email: email,
-              password: password
+              password: password,
+              createdEvents: ["56ce5cfef60e2f4441e098de"]
           });
           newUser.save(function(err, newUser) {
             if(err) return next(err);
@@ -137,7 +137,8 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/createdEventsEntry', function (req, res) {
+  // Fetch information for a specific tour, given its id
+  app.post('/fetchTourInfo', function (req, res) {
     var id = req.body.data;
     Tour.findOne({_id: id}, function(err, data) {
       if (err) {
@@ -145,7 +146,8 @@ module.exports = function(app) {
       } else {
         res.send(data);
       }
-  })
+    });
+  });
 }
 
 

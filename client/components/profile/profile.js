@@ -12,15 +12,12 @@ export default class Profile extends React.Component {
     this.state = {
       user: '',
       description: '',
-      userMadeEvents: [
-        { Name: "Event 1", Location: "Location 1" }, 
-        { Name: 'Event 2', Location: 'Location 2' }
-      ],
+      userMadeEvents: [],
       showCreateForm: false,
       showCreateFormButtonValue: 'Create an Event'
     }
   }
-  componentDidMount () {
+  componentWillMount () {
     $.get('http://localhost:8080/profile')
     .done( (data) => {
       this.setState({
