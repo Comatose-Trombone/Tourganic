@@ -68,7 +68,7 @@ module.exports = function(app) {
   });
 
   // Add a tour's ID to the user's attendingTours property when the user "Joins" the tour
-  app.post('/joinTour', function(req, res) {
+  app.post('/joinTour', restrict, function(req, res) {
     // Find the currently logged in user
     User.findOne({_id: req.session.userId}, function(err, user){
       if (err) {
