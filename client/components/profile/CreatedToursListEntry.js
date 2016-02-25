@@ -14,11 +14,11 @@ export default class CreatedToursListEntry extends React.Component {
 
   // Redirect to unique tour page upon click, using tour's unique id
   handleTourClick() {
-    window.location = 'http://localhost:8080/#/profile/' + this.props.tour;
+    window.location = 'http://localhost:8080/#/profile/' + this.props.tourId;
   }
 
   componentDidMount () {
-    $.post('http://localhost:8080/fetchTourInfo', {data: this.props.tour})
+    $.post('http://localhost:8080/fetchTourInfo', {data: this.props.tourId})
     .done( (data) => {
       this.setState({
         name : data.name,
