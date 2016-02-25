@@ -5,7 +5,7 @@ export default class AboutMe extends React.Component {
     super(props);
   }
   render() {
-
+console.log("this.props is :", this.props);
     return (
       <div className='aboutMeParentContainer'>
         <div>{this.props.user}</div>

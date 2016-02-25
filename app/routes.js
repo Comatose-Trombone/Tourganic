@@ -3,6 +3,7 @@ var User = require('./models/user.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
+var bluebird = require('bluebird');
 
 
 
@@ -56,14 +57,11 @@ module.exports = function(app) {
     };
     Tour.create(events, function(err, event) {
       if(err) return next(err);
-      console.log("req.session.userId is ", req.session.userId);
       User.findOne({_id : req.session.userId}, function(err, user) {
       if(err) return next(err);
       user.createdEvents.push(event);
-      console.log("craetedEvents is", user.createdEvents);
       user.save(function(err, user) {
         if(err) return next(err);
-      console.log("User is in event", user);
       res.send(user);
       });
       })
@@ -103,14 +101,17 @@ module.exports = function(app) {
               createdEvents: [],
               attendingEvents: []
           });
-          newUser.save(function(err, newUser) {
+          User.hashPassword(password, function(hash) {
             if(err) return next(err);
-            //generate a session for the user:
-            req.session.regenerate(function () {
-              req.session.userId = newUser._id;
-              console.log('newuser', newUser);
-              res.send(user);
-            });
+            newUser.password = hash;
+            console.log(newUser)
+            newUser.save(function(err, newUser) {
+              req.session.regenerate(function () {
+                req.session.userId = newUser._id;
+                console.log('newuser', newUser);
+                res.send(newUser);
+              });
+            })
           });
         }
       })
@@ -124,6 +125,8 @@ module.exports = function(app) {
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
       if(!user) return res.send('Username does not exist in our records.');
+      console.log('user', user);
+      console.log('password', password);
       //checks entered PW with the saved hashed/salted PW (defined in user.js)
       //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {
