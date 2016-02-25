@@ -15,7 +15,6 @@ module.exports = function(app) {
     saveUninitialized: true
   }));
 
-  // app.use(cookie('secret'));
 
   var restrict = function(req, res, next) {
     if (req.session.userId !== undefined) {
@@ -26,6 +25,7 @@ module.exports = function(app) {
       // res.redirect('/login');
     }
   };
+  
 
   app.post('/search', function(req,res) {
     var location = req.body.data
@@ -170,7 +170,7 @@ module.exports = function(app) {
   });
 
   // Fetch information for a specific tour, given its id
-  app.post('/fetchTourInfo', function (req, res) {
+  app.post('/fetchTourInfo', restrict, function (req, res) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {

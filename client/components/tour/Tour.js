@@ -10,7 +10,8 @@ export default class Tour extends React.Component {
       location : "",
       price : "",
       description: "",
-      createdBy: ""
+      createdBy: "",
+      isLoggedIn: true
     }
   }
 
@@ -40,10 +41,19 @@ export default class Tour extends React.Component {
     })
   }
 
+  // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
     $.post('http://localhost:8080/joinTour', {data: this.getID()})
       .done( (data) => {
-        console.log('join tour successful!');
+        if (data.isAuth === false) {
+          this.setState({
+            isLoggedIn: false
+          })
+          var setState = this.setState.bind(this);
+          setTimeout(function(){
+            setState({isLoggedIn:true})
+          }, 2000);
+        } 
       })
       .fail( (err) => {
         console.log('error joining tour');
@@ -51,6 +61,7 @@ export default class Tour extends React.Component {
   }
 
   render() {
+    var loginReminder = <div>Please login first</div>
     return (
       <div className='tourContainer'>
         <ul>
@@ -61,6 +72,7 @@ export default class Tour extends React.Component {
           <li>{this.state.createdBy}</li>
         </ul>
         <input type="submit" value="Join Tour" onClick={ () => this.handleJoinTourClick() }/>
+        {this.state.isLoggedIn ? null : loginReminder}
       </div>
     )
   }
