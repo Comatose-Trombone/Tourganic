@@ -13,13 +13,20 @@ export default class Tour extends React.Component {
       createdBy: ""
     }
   }
-  // Get tour ID from the url, get information on that tour from server, and rerender page with the correct tour data via setState
-  componentDidMount () {
-    var urlSplit1 = window.location.href.split('/');
-    var urlSplit2 = urlSplit1[urlSplit1.length-1].split('?');
-    var id = urlSplit2[0];
-    $.post('http://localhost:8080/fetchTourInfo', {data: id})
+
+  // Isolate tour ID from the url
+  getID() {
+    var splitURL = window.location.href.split('/');
+    var id = splitURL[splitURL.length-1].split('?')[0];
+    return id;
+  }
+
+  // Fetch tour data from server using its ID, and setState to the correct tour information before initial render
+  componentWillMount() {
+    // Fetch specified tour data from server using its unique ID
+    $.post('http://localhost:8080/fetchTourInfo', {data: this.getID()})
     .done( (data) => {
+      // Change state properties to equal fetched tour data so page renders with correct information
       this.setState({
         name : data.name,
         location : data.location,
@@ -33,7 +40,12 @@ export default class Tour extends React.Component {
     })
   }
 
+  handleJoinTourClick() {
+
+  }
+
   render() {
+
     return (
       <div className='tourContainer'>
         <ul>
