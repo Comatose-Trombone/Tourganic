@@ -1,7 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 
-export default class CreatedEventsEntry extends React.Component {
+export default class CreatedToursListEntry extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,13 +12,13 @@ export default class CreatedEventsEntry extends React.Component {
     }
   }
 
-  // Redirect to specified tour page upon click, using tour's unique id
+  // Redirect to unique tour page upon click, using tour's unique id
   handleTourClick() {
-    window.location = 'http://localhost:8080/#/profile/' + this.props.userMadeEvent;
+    window.location = 'http://localhost:8080/#/profile/' + this.props.tour;
   }
 
   componentDidMount () {
-    $.post('http://localhost:8080/fetchTourInfo', {data: this.props.userMadeEvent})
+    $.post('http://localhost:8080/fetchTourInfo', {data: this.props.tour})
     .done( (data) => {
       this.setState({
         name : data.name,
@@ -34,9 +34,9 @@ export default class CreatedEventsEntry extends React.Component {
   render() {
     return (
       <div onClick={ () => this.handleTourClick() }>
-        <span className='eventContainer'> {this.state.name} </span>
-        <span className='eventContainer'> {this.state.location} </span>
-        <span className='eventContainer'> {this.state.price} </span>
+        <span className='tourContainer'> {this.state.name} </span>
+        <span className='tourContainer'> {this.state.location} </span>
+        <span className='tourContainer'> {this.state.price} </span>
       </div>
     )
   }
