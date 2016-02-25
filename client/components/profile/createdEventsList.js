@@ -7,6 +7,7 @@ export default class CreatedEventsList extends React.Component {
   }
 
   render() {
+
     if (typeof this.props.tours !== 'undefined') {
       var eventListEntries = this.props.tours.map(event =>
         <CreatedEventsEntry tour={event} />)

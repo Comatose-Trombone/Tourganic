@@ -41,7 +41,6 @@ module.exports = function(app) {
 
 
   app.get('/session', restrict,  function(req,res) {
-    console.log("Iamstill here")
     res.send({isAuth:true});
   });
 
@@ -65,12 +64,10 @@ module.exports = function(app) {
       res.send(user);
       });
       })
-
     });
   });
 
   app.get('/profile', restrict, function(req,res) {
-    console.log('foobar');
     User.findOne({_id: req.session.userId}, function(err, data){
       if (err) {
         console.log(err);
@@ -108,7 +105,6 @@ module.exports = function(app) {
             newUser.save(function(err, newUser) {
               req.session.regenerate(function () {
                 req.session.userId = newUser._id;
-                console.log('newuser', newUser);
                 res.send(newUser);
               });
             })
@@ -125,8 +121,6 @@ module.exports = function(app) {
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
       if(!user) return res.send('Username does not exist in our records.');
-      console.log('user', user);
-      console.log('password', password);
       //checks entered PW with the saved hashed/salted PW (defined in user.js)
       //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {
@@ -149,7 +143,6 @@ module.exports = function(app) {
       res.send('hey');
     });
   });
-});
 
   // Fetch information for a specific tour, given its id
   app.post('/fetchTourInfo', function (req, res) {
