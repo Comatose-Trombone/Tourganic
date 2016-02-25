@@ -9,7 +9,10 @@ export default class SearchListEntry extends React.Component {
 	render() {
 		return (
 			<div>
-				{this.props.tour}
+				<div>{this.props.tour.name}</div>
+				<div>{this.props.tour.location}</div>
+				<div>price: ${this.props.tour.price}</div>
+				<div>Created By: {this.props.tour.createdBy}</div>
 			</div>
 		)
 	}

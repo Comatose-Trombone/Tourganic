@@ -18,10 +18,9 @@
 	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
-	  .done(data => {
-	  	console.log('data from search', data);
+	  .done(tours => {
 	   this.setState ({
-	  			tours: [data.name]
+	  			tours: tours
 	  		})
 	  })
 	  .fail(({responseJSON}) => {
