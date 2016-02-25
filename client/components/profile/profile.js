@@ -32,7 +32,6 @@ export default class Profile extends React.Component {
   }
 
   submitNewEvent(eventInfo) {
-    // console.log(eventInfo);
     $.post('/createEvent', eventInfo)
     .done( (data) => {
 

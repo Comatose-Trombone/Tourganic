@@ -24833,7 +24833,6 @@
 				var _this3 = this;
 
 				_jquery2.default.get('http://localhost:8080/session').done(function (data) {
-					console.log("Iamthedataon session", data);
 					if (data.isAuth === false) {
 						_this3.setState({
 							logOut: false
@@ -24874,6 +24873,24 @@
 					null,
 					'Please login first '
 				);
+				var signin = _react2.default.createElement(
+					'li',
+					null,
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: '/signin' },
+						'Sign In'
+					)
+				);
+				var signup = _react2.default.createElement(
+					'li',
+					null,
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: '/signup' },
+						'Sign Up'
+					)
+				);
 				return _react2.default.createElement(
 					'div',
 					{ className: 'nav' },
@@ -24896,25 +24913,9 @@
 								} },
 							'Profile'
 						),
-						_react2.default.createElement(
-							'li',
-							null,
-							_react2.default.createElement(
-								_reactRouter.Link,
-								{ to: '/signin' },
-								'Sign In'
-							)
-						),
-						_react2.default.createElement(
-							'li',
-							null,
-							_react2.default.createElement(
-								_reactRouter.Link,
-								{ to: '/signup' },
-								'Sign Up'
-							)
-						),
-						this.state.logOut ? logOut : null
+						this.state.logOut ? logOut : null,
+						this.state.logOut ? null : signin,
+						this.state.logOut ? null : signup
 					),
 					this.state.showLoginReminder ? loginReminder : null
 				);
@@ -34843,7 +34844,6 @@
 	    value: function submitNewEvent(eventInfo) {
 	      var _this3 = this;
 
-	      // console.log(eventInfo);
 	      _jquery2.default.post('/createEvent', eventInfo).done(function (data) {
 
 	        _this3.setState({
@@ -35087,7 +35087,6 @@
 	    value: function render() {
 	      var _this3 = this;
 
-	      console.log('propsusermadevent in createdeventsentry', this.props.tour.name);
 	      return _react2.default.createElement(
 	        'div',
 	        { onClick: function onClick() {
@@ -35192,8 +35191,6 @@
 	          'form',
 	          null,
 	          _react2.default.createElement('input', { value: this.state.name, onChange: this.handleChange.bind(this, 'name'), onClick: this.reset.bind(this, 'name') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { value: this.state.createdBy, onChange: this.handleChange.bind(this, 'createdBy'), onClick: this.reset.bind(this, 'createdBy') }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement('input', { value: this.state.location, onChange: this.handleChange.bind(this, 'location'), onClick: this.reset.bind(this, 'location') }),
 	          _react2.default.createElement('br', null),
@@ -37163,9 +37160,7 @@
 					password: this.refs.password.value,
 					email: this.refs.email.value
 				};
-				console.log('user', user);
 				_jquery2.default.post('http://localhost:8080/signup', { data: user }).done(function (data) {
-					console.log('User added successfully');
 					window.location = 'http://localhost:8080/#/profile';
 				}).fail(function (err) {
 					console.log('error in signUp', err);
