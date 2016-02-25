@@ -32,7 +32,6 @@ export default class CreatedEventsEntry extends React.Component {
   }
 
   render() {
-    console.log('propsusermadevent in createdeventsentry', this.props.tour.name);
     return (
       <div onClick={ () => this.handleTourClick() }>
         <span className='eventContainer'> {this.state.name} </span>
