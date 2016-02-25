@@ -17,7 +17,7 @@ export default class Profile extends React.Component {
       showCreateFormButtonValue: 'Create an Event'
     }
   }
-  componentDidMount () {
+  componentWillMount () {
     $.get('http://localhost:8080/profile')
     .done( (data) => {
       this.setState({

@@ -82,7 +82,6 @@ module.exports = function(app) {
     })
   });
 
-
   app.post('/signup', function (req, res, next) {
     var username = req.body.data.username;
     var password = req.body.data.password;
@@ -141,16 +140,28 @@ module.exports = function(app) {
         else {
           res.redirect('/signin');
         }
-      })
-    })
+      });
+    });
   });
 
   app.get('/logout', function (req, res) {
     req.session.destroy(function() {
       res.send('hey');
+    });
   });
 });
 
+  // Fetch information for a specific tour, given its id
+  app.post('/fetchTourInfo', function (req, res) {
+    var id = req.body.data;
+    Tour.findOne({_id: id}, function(err, data) {
+      if (err) {
+        throw err;
+      } else {
+        res.send(data);
+      }
+    });
+  });
 }
 
 

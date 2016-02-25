@@ -4,7 +4,6 @@ import CreatedEventsEntry from './CreatedEventsEntry'
 export default class CreatedEventsList extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   render() {
