@@ -64,21 +64,25 @@
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _Search = __webpack_require__(222);
+	var _Search = __webpack_require__(223);
 
 	var _Search2 = _interopRequireDefault(_Search);
 
-	var _SignIn = __webpack_require__(227);
+	var _SignIn = __webpack_require__(228);
 
 	var _SignIn2 = _interopRequireDefault(_SignIn);
 
-	var _SignUp = __webpack_require__(228);
+	var _SignUp = __webpack_require__(229);
 
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 
-	var _Welcome = __webpack_require__(229);
+	var _Welcome = __webpack_require__(230);
 
 	var _Welcome2 = _interopRequireDefault(_Welcome);
+
+	var _Tour = __webpack_require__(231);
+
+	var _Tour2 = _interopRequireDefault(_Tour);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -121,6 +125,7 @@
 			_react2.default.createElement(_reactRouter.IndexRoute, { component: _Welcome2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/welcome', component: _Welcome2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/profile/:id', component: _Tour2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/search', component: _Search2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/signin', component: _SignIn2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _SignUp2.default })
@@ -24794,7 +24799,8 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
 
 			_this.state = {
-				showLoginReminder: false
+				showLoginReminder: false,
+				logOut: false
 			};
 			return _this;
 		}
@@ -24809,6 +24815,10 @@
 						_this2.setState({
 							showLoginReminder: true
 						});
+						var setState = _this2.setState.bind(_this2);
+						setTimeout(function () {
+							setState({ showLoginReminder: false });
+						}, 2000);
 					} else {
 						_this2.setState({
 							showLoginReminder: false
@@ -24818,16 +24828,52 @@
 				});
 			}
 		}, {
-			key: 'render',
-			value: function render() {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
 				var _this3 = this;
 
+				_jquery2.default.get('http://localhost:8080/session').done(function (data) {
+					console.log("Iamthedataon session", data);
+					if (data.isAuth === false) {
+						_this3.setState({
+							logOut: false
+						});
+					} else {
+						_this3.setState({
+							logOut: true
+						});
+					}
+				});
+			}
+		}, {
+			key: 'endSession',
+			value: function endSession() {
+				var _this4 = this;
+
+				_jquery2.default.get('http://localhost:8080/logout').done(function () {
+					_this4.setState({
+						logOut: false
+					});
+					window.location = 'http://localhost:8080/#/signin';
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this5 = this;
+
+				var logOut = _react2.default.createElement(
+					'li',
+					{ onClick: function onClick() {
+							return _this5.endSession();
+						} },
+					'Log Out'
+				);
 				var loginReminder = _react2.default.createElement(
 					'div',
 					null,
 					'Please login first '
 				);
-
 				return _react2.default.createElement(
 					'div',
 					{ className: 'nav' },
@@ -24846,7 +24892,7 @@
 						_react2.default.createElement(
 							'li',
 							{ onClick: function onClick() {
-									return _this3.handleProfileClick();
+									return _this5.handleProfileClick();
 								} },
 							'Profile'
 						),
@@ -24867,7 +24913,8 @@
 								{ to: '/signup' },
 								'Sign Up'
 							)
-						)
+						),
+						this.state.logOut ? logOut : null
 					),
 					this.state.showLoginReminder ? loginReminder : null
 				);
@@ -24884,7 +24931,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v2.2.0
+	 * jQuery JavaScript Library v2.2.1
 	 * http://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -24894,7 +24941,7 @@
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-01-08T20:02Z
+	 * Date: 2016-02-22T19:11Z
 	 */
 
 	(function( global, factory ) {
@@ -24950,7 +24997,7 @@
 
 
 	var
-		version = "2.2.0",
+		version = "2.2.1",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -29364,7 +29411,7 @@
 		if ( fn === false ) {
 			fn = returnFalse;
 		} else if ( !fn ) {
-			return this;
+			return elem;
 		}
 
 		if ( one === 1 ) {
@@ -30013,14 +30060,14 @@
 		rscriptTypeMasked = /^true\/(.*)/,
 		rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
+	// Manipulating tables requires a tbody
 	function manipulationTarget( elem, content ) {
-		if ( jQuery.nodeName( elem, "table" ) &&
-			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
+		return jQuery.nodeName( elem, "table" ) &&
+			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
 
-			return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
-		}
-
-		return elem;
+			elem.getElementsByTagName( "tbody" )[ 0 ] ||
+				elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
+			elem;
 	}
 
 	// Replace/restore the type attribute of script elements for safe DOM manipulation
@@ -30527,7 +30574,7 @@
 			// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 			var view = elem.ownerDocument.defaultView;
 
-			if ( !view.opener ) {
+			if ( !view || !view.opener ) {
 				view = window;
 			}
 
@@ -30676,15 +30723,18 @@
 			style = elem.style;
 
 		computed = computed || getStyles( elem );
+		ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
+
+		// Support: Opera 12.1x only
+		// Fall back to style even without computed
+		// computed is undefined for elems on document fragments
+		if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
+			ret = jQuery.style( elem, name );
+		}
 
 		// Support: IE9
 		// getPropertyValue is only needed for .css('filter') (#12537)
 		if ( computed ) {
-			ret = computed.getPropertyValue( name ) || computed[ name ];
-
-			if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
-				ret = jQuery.style( elem, name );
-			}
 
 			// A tribute to the "awesome hack by Dean Edwards"
 			// Android Browser returns percentage for some values,
@@ -32734,7 +32784,7 @@
 					// But now, this "simulate" function is used only for events
 					// for which stopPropagation() is noop, so there is no need for that anymore.
 					//
-					// For the compat branch though, guard for "click" and "submit"
+					// For the 1.x branch though, guard for "click" and "submit"
 					// events is still used, but was moved to jQuery.event.stopPropagation function
 					// because `originalEvent` should point to the original event for the constancy
 					// with other events and for more focused logic
@@ -34504,11 +34554,8 @@
 				}
 
 				// Add offsetParent borders
-				// Subtract offsetParent scroll positions
-				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ) -
-					offsetParent.scrollTop();
-				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true ) -
-					offsetParent.scrollLeft();
+				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
+				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
 			}
 
 			// Subtract parent offsets and element margins
@@ -34746,7 +34793,7 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _createEventForm = __webpack_require__(230);
+	var _createEventForm = __webpack_require__(222);
 
 	var _createEventForm2 = _interopRequireDefault(_createEventForm);
 
@@ -34769,7 +34816,7 @@
 	    _this.state = {
 	      user: '',
 	      description: '',
-	      userMadeEvents: [{ Name: "Event 1", Location: "Location 1" }, { Name: 'Event 2', Location: 'Location 2' }],
+	      userMadeEvents: [],
 	      showCreateForm: false,
 	      showCreateFormButtonValue: 'Create an Event'
 	    };
@@ -34777,8 +34824,8 @@
 	  }
 
 	  _createClass(Profile, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 
 	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
@@ -34794,9 +34841,14 @@
 	  }, {
 	    key: 'submitNewEvent',
 	    value: function submitNewEvent(eventInfo) {
+	      var _this3 = this;
+
 	      // console.log(eventInfo);
 	      _jquery2.default.post('/createEvent', eventInfo).done(function (data) {
-	        console.log('event created, page re-rendering..');
+
+	        _this3.setState({
+	          userMadeEvents: data.createdEvents
+	        });
 	      }).fail(function (err) {
 	        console.log('err', err);
 	      });
@@ -34869,7 +34921,7 @@
 	  _createClass(AboutMe, [{
 	    key: 'render',
 	    value: function render() {
-
+	      console.log("this.props is :", this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'aboutMeParentContainer' },
@@ -34933,32 +34985,27 @@
 	  function CreatedEventsList(props) {
 	    _classCallCheck(this, CreatedEventsList);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsList).call(this, props));
-
-	    _this.props = props;
-	    _this.tours = props.tours;
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsList).call(this, props));
 	  }
 
 	  _createClass(CreatedEventsList, [{
 	    key: 'render',
 	    value: function render() {
 
-	      if (typeof this.tours !== 'undefined') {
-	        var eventListEntries = this.tours.map(function (userMadeEvent) {
-	          return _react2.default.createElement(_CreatedEventsEntry2.default, { userMadeEvent: userMadeEvent });
+	      if (typeof this.props.tours !== 'undefined') {
+	        var eventListEntries = this.props.tours.map(function (event) {
+	          return _react2.default.createElement(_CreatedEventsEntry2.default, { tour: event });
 	        });
 	      }
-
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'createdEventsListParentContainer' },
+	        { className: 'CreatedEventsListParentContainer' },
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Here is the Created Events List Page! '
+	          ' Here is the Created Events '
 	        ),
-	        eventListEntries
+	        eventListEntries ? eventListEntries : null
 	      );
 	    }
 	  }]);
@@ -34984,6 +35031,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _jquery = __webpack_require__(217);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35000,20 +35051,67 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsEntry).call(this, props));
 
-	    _this.props = props;
+	    _this.state = {
+	      name: "",
+	      location: "",
+	      price: ""
+	    };
 	    return _this;
 	  }
 
+	  // Redirect to specified tour page upon click, using tour's unique id
+
+
 	  _createClass(CreatedEventsEntry, [{
+	    key: 'handleTourClick',
+	    value: function handleTourClick() {
+	      window.location = 'http://localhost:8080/#/profile/' + this.props.userMadeEvent;
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: this.props.userMadeEvent }).done(function (data) {
+	        _this2.setState({
+	          name: data.name,
+	          location: data.location,
+	          price: data.price
+	        });
+	      }).fail(function (err) {
+	        console.log('error getProfile', err);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return(
-	        /* dummy data for now */
+	      var _this3 = this;
+
+	      console.log('propsusermadevent in createdeventsentry', this.props.tour.name);
+	      return _react2.default.createElement(
+	        'div',
+	        { onClick: function onClick() {
+	            return _this3.handleTourClick();
+	          } },
 	        _react2.default.createElement(
-	          'div',
+	          'span',
 	          { className: 'eventContainer' },
 	          ' ',
-	          this.props.userMadeEvent.Name,
+	          this.state.name,
+	          ' '
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'eventContainer' },
+	          ' ',
+	          this.state.location,
+	          ' '
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'eventContainer' },
+	          ' ',
+	          this.state.price,
 	          ' '
 	        )
 	      );
@@ -35032,6 +35130,95 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateEventForm = function (_React$Component) {
+	  _inherits(CreateEventForm, _React$Component);
+
+	  function CreateEventForm(props) {
+	    _classCallCheck(this, CreateEventForm);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreateEventForm).call(this, props));
+
+	    _this.props = props;
+	    _this.state = {
+	      name: 'name',
+	      createdBy: 'createdBy',
+	      location: 'location',
+	      price: 'price',
+	      date: 'date'
+	    };
+
+	    return _this;
+	  }
+
+	  _createClass(CreateEventForm, [{
+	    key: 'handleChange',
+	    value: function handleChange(prop, e) {
+	      var newState = {};
+	      console.log(e.target.value);
+	      newState[prop] = e.target.value;
+	      this.setState(newState);
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset(prop, e) {
+	      var newState = {};
+	      newState[prop] = '';
+	      this.setState(newState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          null,
+	          _react2.default.createElement('input', { value: this.state.name, onChange: this.handleChange.bind(this, 'name'), onClick: this.reset.bind(this, 'name') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { value: this.state.createdBy, onChange: this.handleChange.bind(this, 'createdBy'), onClick: this.reset.bind(this, 'createdBy') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { value: this.state.location, onChange: this.handleChange.bind(this, 'location'), onClick: this.reset.bind(this, 'location') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { type: 'number', value: this.state.price, onChange: this.handleChange.bind(this, 'price'), onClick: this.reset.bind(this, 'price') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { value: this.state.date, onChange: this.handleChange.bind(this, 'date'), onClick: this.reset.bind(this, 'date') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { type: 'submit', value: 'Create Event', onClick: this.props.submitNewEvent.bind(this, this.state) })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CreateEventForm;
+	}(_react2.default.Component);
+
+	exports.default = CreateEventForm;
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
@@ -35041,11 +35228,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchBar = __webpack_require__(223);
+	var _SearchBar = __webpack_require__(224);
 
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 
-	var _SearchList = __webpack_require__(224);
+	var _SearchList = __webpack_require__(225);
 
 	var _SearchList2 = _interopRequireDefault(_SearchList);
 
@@ -35115,7 +35302,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35186,7 +35373,7 @@
 	;
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35201,11 +35388,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchListEntry = __webpack_require__(225);
+	var _SearchListEntry = __webpack_require__(226);
 
 	var _SearchListEntry2 = _interopRequireDefault(_SearchListEntry);
 
-	var _underscore = __webpack_require__(226);
+	var _underscore = __webpack_require__(227);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -35246,7 +35433,7 @@
 	;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35296,7 +35483,7 @@
 	;
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -36850,7 +37037,7 @@
 
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36932,7 +37119,7 @@
 	exports.default = SignIn;
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36979,6 +37166,7 @@
 				console.log('user', user);
 				_jquery2.default.post('http://localhost:8080/signup', { data: user }).done(function (data) {
 					console.log('User added successfully');
+					window.location = 'http://localhost:8080/#/profile';
 				}).fail(function (err) {
 					console.log('error in signUp', err);
 				});
@@ -37016,7 +37204,7 @@
 	exports.default = SignUp;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37074,7 +37262,7 @@
 	exports.default = Welcome;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37089,6 +37277,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _jquery = __webpack_require__(217);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37097,70 +37289,87 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CreateEventForm = function (_React$Component) {
-	  _inherits(CreateEventForm, _React$Component);
+	var Tour = function (_React$Component) {
+	  _inherits(Tour, _React$Component);
 
-	  function CreateEventForm(props) {
-	    _classCallCheck(this, CreateEventForm);
+	  function Tour(props) {
+	    _classCallCheck(this, Tour);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreateEventForm).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tour).call(this, props));
 
-	    _this.props = props;
 	    _this.state = {
-	      name: 'name',
-	      createdBy: 'createdBy',
-	      location: 'location',
-	      price: 'price',
-	      date: 'date'
+	      name: "",
+	      location: "",
+	      price: "",
+	      description: "",
+	      createdBy: ""
 	    };
-
 	    return _this;
 	  }
 
-	  _createClass(CreateEventForm, [{
-	    key: 'handleChange',
-	    value: function handleChange(prop, e) {
-	      var newState = {};
-	      console.log(e.target.value);
-	      newState[prop] = e.target.value;
-	      this.setState(newState);
-	    }
-	  }, {
-	    key: 'reset',
-	    value: function reset(prop, e) {
-	      var newState = {};
-	      newState[prop] = '';
-	      this.setState(newState);
+	  _createClass(Tour, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      var urlSplit1 = window.location.href.split('/');
+	      var urlSplit2 = urlSplit1[urlSplit1.length - 1].split('?');
+	      var id = urlSplit2[0];
+	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: id }).done(function (data) {
+	        _this2.setState({
+	          name: data.name,
+	          location: data.location,
+	          price: data.price,
+	          description: data.description,
+	          createdBy: data.createdBy
+	        });
+	      }).fail(function (err) {
+	        console.log('error getProfile', err);
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'tourContainer' },
 	        _react2.default.createElement(
-	          'form',
+	          'ul',
 	          null,
-	          _react2.default.createElement('input', { value: this.state.name, onChange: this.handleChange.bind(this, 'name'), onClick: this.reset.bind(this, 'name') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { value: this.state.createdBy, onChange: this.handleChange.bind(this, 'createdBy'), onClick: this.reset.bind(this, 'createdBy') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { value: this.state.location, onChange: this.handleChange.bind(this, 'location'), onClick: this.reset.bind(this, 'location') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { type: 'number', value: this.state.price, onChange: this.handleChange.bind(this, 'price'), onClick: this.reset.bind(this, 'price') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { value: this.state.date, onChange: this.handleChange.bind(this, 'date'), onClick: this.reset.bind(this, 'date') }),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { type: 'submit', value: 'Create Event', onClick: this.props.submitNewEvent.bind(this, this.state) })
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.name
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.location
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.price
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.description
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.createdBy
+	          )
 	        )
 	      );
 	    }
 	  }]);
 
-	  return CreateEventForm;
+	  return Tour;
 	}(_react2.default.Component);
 
-	exports.default = CreateEventForm;
+	exports.default = Tour;
 
 /***/ }
 /******/ ]);
