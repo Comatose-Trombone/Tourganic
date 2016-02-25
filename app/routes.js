@@ -29,7 +29,7 @@ module.exports = function(app) {
 
   app.post('/search', function(req,res) {
     var location = req.body.data
-    Tour.findOne({"location": location}, function(err, data) {
+    Tour.find({"location": location}, function(err, data) {
       if (err) {
         console.log('error');
         res.send(err)
@@ -58,7 +58,7 @@ module.exports = function(app) {
       if(err) return next(err);
       User.findOne({_id : req.session.userId}, function(err, user) {
       if(err) return next(err);
-      user.createdTours.push(tour);
+      user.createdTours.push(tour._id);
       user.save(function(err, user) {
         if(err) return next(err);
       res.send(user);
@@ -73,7 +73,6 @@ module.exports = function(app) {
         console.log(err);
         res.send(err);
       } else {
-        console.log(data);
         res.send(data);
       }
     })
@@ -101,7 +100,6 @@ module.exports = function(app) {
           User.hashPassword(password, function(hash) {
             if(err) return next(err);
             newUser.password = hash;
-            console.log(newUser)
             newUser.save(function(err, newUser) {
               req.session.regenerate(function () {
                 req.session.userId = newUser._id;
@@ -147,14 +145,15 @@ module.exports = function(app) {
   // Fetch information for a specific tour, given its id
   app.post('/fetchTourInfo', function (req, res) {
     var id = req.body.data;
-    console.log(id);
-    Tour.findOne({_id: id}, function(err, data) {
-      if (err) {
-        throw err;
-      } else {
-        res.send(data);
-      }
-    });
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      Tour.findOne({_id: id}, function(err, data) {
+        if (err) {
+          throw err;
+        } else {
+          res.send(data);
+        }
+      });
+    }
   });
 }
 

@@ -9,7 +9,7 @@
 		super(props)
 
 		this.state = {
-      tours: ["example tour 1"]
+      tours: []
     };
 
 	}
@@ -19,7 +19,7 @@
 	  	{data: options}
 	  )
 	  .done(data => {
-	  	console.log(data);
+	  	console.log('data from search', data);
 	   this.setState ({
 	  			tours: [data.name]
 	  		})
