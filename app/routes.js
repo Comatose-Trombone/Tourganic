@@ -67,6 +67,33 @@ module.exports = function(app) {
     });
   });
 
+  // Add a tour's ID to the user's attendingTours property when the user "Joins" the tour
+  app.post('/joinTour', function(req, res) {
+    // Find the currently logged in user
+    User.findOne({_id: req.session.userId}, function(err, user){
+      if (err) {
+        res.send(err);
+      } else {
+        // Find the specified tour, given its ID
+        Tour.findOne({_id: req.body.data}, function(err, tour) {
+          if (err) {
+            res.send(err);
+          } else{
+            user.attendingTours.push(tour._id);
+            user.save(function(err, user) {
+              if(err) {
+                return next(err);
+              } else {
+                console.log(user);
+                res.send(user);
+              }
+            });
+          }
+        })
+      }
+    })
+  })
+
   app.get('/profile', restrict, function(req,res) {
     User.findOne({_id: req.session.userId}, function(err, data){
       if (err) {

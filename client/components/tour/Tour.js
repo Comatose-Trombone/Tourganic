@@ -41,11 +41,16 @@ export default class Tour extends React.Component {
   }
 
   handleJoinTourClick() {
-
+    $.post('http://localhost:8080/joinTour', {data: this.getID()})
+      .done( (data) => {
+        console.log('join tour successful!');
+      })
+      .fail( (err) => {
+        console.log('error joining tour');
+      })
   }
 
   render() {
-
     return (
       <div className='tourContainer'>
         <ul>
@@ -55,6 +60,7 @@ export default class Tour extends React.Component {
           <li>{this.state.description}</li>
           <li>{this.state.createdBy}</li>
         </ul>
+        <input type="submit" value="Join Tour" onClick={ () => this.handleJoinTourClick() }/>
       </div>
     )
   }
