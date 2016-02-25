@@ -7,9 +7,13 @@ export default class CreatedEventsList extends React.Component {
     this.props = props;
   }
 
+  handleTourClick() {
+    window.location = 'http://localhost:8080/profile/' + this.props.userMadeEvent;
+  }
+
   render() {
     var eventListEntries = this.props.tours.map((userMadeEvent) =>
-      <CreatedEventsEntry userMadeEvent={userMadeEvent} />
+      <CreatedEventsEntry handleTourClick={handleTourClick} userMadeEvent={userMadeEvent} />
     );
 
     return (
