@@ -8,9 +8,9 @@ export default class CreatedToursList extends React.Component {
 
   render() {
 
-    if (typeof this.props.tours !== 'undefined') {
-      var tourListEntries = this.props.tours.map(tour =>
-        <CreatedToursListEntry tour={tour} />)
+    if (typeof this.props.tourIds !== 'undefined') {
+      var tourListEntries = this.props.tourIds.map(tourId =>
+        <CreatedToursListEntry tourId={tourId} />)
       console.log(tourListEntries);
     }
     return (

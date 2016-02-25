@@ -7,15 +7,6 @@ var db = require('./config/db.js');
 
 var Tour = require('./app/models/tour.js');
 
-var tour1 = Tour({
-  name: "Golden Gate Tour",
-  location: "San Francisco"
-});
-
-tour1.save(function(err){
-  if (err) throw err;
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true

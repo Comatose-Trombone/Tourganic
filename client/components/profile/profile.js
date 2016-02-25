@@ -59,7 +59,7 @@ export default class Profile extends React.Component {
         <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
         {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
         <AboutMe user={this.state.user} description={this.state.description}/>
-        <CreatedToursList tours={this.state.userMadeTours} />
+        <CreatedToursList tourIds={this.state.userMadeTours} />
       </div>
     )
   }
