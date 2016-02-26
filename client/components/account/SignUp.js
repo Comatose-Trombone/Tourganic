@@ -22,6 +22,9 @@ export default class SignUp extends React.Component {
 		$.post('http://localhost:8080/signup', {data: user})
 			.done(data => {
 				window.location = 'http://localhost:8080/#/profile';
+				this.setState({
+					show: false
+				})
 			})
 			.fail((err) => {
 				console.log('error in signUp', err);
