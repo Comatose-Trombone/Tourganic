@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 import $ from 'jquery'
+import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from 'react-bootstrap'
 
 
 

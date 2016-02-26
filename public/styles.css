@@ -106,6 +106,17 @@ body {
 
 
 
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+
+.custom-modal {
+  width: 300px;
+}
+
 
 
 
