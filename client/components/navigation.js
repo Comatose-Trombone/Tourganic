@@ -69,7 +69,7 @@ export default class Navigation extends React.Component {
 			return (
 				<div className='nav'>
 					<ul> 
-						<li><Link to="/search">Search</Link></li>
+						<li className='button'><Link to="/search">Search</Link></li>
 						<li onClick={ () => this.handleProfileClick() } >Profile</li>
 						 {this.state.logOut ? logOut : null}
 						 {this.state.logOut ? null : signin}
