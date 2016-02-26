@@ -64,14 +64,25 @@ body {
 
     }
 
-    .profileDescription {
+    .aboutMeContainer {
+      display: inline;
+    }
+
+    .aboutMe {
       width: 530px;
       border: 1px solid black;
       margin-left: 10px;
       height: 250px;
       display: inline-block;
       vertical-align: top;
+    }
 
+    .aboutMeSubmitButton {
+      display: block;
+    }
+
+    .aboutMeForm {
+      display: inline;
     }
 
 
@@ -128,6 +139,8 @@ body {
   height: 35px;
   vertical-align: middle;
 }
+
+
 
 
 
