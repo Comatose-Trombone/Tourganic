@@ -20,6 +20,7 @@ body {
   line-height: 350px;
   vertical-align: middle;
   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  border-radius: 15px;
 }
 
 .welcomeText {
