@@ -25,6 +25,8 @@ export default class SignUp extends React.Component {
 				this.setState({
 					show: false
 				})
+			//triggers the signIn function on navigation, which changes the signedIn state
+				this.props.signIn();
 			})
 			.fail((err) => {
 				console.log('error in signUp', err);

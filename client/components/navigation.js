@@ -41,7 +41,7 @@ export default class Navigation extends React.Component {
 				})
 		};
 
-		componentDidMount() {
+		componentWillMount() {
 			$.get('http://localhost:8080/session')
 				.done( (data) => {
 					if (data.isAuth === false) {
@@ -66,13 +66,13 @@ export default class Navigation extends React.Component {
 		};
 
 		signIn() {
+			console.log('signin called');
 			this.setState({
-				showSignIn: true
+				signedIn: true
 			})
 		} 
 
 	render() {
-		console.log('state:', this.state.signedIn);
 
 		var logout = <NavItem onClick={this.endSession}> Logout </NavItem>
 		var profile = <NavItem href="#/profile">Profile</NavItem>
@@ -87,7 +87,7 @@ export default class Navigation extends React.Component {
 					<Nav>
 						 <NavItem href="#/search">Search</NavItem>
 	      		 { this.state.signedIn ? profile : null }
-	      		 { this.state.signedIn ? null : <SignUp /> }
+	      		 { this.state.signedIn ? null : <SignUp signIn={this.signIn}/> }
 	      		 { this.state.signedIn ? null : <SignIn signIn={this.signIn}/> }
 	      		 { this.state.signedIn ? logout : null }
 					</Nav>
