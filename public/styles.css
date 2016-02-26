@@ -1,7 +1,16 @@
+html,
 body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e1ffff+0,e1ffff+0,fdffff+0,e1ffff+0,e6f8fd+16,c8eefb+48,bee4f8+74,b1d8f5+100 */
+  background: #e1ffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #e1ffff 0%, #e1ffff 0%, #fdffff 0%, #e1ffff 0%, #e6f8fd 16%, #c8eefb 48%, #bee4f8 74%, #b1d8f5 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #e1ffff 0%,#e1ffff 0%,#fdffff 0%,#e1ffff 0%,#e6f8fd 16%,#c8eefb 48%,#bee4f8 74%,#b1d8f5 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #e1ffff 0%,#e1ffff 0%,#fdffff 0%,#e1ffff 0%,#e6f8fd 16%,#c8eefb 48%,#bee4f8 74%,#b1d8f5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 ); /* IE6-9 */
+
   overflow-x: scroll; 
   overflow-y: scroll; 
   font-family: sans-serif;
+  height: 100%;
 }
 
 .motherContainer {
@@ -20,6 +29,7 @@ body {
   line-height: 350px;
   vertical-align: middle;
   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  border-radius: 15px;
 }
 
 .welcomeText {
@@ -32,17 +42,41 @@ body {
 
 .nav ul {
   list-style: none;
+  text-align: center;
   padding: 0;
   margin: 0;
 }
-.nav li {
-  font-family: sans-serif;
-  font-size: 15px;
-  line-height: 40px;
-  height: 40px;
-  display: inline-block;
-  padding-left: 5px;
-}
+
+    .nav li {
+        border: 2px solid #28aadc;
+        height: 33px;
+        padding-left: 5px;
+        border-radius: 5px;
+        padding-right: 5px;
+        color: #28aadc;
+        display: inline-block;
+        font-size: 15px;
+        line-height: 33px;
+        margin: 4px 4px;
+        cursor: pointer;
+    }
+
+    .nav li:hover {
+        background-color: #28aadc;
+        color: white;
+    }
+    
+    .nav li a {
+       text-decoration: none;
+       color: #28aadc;
+    }
+
+    .nav li:hover a {
+        color: white;
+    }
+
+
+
 
 /*================ PROFILE PAGE ==================*/
 
