@@ -7,7 +7,7 @@ export default class AboutMe extends React.Component {
 
     this.state = {
       aboutMeEdit: false,
-      aboutMe: this.props.aboutMe + 'Hello'
+      aboutMe: this.props.aboutMe
     }
   }
 
@@ -33,17 +33,16 @@ export default class AboutMe extends React.Component {
   }
 
   render() {
-    var aboutMeEdit = <form onSubmit={ () => this.handleAboutMeClick() } >
-                        <textarea ref="aboutMe">{this.state.aboutMe}</textarea>
-                        <input type="submit" value="Save changes" />
+    var aboutMeEdit = <form className="aboutMeForm" onSubmit={ () => this.handleAboutMeEdit() } >
+                        <textarea className="aboutMe" ref="aboutMe">{this.state.aboutMe}</textarea>
+                        <input className="aboutMeSubmitButton" type="submit" value="Save changes" />
                       </form>
-    var aboutMe = <div onClick={ () => this.handleAboutMeClick() }>{this.state.aboutMe}</div>
+    var aboutMe = <div className="aboutMe" onClick={ () => this.handleAboutMeEdit() }>{this.state.aboutMe}</div>
     return (
       <div className='aboutMeParentContainer'>
         <div>{this.props.user}</div>
         <div className='profilePicture'> picture </div>
-        <div className='aboutMeContainer'>
-          Here is the container
+        <div className="aboutMeContainer">
           {this.state.aboutMeEdit ? aboutMeEdit : aboutMe}
         </div>
       </div>

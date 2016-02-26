@@ -24932,7 +24932,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v2.2.1
+	 * jQuery JavaScript Library v2.2.0
 	 * http://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -24942,7 +24942,7 @@
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-02-22T19:11Z
+	 * Date: 2016-01-08T20:02Z
 	 */
 
 	(function( global, factory ) {
@@ -24998,7 +24998,7 @@
 
 
 	var
-		version = "2.2.1",
+		version = "2.2.0",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -29412,7 +29412,7 @@
 		if ( fn === false ) {
 			fn = returnFalse;
 		} else if ( !fn ) {
-			return elem;
+			return this;
 		}
 
 		if ( one === 1 ) {
@@ -30061,14 +30061,14 @@
 		rscriptTypeMasked = /^true\/(.*)/,
 		rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
-	// Manipulating tables requires a tbody
 	function manipulationTarget( elem, content ) {
-		return jQuery.nodeName( elem, "table" ) &&
-			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
+		if ( jQuery.nodeName( elem, "table" ) &&
+			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
 
-			elem.getElementsByTagName( "tbody" )[ 0 ] ||
-				elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
-			elem;
+			return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
+		}
+
+		return elem;
 	}
 
 	// Replace/restore the type attribute of script elements for safe DOM manipulation
@@ -30575,7 +30575,7 @@
 			// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 			var view = elem.ownerDocument.defaultView;
 
-			if ( !view || !view.opener ) {
+			if ( !view.opener ) {
 				view = window;
 			}
 
@@ -30724,18 +30724,15 @@
 			style = elem.style;
 
 		computed = computed || getStyles( elem );
-		ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
-
-		// Support: Opera 12.1x only
-		// Fall back to style even without computed
-		// computed is undefined for elems on document fragments
-		if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
-			ret = jQuery.style( elem, name );
-		}
 
 		// Support: IE9
 		// getPropertyValue is only needed for .css('filter') (#12537)
 		if ( computed ) {
+			ret = computed.getPropertyValue( name ) || computed[ name ];
+
+			if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
+				ret = jQuery.style( elem, name );
+			}
 
 			// A tribute to the "awesome hack by Dean Edwards"
 			// Android Browser returns percentage for some values,
@@ -32785,7 +32782,7 @@
 					// But now, this "simulate" function is used only for events
 					// for which stopPropagation() is noop, so there is no need for that anymore.
 					//
-					// For the 1.x branch though, guard for "click" and "submit"
+					// For the compat branch though, guard for "click" and "submit"
 					// events is still used, but was moved to jQuery.event.stopPropagation function
 					// because `originalEvent` should point to the original event for the constancy
 					// with other events and for more focused logic
@@ -34555,8 +34552,11 @@
 				}
 
 				// Add offsetParent borders
-				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
-				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
+				// Subtract offsetParent scroll positions
+				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ) -
+					offsetParent.scrollTop();
+				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true ) -
+					offsetParent.scrollLeft();
 			}
 
 			// Subtract parent offsets and element margins
@@ -34784,9 +34784,9 @@
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _CreatedEventsList = __webpack_require__(220);
+	var _CreatedToursList = __webpack_require__(220);
 
-	var _CreatedEventsList2 = _interopRequireDefault(_CreatedEventsList);
+	var _CreatedToursList2 = _interopRequireDefault(_CreatedToursList);
 
 	var _jquery = __webpack_require__(217);
 
@@ -34794,9 +34794,9 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _createEventForm = __webpack_require__(222);
+	var _CreateTourForm = __webpack_require__(222);
 
-	var _createEventForm2 = _interopRequireDefault(_createEventForm);
+	var _CreateTourForm2 = _interopRequireDefault(_CreateTourForm);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34815,11 +34815,12 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Profile).call(this, props));
 
 	    _this.state = {
+	      showProfile: false,
 	      user: '',
-	      description: '',
-	      userMadeEvents: [],
+	      aboutMe: '',
+	      userMadeTours: [],
 	      showCreateForm: false,
-	      showCreateFormButtonValue: 'Create an Event'
+	      showCreateFormButtonValue: 'Create a Tour'
 	    };
 	    return _this;
 	  }
@@ -34830,24 +34831,31 @@
 	      var _this2 = this;
 
 	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
-	        _this2.setState({
-	          user: data.username,
-	          description: data.description,
-	          userMadeEvents: data.createdEvents
-	        });
+	        // if no session, restrict function will return {isAuth: false} in data
+	        // if this is true, we want to redirect to signin page
+	        if (data.isAuth === false) {
+	          console.log('please login first. redirecting..');
+	          window.location = 'http://localhost:8080/#/signin';
+	        } else {
+	          _this2.setState({
+	            showProfile: true,
+	            user: data.username,
+	            aboutMe: data.aboutMe,
+	            userMadeTours: data.createdTours
+	          });
+	        }
 	      }).fail(function (err) {
 	        console.log('error getProfile', err);
 	      });
 	    }
 	  }, {
-	    key: 'submitNewEvent',
-	    value: function submitNewEvent(eventInfo) {
+	    key: 'submitNewTour',
+	    value: function submitNewTour(tourInfo) {
 	      var _this3 = this;
 
-	      _jquery2.default.post('/createEvent', eventInfo).done(function (data) {
-
+	      _jquery2.default.post('/createTour', tourInfo).done(function (data) {
 	        _this3.setState({
-	          userMadeEvents: data.createdEvents
+	          userMadeTours: data.createdTours
 	        });
 	      }).fail(function (err) {
 	        console.log('err', err);
@@ -34857,25 +34865,29 @@
 	    key: 'toggleCreateForm',
 	    value: function toggleCreateForm() {
 	      var currentStatus = this.state.showCreateForm;
-	      var tempState = this.state.showCreateFormButtonValue === 'Create an Event' ? 'Hide Form' : 'Create an Event';
+	      var tempState = this.state.showCreateFormButtonValue === 'Create a Tour' ? 'Hide Form' : 'Create a Tour';
 	      this.setState({
 	        showCreateForm: !currentStatus,
 	        showCreateFormButtonValue: tempState
 	      });
 	    }
-
-	    // <input type='submit' onClick={this.getProfile.bind(this)} value='Get Profile' />
-
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
+	      var profilePage = _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement('input', { type: 'submit', value: this.state.showCreateFormButtonValue, onClick: this.toggleCreateForm.bind(this) }),
-	        this.state.showCreateForm ? _react2.default.createElement(_createEventForm2.default, { submitNewEvent: this.submitNewEvent }) : null,
-	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user, description: this.state.description }),
-	        _react2.default.createElement(_CreatedEventsList2.default, { tours: this.state.userMadeEvents })
+	        this.state.showCreateForm ? _react2.default.createElement(_CreateTourForm2.default, { submitNewTour: this.submitNewTour }) : null,
+	        _react2.default.createElement(_AboutMe2.default, { user: this.state.user, aboutMe: this.state.aboutMe }),
+	        _react2.default.createElement(_CreatedToursList2.default, { tourIds: this.state.userMadeTours })
+	      );
+
+	      return(
+	        // ComponentWillMount will change showProfile to true once that async call is complete. Before that happens,
+	        // showProfile will be false. This prevents people from viewing the profile page before they log in (in fact,
+	        // without this check, they see a ~0.5 second flash of the page because it renders before the ajax call is done )
+	        this.state.showProfile ? profilePage : null
 	      );
 	    }
 	  }]);
@@ -34901,6 +34913,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _jquery = __webpack_require__(217);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34915,13 +34931,61 @@
 	  function AboutMe(props) {
 	    _classCallCheck(this, AboutMe);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AboutMe).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AboutMe).call(this, props));
+
+	    _this.state = {
+	      aboutMeEdit: false,
+	      aboutMe: _this.props.aboutMe
+	    };
+	    return _this;
 	  }
 
 	  _createClass(AboutMe, [{
+	    key: 'handleAboutMeEdit',
+	    value: function handleAboutMeEdit() {
+	      var _this2 = this;
+
+	      if (this.state.aboutMeEdit === true) {
+	        var aboutMe = this.refs.aboutMe.value;
+	        _jquery2.default.post('http://localhost:8080/aboutMeEdit', { data: aboutMe }).done(function (data) {
+	          console.log('About me edited successfully');
+	          _this2.setState({
+	            aboutMeEdit: false,
+	            aboutMe: data.aboutMe
+	          });
+	        }).fail(function (err) {
+	          console.error('cannot signIn', err);
+	        });
+	      } else {
+	        this.setState({
+	          aboutMeEdit: true
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log("this.props is :", this.props);
+	      var _this3 = this;
+
+	      var aboutMeEdit = _react2.default.createElement(
+	        'form',
+	        { className: 'aboutMeForm', onSubmit: function onSubmit() {
+	            return _this3.handleAboutMeEdit();
+	          } },
+	        _react2.default.createElement(
+	          'textarea',
+	          { className: 'aboutMe', ref: 'aboutMe' },
+	          this.state.aboutMe
+	        ),
+	        _react2.default.createElement('input', { className: 'aboutMeSubmitButton', type: 'submit', value: 'Save changes' })
+	      );
+	      var aboutMe = _react2.default.createElement(
+	        'div',
+	        { className: 'aboutMe', onClick: function onClick() {
+	            return _this3.handleAboutMeEdit();
+	          } },
+	        this.state.aboutMe
+	      );
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'aboutMeParentContainer' },
@@ -34937,10 +35001,8 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'profileDescription' },
-	          ' ',
-	          this.props.description,
-	          ' '
+	          { className: 'aboutMeContainer' },
+	          this.state.aboutMeEdit ? aboutMeEdit : aboutMe
 	        )
 	      );
 	    }
@@ -34967,9 +35029,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CreatedEventsEntry = __webpack_require__(221);
+	var _CreatedToursListEntry = __webpack_require__(221);
 
-	var _CreatedEventsEntry2 = _interopRequireDefault(_CreatedEventsEntry);
+	var _CreatedToursListEntry2 = _interopRequireDefault(_CreatedToursListEntry);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34979,41 +35041,42 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CreatedEventsList = function (_React$Component) {
-	  _inherits(CreatedEventsList, _React$Component);
+	var CreatedToursList = function (_React$Component) {
+	  _inherits(CreatedToursList, _React$Component);
 
-	  function CreatedEventsList(props) {
-	    _classCallCheck(this, CreatedEventsList);
+	  function CreatedToursList(props) {
+	    _classCallCheck(this, CreatedToursList);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsList).call(this, props));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedToursList).call(this, props));
 	  }
 
-	  _createClass(CreatedEventsList, [{
+	  _createClass(CreatedToursList, [{
 	    key: 'render',
 	    value: function render() {
 
-	      if (typeof this.props.tours !== 'undefined') {
-	        var eventListEntries = this.props.tours.map(function (event) {
-	          return _react2.default.createElement(_CreatedEventsEntry2.default, { tour: event });
+	      if (typeof this.props.tourIds !== 'undefined') {
+	        var tourListEntries = this.props.tourIds.map(function (tourId) {
+	          return _react2.default.createElement(_CreatedToursListEntry2.default, { tourId: tourId });
 	        });
+	        console.log(tourListEntries);
 	      }
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'CreatedEventsListParentContainer' },
+	        { className: 'CreatedToursListParentContainer' },
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          ' Here is the Created Events '
+	          ' Here are the Created Tours '
 	        ),
-	        eventListEntries ? eventListEntries : null
+	        tourListEntries ? tourListEntries : null
 	      );
 	    }
 	  }]);
 
-	  return CreatedEventsList;
+	  return CreatedToursList;
 	}(_react2.default.Component);
 
-	exports.default = CreatedEventsList;
+	exports.default = CreatedToursList;
 
 /***/ },
 /* 221 */
@@ -35043,13 +35106,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CreatedEventsEntry = function (_React$Component) {
-	  _inherits(CreatedEventsEntry, _React$Component);
+	var CreatedToursListEntry = function (_React$Component) {
+	  _inherits(CreatedToursListEntry, _React$Component);
 
-	  function CreatedEventsEntry(props) {
-	    _classCallCheck(this, CreatedEventsEntry);
+	  function CreatedToursListEntry(props) {
+	    _classCallCheck(this, CreatedToursListEntry);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedEventsEntry).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreatedToursListEntry).call(this, props));
 
 	    _this.state = {
 	      name: "",
@@ -35059,20 +35122,20 @@
 	    return _this;
 	  }
 
-	  // Redirect to specified tour page upon click, using tour's unique id
+	  // Redirect to unique tour page upon click, using tour's unique id
 
 
-	  _createClass(CreatedEventsEntry, [{
+	  _createClass(CreatedToursListEntry, [{
 	    key: 'handleTourClick',
 	    value: function handleTourClick() {
-	      window.location = 'http://localhost:8080/#/profile/' + this.props.userMadeEvent;
+	      window.location = 'http://localhost:8080/#/profile/' + this.props.tourId;
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: this.props.userMadeEvent }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: this.props.tourId }).done(function (data) {
 	        _this2.setState({
 	          name: data.name,
 	          location: data.location,
@@ -35089,26 +35152,26 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { onClick: function onClick() {
+	        { className: 'eventContainer', onClick: function onClick() {
 	            return _this3.handleTourClick();
 	          } },
 	        _react2.default.createElement(
-	          'span',
-	          { className: 'eventContainer' },
+	          'div',
+	          { className: 'tourContainer' },
 	          ' ',
 	          this.state.name,
 	          ' '
 	        ),
 	        _react2.default.createElement(
-	          'span',
-	          { className: 'eventContainer' },
+	          'div',
+	          { className: 'tourContainer' },
 	          ' ',
 	          this.state.location,
 	          ' '
 	        ),
 	        _react2.default.createElement(
-	          'span',
-	          { className: 'eventContainer' },
+	          'div',
+	          { className: 'tourContainer' },
 	          ' ',
 	          this.state.price,
 	          ' '
@@ -35117,10 +35180,10 @@
 	    }
 	  }]);
 
-	  return CreatedEventsEntry;
+	  return CreatedToursListEntry;
 	}(_react2.default.Component);
 
-	exports.default = CreatedEventsEntry;
+	exports.default = CreatedToursListEntry;
 
 /***/ },
 /* 222 */
@@ -35146,13 +35209,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CreateEventForm = function (_React$Component) {
-	  _inherits(CreateEventForm, _React$Component);
+	var CreateTourForm = function (_React$Component) {
+	  _inherits(CreateTourForm, _React$Component);
 
-	  function CreateEventForm(props) {
-	    _classCallCheck(this, CreateEventForm);
+	  function CreateTourForm(props) {
+	    _classCallCheck(this, CreateTourForm);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreateEventForm).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreateTourForm).call(this, props));
 
 	    _this.props = props;
 	    _this.state = {
@@ -35166,11 +35229,10 @@
 	    return _this;
 	  }
 
-	  _createClass(CreateEventForm, [{
+	  _createClass(CreateTourForm, [{
 	    key: 'handleChange',
 	    value: function handleChange(prop, e) {
 	      var newState = {};
-	      console.log(e.target.value);
 	      newState[prop] = e.target.value;
 	      this.setState(newState);
 	    }
@@ -35198,16 +35260,16 @@
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement('input', { value: this.state.date, onChange: this.handleChange.bind(this, 'date'), onClick: this.reset.bind(this, 'date') }),
 	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('input', { type: 'submit', value: 'Create Event', onClick: this.props.submitNewEvent.bind(this, this.state) })
+	          _react2.default.createElement('input', { type: 'submit', value: 'Create Tour', onClick: this.props.submitNewTour.bind(this, this.state) })
 	        )
 	      );
 	    }
 	  }]);
 
-	  return CreateEventForm;
+	  return CreateTourForm;
 	}(_react2.default.Component);
 
-	exports.default = CreateEventForm;
+	exports.default = CreateTourForm;
 
 /***/ },
 /* 223 */
@@ -35256,7 +35318,7 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Search).call(this, props));
 
 			_this.state = {
-				tours: ["example tour 1"]
+				tours: []
 			};
 
 			return _this;
@@ -35267,15 +35329,14 @@
 			value: function getToursFromDatabase(options) {
 				var _this2 = this;
 
-				_jquery2.default.post('http://localhost:8080/search', { data: options }).done(function (data) {
-					console.log(data);
+				_jquery2.default.post('http://localhost:8080/search', { data: options }).done(function (tours) {
+					console.log(tours);
 					_this2.setState({
-						tours: [data.name]
+						tours: tours
 					});
 				}).fail(function (_ref) {
 					var responseJSON = _ref.responseJSON;
 
-					console.log(responseJSON);
 					responseJSON.error.errors.forEach(function (err) {
 						return console.error(err);
 					});
@@ -35331,17 +35392,25 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SearchBar).call(this, props));
 
 			_this.state = {
-				value: ""
+				name: "",
+				location: ""
 			};
 			return _this;
 		}
 
 		_createClass(SearchBar, [{
 			key: "handleInputChange",
-			value: function handleInputChange(e) {
-				this.setState({
-					value: e.target.value
-				});
+			value: function handleInputChange(prop, e) {
+				var newState = {};
+				newState[prop] = e.target.value;
+				this.setState(newState);
+			}
+		}, {
+			key: "reset",
+			value: function reset(prop, e) {
+				var newState = {};
+				newState[prop] = '';
+				this.setState(newState);
 			}
 		}, {
 			key: "render",
@@ -35354,9 +35423,10 @@
 					_react2.default.createElement(
 						"form",
 						{ "class": "searchForm" },
-						_react2.default.createElement("input", { "class": "searchLocation", placeholder: "Put Location", onChange: this.handleInputChange.bind(this) }),
+						_react2.default.createElement("input", { "class": "searchName", value: this.state.name, placeholder: "Search for Tour Name", onChange: this.handleInputChange.bind(this, "name"), onClick: this.reset.bind(this, 'name') }),
+						_react2.default.createElement("input", { "class": "searchLocation", value: this.state.location, placeholder: "Put Location", onChange: this.handleInputChange.bind(this, "location"), onClick: this.reset.bind(this, 'location') }),
 						_react2.default.createElement("input", { type: "submit", onClick: function onClick(e) {
-								return _this2.props.getToursFromDatabase(_this2.state.value);
+								return _this2.props.getToursFromDatabase(_this2.state);
 							} })
 					)
 				);
@@ -35463,12 +35533,39 @@
 		}
 
 		_createClass(SearchListEntry, [{
+			key: 'handleTourClick',
+			value: function handleTourClick() {
+				window.location = 'http://localhost:8080/#/profile/' + this.props.tour._id;
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+
 				return _react2.default.createElement(
 					'div',
-					null,
-					this.props.tour
+					{ className: 'searchTourEntry', onClick: this.handleTourClick.bind(this) },
+					_react2.default.createElement(
+						'div',
+						null,
+						this.props.tour.name
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						this.props.tour.location
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						'price: $',
+						this.props.tour.price
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						'Created By: ',
+						this.props.tour.createdBy
+					)
 				);
 			}
 		}]);
@@ -37297,20 +37394,33 @@
 	      location: "",
 	      price: "",
 	      description: "",
-	      createdBy: ""
+	      createdBy: "",
+	      isLoggedIn: true
 	    };
 	    return _this;
 	  }
 
+	  // Isolate tour ID from the url
+
+
 	  _createClass(Tour, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'getID',
+	    value: function getID() {
+	      var splitURL = window.location.href.split('/');
+	      var id = splitURL[splitURL.length - 1].split('?')[0];
+	      return id;
+	    }
+
+	    // Fetch tour data from server using its ID, and setState to the correct tour information before initial render
+
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      var urlSplit1 = window.location.href.split('/');
-	      var urlSplit2 = urlSplit1[urlSplit1.length - 1].split('?');
-	      var id = urlSplit2[0];
-	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: id }).done(function (data) {
+	      // Fetch specified tour data from server using its unique ID
+	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: this.getID() }).done(function (data) {
+	        // Change state properties to equal fetched tour data so page renders with correct information
 	        _this2.setState({
 	          name: data.name,
 	          location: data.location,
@@ -37322,9 +37432,38 @@
 	        console.log('error getProfile', err);
 	      });
 	    }
+
+	    // Add tour ID to user's attendingTours array if user is logged in
+
+	  }, {
+	    key: 'handleJoinTourClick',
+	    value: function handleJoinTourClick() {
+	      var _this3 = this;
+
+	      _jquery2.default.post('http://localhost:8080/joinTour', { data: this.getID() }).done(function (data) {
+	        if (data.isAuth === false) {
+	          _this3.setState({
+	            isLoggedIn: false
+	          });
+	          var setState = _this3.setState.bind(_this3);
+	          setTimeout(function () {
+	            setState({ isLoggedIn: true });
+	          }, 2000);
+	        }
+	      }).fail(function (err) {
+	        console.log('error joining tour');
+	      });
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
+	      var loginReminder = _react2.default.createElement(
+	        'div',
+	        null,
+	        'Please login first'
+	      );
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'tourContainer' },
@@ -37356,7 +37495,11 @@
 	            null,
 	            this.state.createdBy
 	          )
-	        )
+	        ),
+	        _react2.default.createElement('input', { type: 'submit', value: 'Join Tour', onClick: function onClick() {
+	            return _this4.handleJoinTourClick();
+	          } }),
+	        this.state.isLoggedIn ? null : loginReminder
 	      );
 	    }
 	  }]);
