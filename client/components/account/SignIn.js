@@ -62,18 +62,20 @@ export default class SignIn extends React.Component {
         aria-labelledby='contained-modal-title'
       >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title">Sign in Here</Modal.Title>
+            <Modal.Title id="contained-modal-title">Sign In Here</Modal.Title>
           </Modal.Header>
           <Modal.Body >
-            <form class="sign-" onSubmit={() => this.handleSignIn()}>
-					    <input ref="username" class="username" placeholder="username" type='text'/>
-					    <input ref="password" class="password" placeholder="password" type="password"/>
-					    <input type="submit" value="Sign In"/>
+            <form className="sign-">
+					    <input ref="username" class="username" placeholder="username" type='text'/><br/>
+					    <input ref="password" class="password" placeholder="password" type="password"/><br/>
+					    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
 			  		</form>
           </Modal.Body>
         </Modal>
       </div>
     </div>
+
+    	/***************old code ***********************/
 			// <div id='signin'>
 			//   <h1>Sign In</h1>
 			//   <form class="sign-" onSubmit={() => this.handleSignIn()}>
