@@ -1,7 +1,9 @@
+html,
 body {
   overflow-x: scroll; 
   overflow-y: scroll; 
   font-family: sans-serif;
+  height: 100%;
 }
 
 .motherContainer {
@@ -50,7 +52,7 @@ body {
     border: 2px solid #28aadc;
     border-radius: 5px;
     padding-right: 5px;
-    color: #008CBA;
+    color: #28aadc;
     display: inline-block;
     font-size: 16px;
     margin: 4px 4px;
@@ -58,13 +60,13 @@ body {
 }
 
 .nav li:hover {
-    background-color: #008CBA;
+    background-color: #28aadc;
     color: white;
 }
 
 .nav a {
    text-decoration: none;
-   color: #008CBA;
+   color: #28aadc;
 }
 
 .nav a:hover {
