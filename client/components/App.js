@@ -32,9 +32,8 @@ render((
 			<Route path='/welcome' component={Welcome} />
 		  <Route path='/profile' component={Profile} />
 		  <Route path='/profile/:id' component={Tour} />
+		{/*deleted the route for signup and signin */}
 		  <Route path="/search" component={Search} />
-		  <Route path='/signin' component={SignIn} />
-		  <Route path='/signup' component={SignUp} />
 		</Route>
 	</Router>
 ), document.getElementById('app'));

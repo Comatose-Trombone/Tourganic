@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from 'react-bootstrap'
+import {Button, ButtonGroup, DropdownButton, MenuItem, Modal, NavItem} from 'react-bootstrap'
 
 
 export default class SignIn extends React.Component {
@@ -11,7 +11,9 @@ export default class SignIn extends React.Component {
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
+
 	}
+
 
 	handleSignIn() {
 		var user = {
@@ -21,6 +23,11 @@ export default class SignIn extends React.Component {
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
 				console.log('User signed in successfully');
+				console.log('this', this);
+				this.setState({
+					show: false
+				})
+				this.props.signIn();
 				window.location = 'http://localhost:8080/#/profile';
 			})
 			.fail((err) => {
@@ -33,8 +40,6 @@ export default class SignIn extends React.Component {
   };
 
   show() {
-    console.log('foobar');
-    console.log(this);
     this.setState({
       show:true
     });
@@ -42,38 +47,35 @@ export default class SignIn extends React.Component {
 
 
 	render() {
-
 		return (
-      <div>
-        <div className='modal-container' style={{height:150}}>
-        <Button
-          bsStyle='default'
-          bsSize='small'
-          onClick={this.show}
-        >
-        Signin
-        </Button>
+				 <NavItem
+	        bsStyle='default'
+	        bsSize='small'
+	        onClick={this.show}
+	       >
+	       SignIn
 
-      <Modal
-        show={this.state.show}
-        dialogClassName="custom-modal"
-        onHide={this.close.bind(this)}
-        container={this}
-        aria-labelledby='contained-modal-title'
-      >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title">Sign In Here</Modal.Title>
-          </Modal.Header>
-          <Modal.Body >
-            <form className="sign-">
-					    <input ref="username" class="username" placeholder="username" type='text'/><br/>
-					    <input ref="password" class="password" placeholder="password" type="password"/><br/>
-					    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
-			  		</form>
-          </Modal.Body>
-        </Modal>
-      </div>
-    </div>
+	     <div className='modal-container' style={{height:150}}>
+		      <Modal
+		        show={this.state.show}
+		        dialogClassName="custom-modal"
+		        onHide={this.close.bind(this)}
+		        container={this}
+		        aria-labelledby='contained-modal-title'
+		      >
+		          <Modal.Header closeButton>
+		            <Modal.Title>Sign In Here</Modal.Title>
+		          </Modal.Header>
+		          <Modal.Body >
+		            <form className="sign-">
+							    <input ref="username" class="username" placeholder="username" type='text'/><br/>
+							    <input ref="password" class="password" placeholder="password" type="password"/><br/>
+							    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
+					  		</form>
+		          </Modal.Body>
+		        </Modal>
+	      	</div>
+	    </NavItem>
 
     	/***************old code ***********************/
 			// <div id='signin'>

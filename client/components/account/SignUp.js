@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from 'react-bootstrap'
+import {Button, ButtonGroup, DropdownButton, MenuItem, Modal, NavItem} from 'react-bootstrap'
 
 
 export default class SignUp extends React.Component {
@@ -43,16 +43,14 @@ export default class SignUp extends React.Component {
 	render() {
 
 		return (
-		  <div>
-        <div className='modal-container' style={{height:150}}>
-        <Button
+		  <NavItem
           bsStyle='default'
           bsSize='small'
           onClick={this.show}
-        >
+       >
         SignUp
-        </Button>
 
+        <div className='modal-container' style={{height:150}}>
       <Modal
         show={this.state.show}
         dialogClassName="custom-modal"
@@ -73,7 +71,7 @@ export default class SignUp extends React.Component {
           </Modal.Body>
         </Modal>
       </div>
-    </div>
+    </NavItem>
     
 			// <div id='signup'>
 			//   <h1>Sign Up</h1>
