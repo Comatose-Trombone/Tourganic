@@ -67,7 +67,7 @@ export default class Tour extends React.Component {
         <ul>
           <li>{this.state.name}</li>
           <li>{this.state.location }</li>
-          <li>{this.state.price}</li>
+          <li>${this.state.price}</li>
           <li>{this.state.description}</li>
           <li>{this.state.createdBy}</li>
         </ul>

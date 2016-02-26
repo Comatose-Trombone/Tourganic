@@ -116,12 +116,29 @@ body {
 }
 
 
+/*================ SIGN IN MODAL ==================*/
 
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
 
+.custom-modal {
+  width: 300px;
+  margin-top: 175px;
+}
 
+.sign- > * {
+  margin-top: 2.5px;
+}
 
-
-
+.sign- > input {
+  width: 250px;
+  height: 35px;
+  vertical-align: middle;
+}
 
 
 
