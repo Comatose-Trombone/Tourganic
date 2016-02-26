@@ -28,8 +28,12 @@ module.exports = function(app) {
   
 
   app.post('/search', function(req,res) {
-    var location = req.body.data
-    Tour.find({"location": location}, function(err, data) {
+    var location = req.body.data.location
+    var name = req.body.data.name
+    console.log("reqbodyis:", req.body.data.name)
+
+    Tour.find({"location": location, "name": name}, function(err, data) {
+      console.log("datainfind:", data)
       if (err) {
         console.log('error');
         res.send(err)

@@ -19,6 +19,7 @@
 	  	{data: options}
 	  )
 	  .done(tours => {
+	  	console.log(tours)
 	   this.setState ({
 	  			tours: tours
 	  		})
