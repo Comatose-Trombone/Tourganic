@@ -31,7 +31,7 @@ export default class Navigation extends React.Component {
 						var setState = this.setState.bind(this);
 						setTimeout(function(){
 							setState({showLoginReminder:false})
-						},2000);x
+						},2000);
 					} else {
 						this.setState({
 							showLoginReminder: false
@@ -95,23 +95,4 @@ export default class Navigation extends React.Component {
 			</div>
 		)
 	}
-
-		// 	var signedIn = <li onClick={ () => this.endSession() } >Log Out</li>
-		// 	var loginReminder = <div>Please login first </div>
-		// 	var signin = <li><Link to="/signin">Sign In</Link></li>
-		// 	var signup = <li><Link to="/signup">Sign Up</Link></li>
-		// 	return (
-		// 		<div className='nav'>
-		// 			<ul> 
-		// 				<li><Link to="/search">Search</Link></li>
-		// 				<li onClick={ () => this.handleProfileClick() } >Profile</li>
-		// 				 {this.state.logOut ? logOut : null}
-		// 				 {this.state.logOut ? null : signin}
-		// 				 {this.state.logOut ? null : signup}
-		// 			</ul>
-		// 			{this.state.showLoginReminder ? loginReminder : null}
-		// 		</div>
-		// 	)
-		// }
-
 }

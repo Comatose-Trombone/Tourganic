@@ -27,6 +27,7 @@ export default class SignIn extends React.Component {
 				this.setState({
 					show: false
 				})
+				//triggers the signIn function on navigation, which changes the signedIn state
 				this.props.signIn();
 				window.location = 'http://localhost:8080/#/profile';
 			})
@@ -55,7 +56,7 @@ export default class SignIn extends React.Component {
 	       >
 	       SignIn
 
-	     <div className='modal-container' style={{height:150}}>
+	     <div className='modal-container'>
 		      <Modal
 		        show={this.state.show}
 		        dialogClassName="custom-modal"

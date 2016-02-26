@@ -53,7 +53,7 @@ export default class SignUp extends React.Component {
        >
         SignUp
 
-        <div className='modal-container' style={{height:150}}>
+        <div className='modal-container'>
       <Modal
         show={this.state.show}
         dialogClassName="custom-modal"
