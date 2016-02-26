@@ -91,7 +91,7 @@ module.exports = function(app) {
         Tour.findOne({_id: req.body.data}, function(err, tour) {
           if (err) {
             res.send(err);
-          } else{
+          } else {
             user.attendingTours.push(tour._id);
             user.save(function(err, user) {
               if(err) {
@@ -183,7 +183,7 @@ module.exports = function(app) {
   });
 
   // Fetch information for a specific tour, given its id
-  app.post('/fetchTourInfo', restrict, function (req, res) {
+  app.post('/fetchTourInfo', restrict, function(req, res) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
@@ -195,6 +195,24 @@ module.exports = function(app) {
       });
     }
   });
+
+  app.post('/aboutMeEdit', function(req, res) {
+    var aboutMe = req.body.data;
+    User.findOne({_id: req.session.userId}, function(err, user){
+      if (err) {
+        throw err;
+      } else {
+        user.aboutMe = aboutMe;
+        user.save(function(err, user) {
+          if(err) {
+            return next(err);
+          } else {
+            res.send(user);
+          }
+        });
+      }
+    })
+  })
 }
 
 
