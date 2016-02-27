@@ -169,7 +169,7 @@ module.exports = function(app) {
     //find the user first:
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
-      if(!user) return res.send('Username does not exist.');
+      if(!user) return res.send('Username and/or password invalid.');
       //checks entered PW with the saved hashed/salted PW (defined in user.js)
       //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {

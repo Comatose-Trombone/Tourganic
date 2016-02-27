@@ -36,9 +36,18 @@ export default class SignIn extends React.Component {
 
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
+				console.log('data', data);
 				//depending on the error, the server will respond with a given message.
-				if (data === 'Username does not exist.') {
-					window.location = 'http://localhost:8080/#/welcome';
+				if (data === 'Username and/or password invalid.') {
+			    this.setState({
+		        showInvalidUsernameOrPassword: true
+		      }, function() {
+		        var setState = this.setState.bind(this);
+		        setTimeout(function() {
+		          setState({showInvalidUsernameOrPassword: false});
+		        }, 2000);
+		      }); 
+		      return;
 				} 
 				else {
 					this.props.signIn();
@@ -49,14 +58,7 @@ export default class SignIn extends React.Component {
 				})
 			})
 		.fail((err) => {
-	    this.setState({
-        showInvalidUsernameOrPassword: true
-      }, function() {
-        var setState = this.setState.bind(this);
-        setTimeout(function() {
-          setState({showInvalidUsernameOrPassword: false});
-        }, 2000);
-      });  
+			console.error('cannot signin');
 	  });
 	}
 
