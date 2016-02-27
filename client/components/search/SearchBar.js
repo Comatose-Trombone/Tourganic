@@ -5,11 +5,13 @@ export default class SearchBar extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-        name: "",
-        location: "",
-        price: "$$$$"
-    }
-	}
+
+        name: undefined,
+        location: undefined,
+        price: undefined
+	  }
+  }
+
 
 	handleInputChange(prop, e) {
     var newState = {}

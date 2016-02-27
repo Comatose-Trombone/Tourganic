@@ -26,22 +26,29 @@ module.exports = function(app) {
     }
   };
   
-
+// checks the valid inputs adn creates a new object with valid keys
   app.post('/search', function(req,res) {
-    var location = req.body.data.location;
-    var name = req.body.data.name;
-    var options = {};
-    if ( location !== "" && name !== "") {
-      options = {"location": location, "name": name};
-    } else if ( location !== "") {
-      options = {"location": location};
-    } else if ( name !== "") {
-      options = {"name": name};
-    } else {
-      options = {};
+    var inputObj = req.body.data
+    var newObj = {};
+    for (var key in inputObj) {
+      if (inputObj[key] !== "") {
+        newObj[key] = inputObj[key]
+      }
     }
-    console.log("optionsis:", options);
-    Tour.find(options, function(err, data) {
+//setting up the price based on the $ amount
+    if(newObj.price !== undefined) {
+      if (newObj.price === "$") {
+       newObj.price = {$lt: 26} ;
+      } else if (newObj.price === "$$") {
+          newObj.price = {$lt: 51} ;
+      } else if (newObj.price === "$$$") {
+         newObj.price = {$lt: 76} ;
+      } else if (newObj.price === "$$$$") {
+        newObj.price = {$lt: 101} ;
+      }
+    };
+
+    Tour.find(newObj, function(err, data) {
       console.log("datainfind:", data)
       if (err) {
         console.log('error');
@@ -62,7 +69,7 @@ module.exports = function(app) {
     console.log('reqbody',req.body);
     var newTour = {
       name: req.body.name,
-      createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      createdBy: req.body.createdBy,
       location: req.body.location,
       price: req.body.price,
       date: req.body.date
@@ -70,12 +77,16 @@ module.exports = function(app) {
     Tour.create(newTour, function(err, tour) {
       if(err) return next(err);
       User.findOne({_id : req.session.userId}, function(err, user) {
-      if(err) return next(err);
-      user.createdTours.push(tour._id);
-      user.save(function(err, user) {
         if(err) return next(err);
-      res.send(user);
-      });
+        user.createdTours.push(tour._id);
+        user.save(function(err, user) {
+          if(err) return next(err);
+          console.log("tour.createdByis", tour.createdBy)
+          tour.createdBy = user.username
+          tour.save(function(err, tour){
+            res.send(user);
+          })
+        });
       })
     });
   });
