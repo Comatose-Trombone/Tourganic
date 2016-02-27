@@ -79,16 +79,6 @@ export default class SignIn extends React.Component {
 	      	</div>
 	    </NavItem>
 
-    	/***************old code ***********************/
-			// <div id='signin'>
-			//   <h1>Sign In</h1>
-			//   <form class="sign-" onSubmit={() => this.handleSignIn()}>
-			//     <input ref="username" class="username" placeholder="username" type='text'/>
-			//     <input ref="password" class="password" placeholder="password" type="password"/>
-			//     <input type="submit" value="Sign In"/>
-			//   </form>
-			// </div>
-
 		)
 	}
 }
