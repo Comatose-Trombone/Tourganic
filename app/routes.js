@@ -26,7 +26,7 @@ module.exports = function(app) {
     }
   };
   
-
+// checks the valid inputs adn creates a new object with valid keys
   app.post('/search', function(req,res) {
     var inputObj = req.body.data
     var newObj = {};
@@ -35,37 +35,19 @@ module.exports = function(app) {
         newObj[key] = inputObj[key]
       }
     }
+//setting up the price based on the $ amount
+    if(newObj.price !== undefined) {
+      if (newObj.price === "$") {
+       newObj.price = {$lt: 26} ;
+      } else if (newObj.price === "$$") {
+          newObj.price = {$lt: 51} ;
+      } else if (newObj.price === "$$$") {
+         newObj.price = {$lt: 76} ;
+      } else if (newObj.price === "$$$$") {
+        newObj.price = {$lt: 101} ;
+      }
+    };
 
-
-    // var location = req.body.data.location
-    // var name = req.body.data.name;
-    // var priceIn= req.body.data.price;
-    // var price = "";
-    // var options = {};
-    console.log("newobjis", newObj);
-    console.log("stringfy new objis", JSON.stringify(newObj));
-    
-    // if (priceIn === "$") {
-    //     price = "'price' : { $lt: 26 }";
-    // } else if (priceIn === "$$") {
-    //     price = "'price' : {$lt: 51 }";
-    // } else if (priceIn === "$$$") {
-    //   price =  "'price' : {$lt: 76 }";
-    // } else if (priceIn === "$$$$") {
-    //   price =  "'price' : {$lt: 76 }"; 
-    // } else {
-    //   price = null;
-    // };
-    
-    // if ( location !== "" && name !== "" && priceIn !== "") {
-    //   options = {"location": location, "name": name, price}};
-    // } else if ( location !== "") {
-    //   options = {"location": location};
-    // } else if ( name !== "") {
-    //   options = {"name": name};
-    // } else {
-    //   options = {};
-    // }
     Tour.find(newObj, function(err, data) {
       console.log("datainfind:", data)
       if (err) {
@@ -87,7 +69,7 @@ module.exports = function(app) {
     console.log('reqbody',req.body);
     var newTour = {
       name: req.body.name,
-      createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      createdBy: req.body.createdBy, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       location: req.body.location,
       price: req.body.price,
       date: req.body.date
@@ -98,8 +80,12 @@ module.exports = function(app) {
       if(err) return next(err);
       user.createdTours.push(tour._id);
       user.save(function(err, user) {
-        if(err) return next(err);
-      res.send(user);
+      if(err) return next(err);
+        console.log("tour.createdByis", tour.createdBy)
+        tour.createdBy = user.username
+        tour.save(function(err, tour){
+        res.send(user);
+        })
       });
       })
     });
