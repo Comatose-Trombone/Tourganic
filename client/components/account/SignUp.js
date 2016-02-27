@@ -8,7 +8,7 @@ export default class SignUp extends React.Component {
 		super(props);
 		this.state = {
       show: false,
-      showError: false
+      showError: false,
       showValidateEmailError: false
     }
     this.show = this.show.bind(this);

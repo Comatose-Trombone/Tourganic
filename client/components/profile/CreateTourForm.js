@@ -5,6 +5,7 @@ export default class CreateTourForm extends React.Component {
     super(props);
     this.props = props;
     this.state = {
+      description: 'description',
       name: 'name',
       createdBy: 'createdBy',
       location: 'location',
@@ -12,7 +13,7 @@ export default class CreateTourForm extends React.Component {
       date: 'date'
     }
 
-  }
+  };
 
   handleChange(prop, e) {
     var newState = {};
@@ -35,6 +36,7 @@ export default class CreateTourForm extends React.Component {
           <input value={this.state.location} onChange={this.handleChange.bind(this, 'location')} onClick={this.reset.bind(this, 'location')}/><br/>
           <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
           <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
+          <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} onClick={this.reset.bind(this, 'description')}/><br/>
           <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
         </form>
       </div>

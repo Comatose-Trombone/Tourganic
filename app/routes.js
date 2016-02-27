@@ -38,13 +38,13 @@ module.exports = function(app) {
 //setting up the price based on the $ amount
     if(newObj.price !== undefined) {
       if (newObj.price === "$") {
-       newObj.price = {$lt: 26} ;
+       newObj.price = {$lt: 26};
       } else if (newObj.price === "$$") {
-          newObj.price = {$lt: 51} ;
+        newObj.price = {$lt: 51};
       } else if (newObj.price === "$$$") {
-         newObj.price = {$lt: 76} ;
+        newObj.price = {$lt: 76};
       } else if (newObj.price === "$$$$") {
-        newObj.price = {$lt: 101} ;
+        newObj.price = {$lt: 101};
       }
     };
 
@@ -56,7 +56,7 @@ module.exports = function(app) {
       } else {
         res.send(data);
       }
-    })
+    });
   });
 
 
@@ -71,8 +71,9 @@ module.exports = function(app) {
       name: req.body.name,
       createdBy: req.body.createdBy,
       location: req.body.location,
-      price: req.body.price,
-      date: req.body.date
+      description: req.body.description,
+      date: req.body.date,
+      price: req.body.price
     };
     Tour.create(newTour, function(err, tour) {
       if(err) return next(err);
@@ -198,6 +199,7 @@ module.exports = function(app) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
+        console.log("datainserver:", data);
         if (err) {
           throw err;
         } else {
