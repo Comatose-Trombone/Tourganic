@@ -194,7 +194,7 @@ module.exports = function(app) {
   });
 
   // Fetch information for a specific tour, given its id
-  app.post('/fetchTourInfo', restrict, function(req, res) {
+  app.post('/fetchTourInfo', function(req, res) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
