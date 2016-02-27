@@ -7,7 +7,8 @@ export default class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
     this.state = {
-      show: false
+      show: false,
+      showInvalidFieldsError: false
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
@@ -20,6 +21,18 @@ export default class SignIn extends React.Component {
 			username: this.refs.username.value,
 			password: this.refs.password.value,
 		};
+		if (!user.username || !user.password) {
+      this.setState({
+        showInvalidFieldsError: true
+      }, function() {
+        var setState = this.setState.bind(this);
+        setTimeout(function() {
+          setState({showInvalidFieldsError: false});
+        }, 2000);
+      });      
+      return;
+    }
+
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
 				if (data === 'Username does not exist.') {
@@ -49,6 +62,8 @@ export default class SignIn extends React.Component {
 
 
 	render() {
+		var invalidFieldsError = <div> Please fill out all forms. </div>
+
 		return (
 				 <NavItem
 	        bsStyle='default'
@@ -73,6 +88,7 @@ export default class SignIn extends React.Component {
 							    <input ref="username" class="username" placeholder="username" type='text'/><br/>
 							    <input ref="password" class="password" placeholder="password" type="password"/><br/>
 							    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
+							    {this.state.showInvalidFieldsError ? invalidFieldsError : null}
 					  		</form>
 		          </Modal.Body>
 		        </Modal>
