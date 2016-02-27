@@ -11,7 +11,7 @@ export default class Profile extends React.Component {
     this.state = {
       showProfile: false,
       user: '',
-      description: '',
+      aboutMe: '',
       userMadeTours: [],
       showCreateForm: false,
       showCreateFormButtonValue: 'Create a Tour'
@@ -25,12 +25,12 @@ export default class Profile extends React.Component {
       // if this is true, we want to redirect to signin page
       if (data.isAuth === false) {
         console.log('please login first. redirecting..');
-        window.location = 'http://localhost:8080/#/signin'
+        window.location = 'http://localhost:8080/#/welcome'
       } else {
         this.setState({
           showProfile: true,
           user : data.username,
-          description : data.description,
+          aboutMe : data.aboutMe,
           userMadeTours : data.createdTours
         })
       }
@@ -67,7 +67,7 @@ export default class Profile extends React.Component {
       <div>
         <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
         {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
-        <AboutMe user={this.state.user} description={this.state.description}/>
+        <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
         <CreatedToursList tourIds={this.state.userMadeTours} />
      </div>
     );

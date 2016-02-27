@@ -2,6 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 import $ from 'jquery'
+import {Button, ButtonGroup, Navbar, Nav, NavItem} from 'react-bootstrap'
+import SignIn from './account/SignIn'
+import SignUp from './account/SignUp'
 
 
 
@@ -11,8 +14,10 @@ export default class Navigation extends React.Component {
 
 		this.state = {
 			showLoginReminder: false,
-			logOut: false
+			signedIn: false,
 		}
+		this.signIn = this.signIn.bind(this);
+		this.endSession = this.endSession.bind(this);
 	}
 	
 
@@ -36,16 +41,16 @@ export default class Navigation extends React.Component {
 				})
 		};
 
-		componentDidMount() {
+		componentWillMount() {
 			$.get('http://localhost:8080/session')
 				.done( (data) => {
 					if (data.isAuth === false) {
 						this.setState({
-							logOut: false
+							signedIn: false
 						})
 					} else {
 						this.setState({
-							logOut: true
+							signedIn: true
 						})
 					}
 				});
@@ -54,30 +59,40 @@ export default class Navigation extends React.Component {
 		endSession() {
 			$.get('http://localhost:8080/logout').done(() => {
 					this.setState({
-					logOut: false
+					signedIn: false
 				})
-				window.location = 'http://localhost:8080/#/signin'
+				window.location = 'http://localhost:8080/#/welcome'
 			})
 		};
 
-		render() {
+		signIn() {
+			console.log('signin called');
+			this.setState({
+				signedIn: true
+			})
+		} 
 
-			var logOut = <li onClick={ () => this.endSession() } >Log Out</li>
-			var loginReminder = <div>Please login first </div>
-			var signin = <li><Link to="/signin">Sign In</Link></li>
-			var signup = <li><Link to="/signup">Sign Up</Link></li>
-			return (
-				<div className='nav'>
-					<ul> 
-						<li><Link to="/search">Search</Link></li>
-						<li onClick={ () => this.handleProfileClick() } >Profile</li>
-						 {this.state.logOut ? logOut : null}
-						 {this.state.logOut ? null : signin}
-						 {this.state.logOut ? null : signup}
-					</ul>
-					{this.state.showLoginReminder ? loginReminder : null}
-				</div>
-			)
-		}
+	render() {
 
+		var logout = <NavItem onClick={this.endSession}> Logout </NavItem>
+		var profile = <NavItem href="#/profile">Profile</NavItem>
+		return (
+			<div>
+				<Navbar pullLeft={true}>
+					<Navbar.Header>
+			      <Navbar.Brand>
+			        <a href="#">Tour-Allure</a>
+			      </Navbar.Brand>
+			    </Navbar.Header>
+					<Nav>
+						 <NavItem href="#/search">Search</NavItem>
+	      		 { this.state.signedIn ? profile : null }
+	      		 { this.state.signedIn ? null : <SignUp signIn={this.signIn}/> }
+	      		 { this.state.signedIn ? null : <SignIn signIn={this.signIn}/> }
+	      		 { this.state.signedIn ? logout : null }
+					</Nav>
+				</Navbar>
+			</div>
+		)
+	}
 }

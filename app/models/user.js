@@ -8,7 +8,8 @@ var userSchema = new Schema({
  email: String,
  password: String,
  createdTours: Array,
- attendingTours: Array
+ attendingTours: Array,
+ aboutMe: String
 });
 
 
