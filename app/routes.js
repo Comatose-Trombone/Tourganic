@@ -69,7 +69,7 @@ module.exports = function(app) {
     console.log('reqbody',req.body);
     var newTour = {
       name: req.body.name,
-      createdBy: req.body.createdBy, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      createdBy: req.body.createdBy,
       location: req.body.location,
       price: req.body.price,
       date: req.body.date
@@ -77,16 +77,16 @@ module.exports = function(app) {
     Tour.create(newTour, function(err, tour) {
       if(err) return next(err);
       User.findOne({_id : req.session.userId}, function(err, user) {
-      if(err) return next(err);
-      user.createdTours.push(tour._id);
-      user.save(function(err, user) {
-      if(err) return next(err);
-        console.log("tour.createdByis", tour.createdBy)
-        tour.createdBy = user.username
-        tour.save(function(err, tour){
-        res.send(user);
-        })
-      });
+        if(err) return next(err);
+        user.createdTours.push(tour._id);
+        user.save(function(err, user) {
+          if(err) return next(err);
+          console.log("tour.createdByis", tour.createdBy)
+          tour.createdBy = user.username
+          tour.save(function(err, tour){
+            res.send(user);
+          })
+        });
       })
     });
   });
