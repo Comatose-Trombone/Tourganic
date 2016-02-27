@@ -8,7 +8,8 @@ export default class SignIn extends React.Component {
 		super(props);
     this.state = {
       show: false,
-      showInvalidFieldsError: false
+      showInvalidFieldsError: false,
+      showInvalidUsernameOrPassword: false
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
@@ -35,9 +36,11 @@ export default class SignIn extends React.Component {
 
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
+				//depending on the error, the server will respond with a given message.
 				if (data === 'Username does not exist.') {
 					window.location = 'http://localhost:8080/#/welcome';
-				} else {
+				} 
+				else {
 					this.props.signIn();
 					window.location = 'http://localhost:8080/#/profile';
 				}
@@ -46,7 +49,14 @@ export default class SignIn extends React.Component {
 				})
 			})
 		.fail((err) => {
-	    console.error('cannot signIn', err);
+	    this.setState({
+        showInvalidUsernameOrPassword: true
+      }, function() {
+        var setState = this.setState.bind(this);
+        setTimeout(function() {
+          setState({showInvalidUsernameOrPassword: false});
+        }, 2000);
+      });  
 	  });
 	}
 
@@ -63,6 +73,7 @@ export default class SignIn extends React.Component {
 
 	render() {
 		var invalidFieldsError = <div> Please fill out all forms. </div>
+		var invalidUsernameOrPassword = <div> Incorrect username or password. </div>
 
 		return (
 				 <NavItem
@@ -89,6 +100,7 @@ export default class SignIn extends React.Component {
 							    <input ref="password" class="password" placeholder="password" type="password"/><br/>
 							    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
 							    {this.state.showInvalidFieldsError ? invalidFieldsError : null}
+							    {this.state.showInvalidUsernameOrPassword ? invalidUsernameOrPassword : null}
 					  		</form>
 		          </Modal.Body>
 		        </Modal>

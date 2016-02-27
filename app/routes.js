@@ -181,7 +181,7 @@ module.exports = function(app) {
           });
         } 
         else {
-          res.redirect('/signin');
+          res.send('Username and/or password invalid.');
         }
       });
     });
