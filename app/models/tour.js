@@ -6,6 +6,7 @@ var tourSchema = new Schema({
  createdBy: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
  attendees: Array,
  location: String,
+ date: Date,
  price: Number,
  description: String
 });
