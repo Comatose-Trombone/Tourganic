@@ -10,7 +10,7 @@ export default class Welcome extends React.Component {
 
 		return (
 				<Jumbotron className='jumbotron'>
-					<span className='welcomeText'>Welcome To Tourganic</span>
+				<span className='welcomeText'> Welcome to Tourganic</span>
 				</Jumbotron>
 		)
 	}
