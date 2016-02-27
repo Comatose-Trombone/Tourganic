@@ -1,6 +1,7 @@
  import React from 'react'
  import SearchBar from './SearchBar'
  import SearchList from './SearchList'
+ import SearchMap from './SearchMap'
  import {Link} from 'react-router'
  import $ from 'jquery'
 
@@ -38,6 +39,7 @@
 			<div>
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
+				<SearchMap />
 			</div>
 		)
 	}
