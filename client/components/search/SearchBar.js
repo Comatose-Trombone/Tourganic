@@ -6,7 +6,7 @@ export default class SearchBar extends React.Component {
 		super(props)
 		this.state = {
         name: "",
-        location: "",
+        city: "",
         price: "$$$$"
     }
 	}
@@ -28,7 +28,7 @@ export default class SearchBar extends React.Component {
 			<div>
 			  <form class="searchForm" >
 		        <input class="searchName" value={this.state.name} placeholder="Search for Tour Name" onChange = {this.handleInputChange.bind(this, "name")} onClick={this.reset.bind(this, 'name')}/>
-                <input class="searchLocation" value={this.state.location} placeholder="Put Location" onChange = {this.handleInputChange.bind(this,"location")} onClick={this.reset.bind(this, 'location')}/>
+                <input class="searchLocation" value={this.state.city} placeholder="Put City" onChange = {this.handleInputChange.bind(this,"city")} onClick={this.reset.bind(this, 'city')}/>
                 <select value={this.state.price} onChange = {this.handleInputChange.bind(this,'price')}>
   				  <option value="" selected>Price Range</option>
   				  <option>$</option>

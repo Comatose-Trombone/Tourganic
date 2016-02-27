@@ -14,7 +14,7 @@ export default class SearchListEntry extends React.Component {
 		return (
 			<div className='searchTourEntry' onClick={this.handleTourClick.bind(this)}>
 				<div>{this.props.tour.name}</div>
-				<div>{this.props.tour.location}</div>
+				<div>{this.props.tour.city}</div>
 				<div>price: ${this.props.tour.price}</div>
 				<div>Created By: {this.props.tour.createdBy}</div>
 			</div>

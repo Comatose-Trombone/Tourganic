@@ -25,16 +25,15 @@ module.exports = function(app) {
       // res.redirect('/login');
     }
   };
-  
 
   app.post('/search', function(req,res) {
-    var location = req.body.data.location;
+    var city = req.body.data.city;
     var name = req.body.data.name;
     var options = {};
-    if ( location !== "" && name !== "") {
-      options = {"location": location, "name": name};
-    } else if ( location !== "") {
-      options = {"location": location};
+    if ( city !== "" && name !== "") {
+      options = {"city": city, "name": name};
+    } else if ( city !== "") {
+      options = {"city": city};
     } else if ( name !== "") {
       options = {"name": name};
     } else {
@@ -63,7 +62,9 @@ module.exports = function(app) {
     var newTour = {
       name: req.body.name,
       createdBy: req.body.username, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-      location: req.body.location,
+      streetAddress: req.body.streetAddress,
+      city: req.body.city,
+      state: req.body.state,
       price: req.body.price,
       date: req.body.date
     };
