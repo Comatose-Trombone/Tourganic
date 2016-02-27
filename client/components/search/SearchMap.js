@@ -19,8 +19,6 @@ export default class SearchMap extends React.Component {
   }
 
   render() {
-    var geocoder = new google.maps.Geocoder();
-    console.log(geocoder.geocode);
     return (
       <section className="map">
         <GoogleMapLoader
