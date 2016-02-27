@@ -9,42 +9,40 @@ export default class SignUp extends React.Component {
 		this.state = {
       show: false,
       showError: false
+      showValidateEmailError: false
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
 	}
 
-	handleSignUp() {
-		var user = {
-			username: this.refs.username.value,
-			password: this.refs.password.value,
-			email: this.refs.email.value
-		};
-		$.post('http://localhost:8080/signup', {data: user})
-			.done(data => {
-        if (data === 'Account already exists.') {
-          this.setState({
-            showError: true
-          }, function() {
-            var setState = this.setState.bind(this);
-            setTimeout(function() {
-              setState({showError: false});
-            }, 2000);
-          });
-        } else {
-  				window.location = 'http://localhost:8080/#/profile';
-  				this.setState({
-  					show: false
-  				})
-  			//triggers the signIn function on navigation, which changes the signedIn state
-  				this.props.signIn();
-  			}
-          
-      })
-			.fail((err) => {
-				console.log('error in signUp', err);
-			});
-	}
+  validateEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
+  handleSignUp() {
+    if (this.validateEmail(this.refs.email.value)) {
+      var user = {
+        username: this.refs.username.value,
+        password: this.refs.password.value,
+        email: this.refs.email.value
+      };
+      $.post('http://localhost:8080/signup', {data: user})
+        .done(data => {
+          window.location = 'http://localhost:8080/#/profile';
+        })
+        .fail((err) => {
+          console.log('error in signUp', err);
+        });
+    } else {
+      this.setState({showValidateEmailError:true}, function() {
+        var setState = this.setState.bind(this);
+        setTimeout(function() {
+          setState({showValidateEmailError:false});
+        }, 2000);
+      });
+    }
+  }
 
 	close() {
     this.setState({show:false});
@@ -59,9 +57,9 @@ export default class SignUp extends React.Component {
   };
 
 	render() {
+    var emailError = <div>Please enter valid email</div>;
 
     var error = <div> Username Already Exists.</div>;
-
 
 		return (
 		  <NavItem
@@ -88,7 +86,7 @@ export default class SignUp extends React.Component {
 					    <input ref="password" class="password" placeholder="password" type="password"/><br/>
 					    <input ref="email" class="email" placeholder="email" type="text"/><br/>
 					    <Button bsStyle='default' onClick={() => this.handleSignUp()}> Sign Up </Button>
-              {this.state.showError ? error : null}
+              {this.state.showValidateEmailError ? emailError : null}
 					  </form>
           </Modal.Body>
         </Modal>
