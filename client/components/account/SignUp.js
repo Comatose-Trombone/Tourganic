@@ -7,7 +7,8 @@ export default class SignUp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      show: false
+      show: false,
+      showError: false
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
@@ -21,13 +22,25 @@ export default class SignUp extends React.Component {
 		};
 		$.post('http://localhost:8080/signup', {data: user})
 			.done(data => {
-				window.location = 'http://localhost:8080/#/profile';
-				this.setState({
-					show: false
-				})
-			//triggers the signIn function on navigation, which changes the signedIn state
-				this.props.signIn();
-			})
+        if (data === 'Account already exists.') {
+          this.setState({
+            showError: true
+          }, function() {
+            var setState = this.setState.bind(this);
+            setTimeout(function() {
+              setState({showError: false});
+            }, 2000);
+          });
+        } else {
+  				window.location = 'http://localhost:8080/#/profile';
+  				this.setState({
+  					show: false
+  				})
+  			//triggers the signIn function on navigation, which changes the signedIn state
+  				this.props.signIn();
+  			}
+          
+      })
 			.fail((err) => {
 				console.log('error in signUp', err);
 			});
@@ -46,6 +59,9 @@ export default class SignUp extends React.Component {
   };
 
 	render() {
+
+    var error = <div> Username Already Exists.</div>;
+
 
 		return (
 		  <NavItem
@@ -72,6 +88,7 @@ export default class SignUp extends React.Component {
 					    <input ref="password" class="password" placeholder="password" type="password"/><br/>
 					    <input ref="email" class="email" placeholder="email" type="text"/><br/>
 					    <Button bsStyle='default' onClick={() => this.handleSignUp()}> Sign Up </Button>
+              {this.state.showError ? error : null}
 					  </form>
           </Modal.Body>
         </Modal>

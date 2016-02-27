@@ -22,18 +22,19 @@ export default class SignIn extends React.Component {
 		};
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
-				console.log('User signed in successfully');
-				console.log('this', this);
+				if (data === 'Username does not exist.') {
+					window.location = 'http://localhost:8080/#/welcome';
+				} else {
+					this.props.signIn();
+					window.location = 'http://localhost:8080/#/profile';
+				}
 				this.setState({
 					show: false
 				})
-				//triggers the signIn function on navigation, which changes the signedIn state
-				this.props.signIn();
-				window.location = 'http://localhost:8080/#/profile';
 			})
-			.fail((err) => {
-		    console.error('cannot signIn', err);
-		  });
+		.fail((err) => {
+	    console.error('cannot signIn', err);
+	  });
 	}
 
 	close() {
