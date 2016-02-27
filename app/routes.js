@@ -126,8 +126,8 @@ module.exports = function(app) {
     User.findOne({username: username})
       .exec(function(err, user) {
         if (user) {
-          console.log('Account already exists');
-          res.redirect('/signup');
+          console.log('Account already exists.');
+          res.send('Account already exists.');
         } else {
           //if user does not exist, create and save the user:
           var newUser = User({
