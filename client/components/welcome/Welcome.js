@@ -1,4 +1,5 @@
 import React from 'react'
+import {Jumbotron} from 'react-bootstrap'
 
 export default class Welcome extends React.Component {
 	constructor(props) {
@@ -8,11 +9,9 @@ export default class Welcome extends React.Component {
 	render() {
 
 		return (
-			<div className='motherContainer'>
-				<div className='jumbotron'>
+				<Jumbotron className='jumbotron'>
 					<span className='welcomeText'>Welcome To Tourganic</span>
-				</div>
-			</div>
+				</Jumbotron>
 		)
 	}
 }

@@ -11,8 +11,8 @@ body {
 
 /*=========== THE JUMBOTRON CONTAINER ===========*/
 .jumbotron {
-  width: 1000px;
-  height: 350px;
+  width: 100%;
+  height: 420px;
   background: url('./brooklynSkyline.jpg');
   margin: 0px auto;
   background-size: 100%;
@@ -24,7 +24,7 @@ body {
 
 .welcomeText {
   font-weight: bolder;
-  font-size: 65px;
+  font-size: 70px;
   color: white;
 }
 /*=========== THE NAV BAR CONTAINER =============*/
