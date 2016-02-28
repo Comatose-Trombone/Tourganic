@@ -8,9 +8,12 @@ export default class CreateTourForm extends React.Component {
     this.props = props;
     this.state = {
       description: '',
-      name: '',
+      name: 'name of tour',
+
+      description: 'description',
+      name: 'name of tour',
       createdBy: 'createdBy',
-      streetAddress: 'streetAddress',
+      streetAddress: 'street address',
       city: 'city',
       state: 'state',
       price: 'price',
