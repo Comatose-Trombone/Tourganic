@@ -11,7 +11,7 @@
 
 		this.state = {
       tours: [],
-      notFound: false
+      notFound: false,
       showMap: false
     };
 
@@ -28,29 +28,31 @@
 	  	//checks if the tours is empty array
 	  	if (tours.length === 0) {
 	  		this.setState ({
-	  			notFound: true
+	  			notFound: true,
+	  			showMap: false
 	  		})
 	  	} else {
 	  	//when it finds, changes back to false so it is not shown	
 	  		this.setState ({
-	  			notFound: false
+	  			notFound: false,
+	  			showMap: true
 	  		})
 	  	}
 	   
 	  	this.setState ({
-	  			tours: data,
+	  			tours: tours
 			// Only show map if a search has been entered and there are more than 0 results
-	  	if (tours.length > 0) {
-	   		this.setState({
-	  			tours: tours,
-	  			showMap: true
-	  		})
-	  	} else {
-	  		this.setState({
-	  			tours: [],
-	  			showMap: false
-	  		})
-	  	}
+	  	// if (tours.length > 0) {
+	   // 		this.setState({
+	  	// 		tours: tours,
+	  	// 		showMap: true
+	  	// 	})
+	  	// } else {
+	  	// 	this.setState({
+	  	// 		tours: [],
+	  	// 		showMap: false
+	  	// 	})
+	  	// }
 	  })
 	  })
 	  .fail(({responseJSON}) => {
