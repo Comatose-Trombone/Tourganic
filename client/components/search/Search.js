@@ -10,8 +10,10 @@
 		super(props)
 
 		this.state = {
-      tours: []
+      tours: [],
+      showMap: false
     };
+
 
 	}
 
@@ -20,10 +22,16 @@
 	  	{data: options}
 	  )
 	  .done(tours => {
-	  	console.log(tours)
-	   this.setState ({
-	  			tours: tours
+	  	if (tours.length > 0) {
+	   		this.setState({
+	  			tours: tours,
+	  			showMap: true
 	  		})
+	  	} else {
+	  		this.setState({
+	  			showMap: false
+	  		})
+	  	}
 	  })
 	  .fail(({responseJSON}) => {
 	    responseJSON.error.errors.forEach((err) =>
@@ -35,11 +43,13 @@
 
 
 	render() {
+		// Only show map if a search has been entered and there are more than 0 results
+		var map = <SearchMap tours={this.state.tours}/>;
 		return (
 			<div>
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
-				<SearchMap />
+				{this.state.showMap ? map : null}
 			</div>
 		)
 	}

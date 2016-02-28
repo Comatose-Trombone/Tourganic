@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var tourSchema = new Schema({
  name: String,
  createdBy: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
- attendees: Array,
+ attendees: Number,
  streetAddress: String,
  city: String,
  state: String,

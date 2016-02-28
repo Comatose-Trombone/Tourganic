@@ -21,7 +21,6 @@ module.exports = function(app) {
     } else {
       console.log("Access denied!");
       res.send({isAuth: false});
-      // res.redirect('/login');
     }
   };
 
