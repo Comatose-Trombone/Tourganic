@@ -59,11 +59,15 @@
 			var place = <p> Could not find the result, please try again </p>
  
 		return (
-			<div>
-				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
-				<SearchList tours={this.state.tours}/>
+			<div className="searchContainer">
+				<div className="searchList-BarContainer">
+					<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
+					<SearchList tours={this.state.tours}/>
 				{this.state.notFound ? place : null}
+				</div>
+				<div className='searchMapContainer'>
 				{this.state.tours.length > 0 ? <SearchMap tours={this.state.tours}/> : null}
+				</div>
 			</div>
 		)
 	}

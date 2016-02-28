@@ -47,12 +47,10 @@ module.exports = function(app) {
     };
 
     Tour.find(newObj, function(err, data) {
-      console.log("datainfind:", data)
       if (err) {
         console.log('error');
         res.send(err)
       } else {
-        console.log("I got calledbefore data and data is", data)
         res.send(data);
       }
     });
@@ -83,7 +81,8 @@ module.exports = function(app) {
           state: req.body.state,
           price: req.body.price,
           date: req.body.date,
-          LatLng: LatLng
+          LatLng: LatLng,
+          description: req.body.description
         };
         // Create new Tour document on DB using data stored in newTour object
         Tour.create(newTour, function(err, tour) {

@@ -54,7 +54,7 @@ export default class SearchMap extends React.Component {
   }
 
   render() {
-    // Adapted from react-google-maps 'Pop-up InfoWindow' example
+    // Adapted from react-google-maps 'Pop-up InfoWindow' exampleg
     return (
       <section className="map">
         <GoogleMapLoader
