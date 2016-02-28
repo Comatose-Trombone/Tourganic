@@ -115,9 +115,37 @@ body {
   margin: 2.5px;
 }
 
+.searchContainer {
+  overflow: hidden;
+}
+
+
+.searchMapContainer {
+  display: inline;
+  float: right;
+  width: 49%;
+  height: 650px;
+  margin-right: 1%;
+}
+
 .map {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
+}
+
+.searchList-BarContainer {
+  display: inline;
+  float: left;
+  width: 49%;
+  margin-left: 1%;
+}
+
+.searchListContainer {
+  margin-top: 2%;
+}
+
+.searchInput {
+  margin-left: 1%;
 }
 
 

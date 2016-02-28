@@ -9,7 +9,7 @@ export default class SearchList extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="searchListContainer">
 				{this.props.tours.map(tour =>
 				<SearchListEntry tour={tour} />)}
 			</div>
