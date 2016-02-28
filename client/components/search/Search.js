@@ -12,7 +12,6 @@
 		this.state = {
       tours: [],
       notFound: false,
-      showMap: false
     };
 
 
@@ -29,13 +28,11 @@
 	  	if (tours.length === 0) {
 	  		this.setState ({
 	  			notFound: true,
-	  			showMap: false
 	  		})
 	  	} else {
 	  	//when it finds, changes back to false so it is not shown	
 	  		this.setState ({
 	  			notFound: false,
-	  			showMap: true
 	  		})
 	  	}
 	   
