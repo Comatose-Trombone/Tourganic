@@ -31,10 +31,7 @@ export default class Tour extends React.Component {
     $.post('http://localhost:8080/fetchTourInfo', {data: this.getID()})
     .done( (data) => {
     var date = data.date.substring(0,10);
-      console.log("data is:", data);
-
-      console.log("data.description is:", data.description);
-      // Change state properties to equal fetched tour data so page renders with correct information
+    // Change state properties to equal fetched tour data so page renders with correct information
       this.setState({
         name : data.name,
         streetAddress: data.streetAddress,
@@ -62,7 +59,7 @@ export default class Tour extends React.Component {
           var setState = this.setState.bind(this);
           setTimeout(function(){
             setState({isLoggedIn:true})
-          }, 2000);
+          }, 3000);
         } 
       })
       .fail( (err) => {
@@ -71,7 +68,7 @@ export default class Tour extends React.Component {
   }
 
   render() {
-    var loginReminder = <div>Please login first</div>
+    var loginReminder = <div>Please signin first</div>
     return (
       <div className='tourContainer'>
         <ul>
