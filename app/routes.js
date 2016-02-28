@@ -54,6 +54,7 @@ module.exports = function(app) {
         console.log('error');
         res.send(err)
       } else {
+        console.log("I got calledbefore data and data is", data)
         res.send(data);
       }
     });

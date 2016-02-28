@@ -9,22 +9,34 @@
 		super(props)
 
 		this.state = {
-      tours: []
+      tours: [],
+      notFound: false
     };
 
 	}
 
 	getToursFromDatabase (options) {
+	  console.log("first time called")
 	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
-	  .done(tours => {
-	  	console.log(tours)
-	   this.setState ({
-	  			tours: tours
+	  .done(data => {
+	  	if (data.length === 0) {
+	  		this.setState ({
+	  			notFound: true
+	  		})
+	  	} else {
+	  		this.setState ({
+	  			notFound: false
+	  		})
+	  	}
+	   
+	  	this.setState ({
+	  			tours: data,
 	  		})
 	  })
 	  .fail(({responseJSON}) => {
+	  	console.log("insideerror")
 	    responseJSON.error.errors.forEach((err) =>
 	      console.error(err)
 	    )
@@ -32,12 +44,22 @@
 	};
 	
 
+	changeFound () {
+		this.setState ({
+  		notFound: false
+  	})
+	};
+
 
 	render() {
+		
+			var place = <p> Could not find the result, please try again </p>
+ 
 		return (
 			<div>
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
+				{this.state.notFound ? place : null}
 			</div>
 		)
 	}
