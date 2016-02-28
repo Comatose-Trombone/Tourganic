@@ -38,6 +38,7 @@ export default class CreateTourForm extends React.Component {
 
   show() {
     console.log('foobar');
+    console.log('this', this);
     this.setState({
       show:true
     });
@@ -50,7 +51,7 @@ export default class CreateTourForm extends React.Component {
         <Button
           bsStyle='default'
           bsSize='small'
-          onClick={this.show}
+          onClick={()=>{this.show()}}
         >
         Create a TOUR
         </Button>
