@@ -1,6 +1,5 @@
 import React from 'react'
 import $ from 'jquery'
-
 export default class CreatedToursListEntry extends React.Component {
   constructor(props) {
     super(props);
@@ -9,8 +8,9 @@ export default class CreatedToursListEntry extends React.Component {
       name: "",
       city: "",
       date: "",
-      price: ""
+      price: "",
     }
+
   }
 
   // Redirect to unique tour page upon click, using tour's unique id
@@ -37,10 +37,10 @@ export default class CreatedToursListEntry extends React.Component {
   render() {
     return (
       <div className='tourContainer' onClick={ () => this.handleTourClick() }>
-        <div className='tourContainer'> {this.state.name} </div>
-        <div className='tourContainer'> {this.state.city} </div>
-        <div className='tourContainer'> {this.state.date} </div>
-        <div className='tourContainer'> ${this.state.price} </div>
+        <div> {this.state.name} </div>
+        <div> {this.state.city} </div>
+        <div> {this.state.date} </div>
+        <div> ${this.state.price} </div>
       </div>
     )
   }

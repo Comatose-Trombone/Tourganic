@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Modal } from 'react-bootstrap'
 
+
 export default class CreateTourForm extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,6 @@ export default class CreateTourForm extends React.Component {
 
       show: false
     }
-
   };
 
   handleChange(prop, e) {
@@ -37,8 +37,6 @@ export default class CreateTourForm extends React.Component {
   };
 
   show() {
-    console.log('foobar');
-    console.log('this', this);
     this.setState({
       show:true
     });
@@ -47,13 +45,13 @@ export default class CreateTourForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='createTourForm'>
         <Button
           bsStyle='default'
           bsSize='small'
           onClick={()=>{this.show()}}
         >
-        Create a TOUR
+        Create a Tour
         </Button>
         <Modal
           show={this.state.show}
@@ -63,16 +61,21 @@ export default class CreateTourForm extends React.Component {
           aria-labelledby='contained-modal-title'
         >
           <Modal.Header closeButton>
-            <Modal.Title>Create A Tour</Modal.Title>
+            <Modal.Title>Create a Tour</Modal.Title>
           </Modal.Header>
-          <Modal.Body >
-            <form>
-              <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} onClick={this.reset.bind(this, 'name')}/><br/>
-              <input value={this.state.location} onChange={this.handleChange.bind(this, 'location')} onClick={this.reset.bind(this, 'location')}/><br/>
-              <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
-              <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
-              <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
-            </form>
+          <Modal.Body>
+            <div>
+              <form>
+                <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} onClick={this.reset.bind(this, 'name')}/><br/>
+                <input value={this.state.streetAddress} onChange={this.handleChange.bind(this, 'streetAddress')} onClick={this.reset.bind(this, 'streetAddress')}/><br/>
+                <input value={this.state.city} onChange={this.handleChange.bind(this, 'city')} onClick={this.reset.bind(this, 'city')}/><br/>
+                <input value={this.state.state} onChange={this.handleChange.bind(this, 'state')} onClick={this.reset.bind(this, 'state')}/><br/>
+                <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
+                <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
+                <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} onClick={this.reset.bind(this, 'description')}/><br/>
+                <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
+              </form>
+            </div>
           </Modal.Body>
         </Modal>
       </div>
@@ -80,19 +83,3 @@ export default class CreateTourForm extends React.Component {
   }
 }
 
-
-
-{/*}
-      <div>
-        <form>
-          <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} onClick={this.reset.bind(this, 'name')} placeholder= "Enter the name of the tour"/><br/>
-          <input value={this.state.streetAddress} onChange={this.handleChange.bind(this, 'streetAddress')} onClick={this.reset.bind(this, 'streetAddress')} placeholder= "Enter the street address"/><br/>
-          <input value={this.state.city} onChange={this.handleChange.bind(this, 'city')} onClick={this.reset.bind(this, 'city')} placeholder= "Enter the city"/><br/>
-          <input value={this.state.state} onChange={this.handleChange.bind(this, 'state')} onClick={this.reset.bind(this, 'state')} placeholder= "Enter the state"/><br/>
-          <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')} placeholder= "Enter the price of the tour"/><br/>
-          <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')} placeholder= "Enter the date of the tour"/><br/>
-          <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} onClick={this.reset.bind(this, 'description')} placeholder= "Brief description about the tour"/><br/>
-          <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
-        </form>
-      </div>
-*/}
