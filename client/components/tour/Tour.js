@@ -14,7 +14,8 @@ export default class Tour extends React.Component {
       date : "",
       description: "",
       createdBy: "",
-      isLoggedIn: true
+      isLoggedIn: true,
+      isJoined:false
     }
   }
 
@@ -60,7 +61,15 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-        } 
+        } else {
+          console.log("successfully joined");
+          this.setState({
+            isJoined: true
+          })
+          //after the joined message, takes you back to profile page
+          setTimeout(function(){
+            window.location = 'http://localhost:8080/#/profile/'}, 1200); 
+        }
       })
       .fail( (err) => {
         console.log('error joining tour');
@@ -69,6 +78,7 @@ export default class Tour extends React.Component {
 
   render() {
     var loginReminder = <div>Please signin first</div>
+    var joinedTour= <div> Successfully joined the tour </div>
     return (
       <div className='tourContainer'>
         <ul>
@@ -83,6 +93,8 @@ export default class Tour extends React.Component {
         </ul>
         <input type="submit" value="Join Tour" onClick={ () => this.handleJoinTourClick() }/>
         {this.state.isLoggedIn ? null : loginReminder}
+        {this.state.isJoined ? joinedTour : null}
+
       </div>
     )
   }
