@@ -22,6 +22,7 @@
 	  	{data: options}
 	  )
 	  .done(tours => {
+			// Only show map if a search has been entered and there are more than 0 results
 	  	if (tours.length > 0) {
 	   		this.setState({
 	  			tours: tours,
@@ -29,6 +30,7 @@
 	  		})
 	  	} else {
 	  		this.setState({
+	  			tours: [],
 	  			showMap: false
 	  		})
 	  	}
@@ -43,13 +45,11 @@
 
 
 	render() {
-		// Only show map if a search has been entered and there are more than 0 results
-		var map = <SearchMap tours={this.state.tours}/>;
 		return (
 			<div>
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
-				{this.state.showMap ? map : null}
+				{this.state.showMap ? <SearchMap tours={this.state.tours}/> : null}
 			</div>
 		)
 	}

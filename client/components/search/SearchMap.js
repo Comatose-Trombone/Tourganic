@@ -13,26 +13,24 @@ export default class SearchMap extends React.Component {
   }
 
   componentWillMount() {
-    // Create markers for each tour result from the search entry, if there are any search results
-    if (this.props.tours.length > 0) {
-      var tours = this.props.tours;
-      var markers = [];
-      tours.forEach(function(tour) {
-        var marker = {};
-        marker.position = {};
-        marker.position.lat = tour.LatLng[0];
-        marker.position.lng = tour.LatLng[1];
-        markers.push(marker);
-      });
-      // Set the defaultCenter to the coordinates for the first marker in the list
-      this.setState({
-        markers: markers,
-        defaultCenter: {
-          lat: markers[0].position.lat,
-          lng: markers[0].position.lng
-        }
-      })
-    }
+    // Create markers for each tour result from the search entry
+    var tours = this.props.tours;
+    var markers = [];
+    tours.forEach(function(tour) {
+      var marker = {};
+      marker.position = {};
+      marker.position.lat = tour.LatLng[0];
+      marker.position.lng = tour.LatLng[1];
+      markers.push(marker);
+    })
+    // Set the defaultCenter to the coordinates for the first marker in the list
+    this.setState({
+      markers: markers,
+      defaultCenter: {
+        lat: markers[0].position.lat,
+        lng: markers[0].position.lng
+      }
+    });
   }
 
   render() {
