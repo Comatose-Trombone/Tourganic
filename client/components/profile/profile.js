@@ -5,6 +5,7 @@ import $ from 'jquery'
 import {Link} from 'react-router'
 import CreateTourForm from './CreateTourForm'
 
+
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -63,12 +64,14 @@ export default class Profile extends React.Component {
 
 
   render() {
+    console.log('re-rendering..')
     var profilePage = (
-      <div>
-        <input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>
-        {this.state.showCreateForm ? <CreateTourForm submitNewTour={this.submitNewTour}/> : null}
+      <div className='profileMotherContainer'>
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
+        {/*<input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>*/}
+        <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
         <CreatedToursList tourIds={this.state.userMadeTours} />
+
      </div>
     );
 

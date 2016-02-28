@@ -14,8 +14,8 @@ export default class CreatedToursList extends React.Component {
       console.log(tourListEntries);
     }
     return (
-      <div className = "CreatedToursListParentContainer">
-       <p> Here are the Created Tours </p>
+      <div className = "createdToursListParentContainer">
+       <p className='hostedTourTitle'> Your Hosted Tours: </p>
        {tourListEntries ? tourListEntries : null}
       </div>
     )
