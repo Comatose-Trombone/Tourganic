@@ -11,6 +11,7 @@ export default class Tour extends React.Component {
       city: "",
       state: "",
       price: "",
+      date : "",
       description: "",
       createdBy: "",
       isLoggedIn: true
@@ -29,6 +30,10 @@ export default class Tour extends React.Component {
     // Fetch specified tour data from server using its unique ID
     $.post('http://localhost:8080/fetchTourInfo', {data: this.getID()})
     .done( (data) => {
+    var date = data.date.substring(0,10);
+      console.log("data is:", data);
+
+      console.log("data.description is:", data.description);
       // Change state properties to equal fetched tour data so page renders with correct information
       this.setState({
         name : data.name,
@@ -36,6 +41,7 @@ export default class Tour extends React.Component {
         city: data.city,
         state: data.state,        
         price : data.price,
+        date : date,
         description: data.description,
         createdBy: data.createdBy
       })
@@ -74,6 +80,7 @@ export default class Tour extends React.Component {
           <li>{this.state.city }</li>
           <li>{this.state.state }</li>
           <li>${this.state.price}</li>
+           <li>{this.state.date}</li>
           <li>{this.state.description}</li>
           <li>{this.state.createdBy}</li>
         </ul>

@@ -81,7 +81,7 @@ export default class Navigation extends React.Component {
 				<Navbar pullLeft={true}>
 					<Navbar.Header>
 			      <Navbar.Brand>
-			        <a href="#">Tour-Allure</a>
+			        <a href="#">Tourganic</a>
 			      </Navbar.Brand>
 			    </Navbar.Header>
 					<Nav>

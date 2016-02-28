@@ -8,6 +8,7 @@ export default class CreatedToursListEntry extends React.Component {
     this.state = {
       name: "",
       city: "",
+      date: "",
       price: ""
     }
   }
@@ -20,9 +21,11 @@ export default class CreatedToursListEntry extends React.Component {
   componentDidMount () {
     $.post('http://localhost:8080/fetchTourInfo', {data: this.props.tourId})
     .done( (data) => {
+      var date = data.date.substring(0,10);
       this.setState({
         name : data.name,
         city : data.city,
+        date : date,
         price : data.price
       })
     })
@@ -36,6 +39,7 @@ export default class CreatedToursListEntry extends React.Component {
       <div className='eventContainer' onClick={ () => this.handleTourClick() }>
         <div className='tourContainer'> {this.state.name} </div>
         <div className='tourContainer'> {this.state.city} </div>
+        <div className='tourContainer'> {this.state.date} </div>
         <div className='tourContainer'> ${this.state.price} </div>
       </div>
     )

@@ -10,7 +10,7 @@ export default class Welcome extends React.Component {
 		return (
 			<div className='motherContainer'>
 				<div className='jumbotron'>
-					<span className='welcomeText'>Welcome To Tour-Allure</span>
+					<span className='welcomeText'>Welcome To Tourganic</span>
 				</div>
 			</div>
 		)

@@ -7,7 +7,9 @@ export default class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
     this.state = {
-      show: false
+      show: false,
+      showInvalidFieldsError: false,
+      showInvalidUsernameOrPassword: false
     }
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
@@ -20,20 +22,44 @@ export default class SignIn extends React.Component {
 			username: this.refs.username.value,
 			password: this.refs.password.value,
 		};
+		if (!user.username || !user.password) {
+      this.setState({
+        showInvalidFieldsError: true
+      }, function() {
+        var setState = this.setState.bind(this);
+        setTimeout(function() {
+          setState({showInvalidFieldsError: false});
+        }, 2000);
+      });      
+      return;
+    }
+
 		$.post('http://localhost:8080/signin', {data: user})
 			.done(data => {
-				console.log('User signed in successfully');
-				console.log('this', this);
+				console.log('data', data);
+				//depending on the error, the server will respond with a given message.
+				if (data === 'Username and/or password invalid.') {
+			    this.setState({
+		        showInvalidUsernameOrPassword: true
+		      }, function() {
+		        var setState = this.setState.bind(this);
+		        setTimeout(function() {
+		          setState({showInvalidUsernameOrPassword: false});
+		        }, 2000);
+		      }); 
+		      return;
+				} 
+				else {
+					this.props.signIn();
+					window.location = 'http://localhost:8080/#/profile';
+				}
 				this.setState({
 					show: false
 				})
-				//triggers the signIn function on navigation, which changes the signedIn state
-				this.props.signIn();
-				window.location = 'http://localhost:8080/#/profile';
 			})
-			.fail((err) => {
-		    console.error('cannot signIn', err);
-		  });
+		.fail((err) => {
+			console.error('cannot signin');
+	  });
 	}
 
 	close() {
@@ -48,6 +74,9 @@ export default class SignIn extends React.Component {
 
 
 	render() {
+		var invalidFieldsError = <div> Please fill out all forms. </div>
+		var invalidUsernameOrPassword = <div> Incorrect username or password. </div>
+
 		return (
 				 <NavItem
 	        bsStyle='default'
@@ -72,21 +101,13 @@ export default class SignIn extends React.Component {
 							    <input ref="username" class="username" placeholder="username" type='text'/><br/>
 							    <input ref="password" class="password" placeholder="password" type="password"/><br/>
 							    <Button onClick={() => this.handleSignIn()} bsStyle='default'> Sign In </Button>
+							    {this.state.showInvalidFieldsError ? invalidFieldsError : null}
+							    {this.state.showInvalidUsernameOrPassword ? invalidUsernameOrPassword : null}
 					  		</form>
 		          </Modal.Body>
 		        </Modal>
 	      	</div>
 	    </NavItem>
-
-    	/***************old code ***********************/
-			// <div id='signin'>
-			//   <h1>Sign In</h1>
-			//   <form class="sign-" onSubmit={() => this.handleSignIn()}>
-			//     <input ref="username" class="username" placeholder="username" type='text'/>
-			//     <input ref="password" class="password" placeholder="password" type="password"/>
-			//     <input type="submit" value="Sign In"/>
-			//   </form>
-			// </div>
 
 		)
 	}

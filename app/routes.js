@@ -23,22 +23,30 @@ module.exports = function(app) {
       res.send({isAuth: false});
     }
   };
-
+  
+// checks the valid inputs adn creates a new object with valid keys
   app.post('/search', function(req,res) {
-    var city = req.body.data.city;
-    var name = req.body.data.name;
-    var options = {};
-    if ( city !== "" && name !== "") {
-      options = {"city": city, "name": name};
-    } else if ( city !== "") {
-      options = {"city": city};
-    } else if ( name !== "") {
-      options = {"name": name};
-    } else {
-      options = {};
+    var inputObj = req.body.data
+    var newObj = {};
+    for (var key in inputObj) {
+      if (inputObj[key] !== "") {
+        newObj[key] = inputObj[key]
+      }
     }
-    console.log("optionsis:", options);
-    Tour.find(options, function(err, data) {
+//setting up the price based on the $ amount
+    if(newObj.price !== undefined) {
+      if (newObj.price === "$") {
+       newObj.price = {$lt: 26};
+      } else if (newObj.price === "$$") {
+        newObj.price = {$lt: 51};
+      } else if (newObj.price === "$$$") {
+        newObj.price = {$lt: 76};
+      } else if (newObj.price === "$$$$") {
+        newObj.price = {$lt: 101};
+      }
+    };
+
+    Tour.find(newObj, function(err, data) {
       console.log("datainfind:", data)
       if (err) {
         console.log('error');
@@ -46,7 +54,7 @@ module.exports = function(app) {
       } else {
         res.send(data);
       }
-    })
+    });
   });
 
 
@@ -91,7 +99,10 @@ module.exports = function(app) {
               if(err) {
                throw err;
               }
-              res.send(user);
+              tour.createdBy = user.username
+              tour.save(function(err, tour){
+                res.send(user);
+              })
             });
           })
         });
@@ -145,8 +156,8 @@ module.exports = function(app) {
     User.findOne({username: username})
       .exec(function(err, user) {
         if (user) {
-          console.log('Account already exists');
-          res.redirect('/signup');
+          console.log('Account already exists.');
+          res.send('Account already exists.');
         } else {
           //if user does not exist, create and save the user:
           var newUser = User({
@@ -177,7 +188,7 @@ module.exports = function(app) {
     //find the user first:
     User.findOne({username: name}, function(err, user) {
       if(err) return next(err);
-      if(!user) return res.send('Username does not exist in our records.');
+      if(!user) return res.send('Username and/or password invalid.');
       //checks entered PW with the saved hashed/salted PW (defined in user.js)
       //isMatch is a boolean value.
       User.comparePassword(password, user.password, function(err, isMatch) {
@@ -189,7 +200,7 @@ module.exports = function(app) {
           });
         } 
         else {
-          res.redirect('/signin');
+          res.send('Username and/or password invalid.');
         }
       });
     });
@@ -202,10 +213,11 @@ module.exports = function(app) {
   });
 
   // Fetch information for a specific tour, given its id
-  app.post('/fetchTourInfo', restrict, function(req, res) {
+  app.post('/fetchTourInfo', function(req, res) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
+        console.log("datainserver:", data);
         if (err) {
           throw err;
         } else {
