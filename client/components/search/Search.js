@@ -18,7 +18,6 @@
 	}
 
 	getToursFromDatabase (options) {
-	  console.log("first time called")
 	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
@@ -38,22 +37,9 @@
 	   
 	  	this.setState ({
 	  			tours: tours
-			// Only show map if a search has been entered and there are more than 0 results
-	  	// if (tours.length > 0) {
-	   // 		this.setState({
-	  	// 		tours: tours,
-	  	// 		showMap: true
-	  	// 	})
-	  	// } else {
-	  	// 	this.setState({
-	  	// 		tours: [],
-	  	// 		showMap: false
-	  	// 	})
-	  	// }
-	  })
+	  	})
 	  })
 	  .fail(({responseJSON}) => {
-	  	console.log("insideerror")
 	    responseJSON.error.errors.forEach((err) =>
 	      console.error(err)
 	    )
