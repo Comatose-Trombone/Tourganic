@@ -80,7 +80,7 @@
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
 				{this.state.notFound ? place : null}
-				{this.state.showMap ? <SearchMap tours={this.state.tours}/> : null}
+				{this.state.tours.length > 0 ? <SearchMap tours={this.state.tours}/> : null}
 			</div>
 		)
 	}
