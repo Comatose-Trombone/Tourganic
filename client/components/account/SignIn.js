@@ -78,14 +78,14 @@ export default class SignIn extends React.Component {
 		var invalidUsernameOrPassword = <div> Incorrect username or password. </div>
 
 		return (
-				 <NavItem
-	        bsStyle='default'
-	        bsSize='small'
-	        onClick={this.show}
-	       >
-	       SignIn
+			<NavItem
+        bsStyle='default'
+        bsSize='small'
+        onClick={this.show}
+      >
+      SignIn
 
-	     <div className='modal-container'>
+	      <div className='modal-container'>
 		      <Modal
 		        show={this.state.show}
 		        dialogClassName="custom-modal"

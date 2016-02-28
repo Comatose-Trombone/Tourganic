@@ -48,14 +48,23 @@ body {
 
 /*================ PROFILE PAGE ==================*/
 
+.profileMotherContainer {
+  border: 1px solid black;
+  width: 1000px;
+  margin: 0 auto;
+}
+
 /*About me*/
 .aboutMeParentContainer {
   margin: 5px auto;
-  border: 1px solid black;
   padding: 5px;
-  width: 800px;
+  width: 850px;
   vertical-align: top;
+  border: 1px solid black;
 }
+    .welcomeBackTitle {
+      font-size: 25px;
+    }
 
     .profilePicture {
       width: 250px;
@@ -63,11 +72,14 @@ body {
       border: 1px solid black;
       display: inline-block;
       vertical-align: top;
-
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-image: url('./default-male-avatar.png');
     }
 
     .aboutMeContainer {
-      display: inline;
+      vertical-align: top;
+      display: inline-block;
     }
 
     .aboutMe {
@@ -89,15 +101,18 @@ body {
 
 
 /*User Made Events Events*/
-.createdEventsListParentContainer {
+.createdToursListParentContainer {
   margin-top: 10px;
   border: 1px solid black;
   padding: 5px;
-  width: 800px;
+  width: 850px;
   margin: 5px auto;
 }
+    .hostedTourTitle {
+      font-size: 25px;
+    }
 
-    .eventContainer {
+    .tourContainer {
       width: 780px;
       height: 150px;
       border: 1px solid black;

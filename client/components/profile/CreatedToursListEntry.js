@@ -36,7 +36,7 @@ export default class CreatedToursListEntry extends React.Component {
 
   render() {
     return (
-      <div className='eventContainer' onClick={ () => this.handleTourClick() }>
+      <div className='tourContainer' onClick={ () => this.handleTourClick() }>
         <div className='tourContainer'> {this.state.name} </div>
         <div className='tourContainer'> {this.state.city} </div>
         <div className='tourContainer'> {this.state.date} </div>

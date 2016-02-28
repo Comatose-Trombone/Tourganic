@@ -40,8 +40,8 @@ export default class AboutMe extends React.Component {
     var aboutMe = <div className="aboutMe" onClick={ () => this.handleAboutMeEdit() }>{this.state.aboutMe}</div>
     return (
       <div className='aboutMeParentContainer'>
-        <div>{this.props.user}</div>
-        <div className='profilePicture'> picture </div>
+        <div className='welcomeBackTitle'>Welcome Back, {this.props.user}</div>
+        <div className='profilePicture'></div>
         <div className="aboutMeContainer">
           {this.state.aboutMeEdit ? aboutMeEdit : aboutMe}
         </div>
