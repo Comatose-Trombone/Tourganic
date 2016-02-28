@@ -3,12 +3,15 @@ var Schema = mongoose.Schema;
 
 var tourSchema = new Schema({
  name: String,
- createdBy: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
- attendees: Array,
- location: String,
+ createdBy: String,
+ attendees: Number,
+ streetAddress: String,
+ city: String,
+ state: String,
  date: Date,
  price: Number,
- description: String
+ description: String,
+ LatLng: Array
 });
 
 module.exports = mongoose.model('Tour', tourSchema);

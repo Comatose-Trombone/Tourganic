@@ -115,6 +115,11 @@ body {
   margin: 2.5px;
 }
 
+.map {
+  width: 500px;
+  height: 500px;
+}
+
 
 /*================ SIGN IN MODAL ==================*/
 

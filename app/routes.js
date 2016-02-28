@@ -1,10 +1,9 @@
 var Tour = require('./models/tour.js');
 var User = require('./models/user.js');
-var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
-
+var request = require('request');
 
 
 module.exports = function(app) {
@@ -22,7 +21,6 @@ module.exports = function(app) {
     } else {
       console.log("Access denied!");
       res.send({isAuth: false});
-      // res.redirect('/login');
     }
   };
   
@@ -66,29 +64,49 @@ module.exports = function(app) {
 
  
   app.post('/createTour', function(req,res, next) {
-    console.log('reqbody',req.body);
-    var newTour = {
-      name: req.body.name,
-      createdBy: req.body.createdBy,
-      location: req.body.location,
-      description: req.body.description,
-      date: req.body.date,
-      price: req.body.price
-    };
-    Tour.create(newTour, function(err, tour) {
-      if(err) return next(err);
-      User.findOne({_id : req.session.userId}, function(err, user) {
-        if(err) return next(err);
-        user.createdTours.push(tour._id);
-        user.save(function(err, user) {
-          if(err) return next(err);
-          console.log("tour.createdByis", tour.createdBy)
-          tour.createdBy = user.username
-          tour.save(function(err, tour){
-            res.send(user);
+    // Construct address and send request to google geocode api to fetch Lat/Lng coordinates for given address
+    var address = req.body.streetAddress + ", " + req.body.city + ", " + req.body.state;
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=AIzaSyBTKobIvbTZTl469EUXd9iM6Mx_08kJAxM';
+    request(url, function (error, response, body) {
+      if (error) {
+        throw error;
+      } else {
+        // Extract Lat/Lng coordinates from response body, and pass them to newTour object
+        var parsedResults = JSON.parse(body).results[0].geometry
+        var LatLng = [parsedResults.location.lat, parsedResults.location.lng];
+        var newTour = {
+          name: req.body.name,
+          createdBy: req.body.username,
+          streetAddress: req.body.streetAddress,
+          city: req.body.city,
+          state: req.body.state,
+          price: req.body.price,
+          date: req.body.date,
+          LatLng: LatLng
+        };
+        // Create new Tour document on DB using data stored in newTour object
+        Tour.create(newTour, function(err, tour) {
+          if(err) {
+            throw err;
+          }
+          // Fetch currently signed in user from DB, and add newly created Tour ID to their createdTour's array
+          User.findOne({_id : req.session.userId}, function(err, user) {
+            if(err) {
+              throw err;
+            }
+            user.createdTours.push(tour._id);
+            user.save(function(err, user) {
+              if(err) {
+               throw err;
+              }
+              tour.createdBy = user.username
+              tour.save(function(err, tour){
+                res.send(user);
+              })
+            });
           })
         });
-      })
+      }
     });
   });
 

@@ -7,7 +7,7 @@ export default class CreatedToursListEntry extends React.Component {
 
     this.state = {
       name: "",
-      location: "",
+      city: "",
       date: "",
       price: ""
     }
@@ -24,7 +24,7 @@ export default class CreatedToursListEntry extends React.Component {
       var date = data.date.substring(0,10);
       this.setState({
         name : data.name,
-        location : data.location,
+        city : data.city,
         date : date,
         price : data.price
       })
@@ -38,7 +38,7 @@ export default class CreatedToursListEntry extends React.Component {
     return (
       <div className='eventContainer' onClick={ () => this.handleTourClick() }>
         <div className='tourContainer'> {this.state.name} </div>
-        <div className='tourContainer'> {this.state.location} </div>
+        <div className='tourContainer'> {this.state.city} </div>
         <div className='tourContainer'> {this.state.date} </div>
         <div className='tourContainer'> ${this.state.price} </div>
       </div>

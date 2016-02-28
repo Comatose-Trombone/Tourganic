@@ -8,7 +8,9 @@ export default class CreateTourForm extends React.Component {
       description: 'description',
       name: 'name',
       createdBy: 'createdBy',
-      location: 'location',
+      streetAddress: 'streetAddress',
+      city: 'city',
+      state: 'state',
       price: 'price',
       date: 'date'
     }
@@ -33,7 +35,9 @@ export default class CreateTourForm extends React.Component {
       <div>
         <form>
           <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} onClick={this.reset.bind(this, 'name')}/><br/>
-          <input value={this.state.location} onChange={this.handleChange.bind(this, 'location')} onClick={this.reset.bind(this, 'location')}/><br/>
+          <input value={this.state.streetAddress} onChange={this.handleChange.bind(this, 'streetAddress')} onClick={this.reset.bind(this, 'streetAddress')}/><br/>
+          <input value={this.state.city} onChange={this.handleChange.bind(this, 'city')} onClick={this.reset.bind(this, 'city')}/><br/>
+          <input value={this.state.state} onChange={this.handleChange.bind(this, 'state')} onClick={this.reset.bind(this, 'state')}/><br/>
           <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
           <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
           <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} onClick={this.reset.bind(this, 'description')}/><br/>
