@@ -1,7 +1,6 @@
 import React from 'react'
 import {Button, Modal } from 'react-bootstrap'
 
-
 export default class CreateTourForm extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +8,6 @@ export default class CreateTourForm extends React.Component {
     this.state = {
       description: '',
       name: 'name of tour',
-
       description: 'description',
       name: 'name of tour',
       createdBy: 'createdBy',
@@ -50,7 +48,6 @@ export default class CreateTourForm extends React.Component {
     this.close.bind(this)();
     this.props.submitNewTour.bind(null, this.state)();
   }
-
 
   render() {
     return (
