@@ -45,6 +45,12 @@ export default class CreateTourForm extends React.Component {
     });
   };
 
+  //closes the modal, and also submits the tour 
+  handleTourSubmission() {
+    this.close.bind(this)();
+    this.props.submitNewTour.bind(null, this.state)();
+  }
+
 
   render() {
     return (
@@ -76,7 +82,7 @@ export default class CreateTourForm extends React.Component {
                 <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} onClick={this.reset.bind(this, 'price')}/><br/>
                 <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} onClick={this.reset.bind(this, 'date')}/><br/>
                 <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} onClick={this.reset.bind(this, 'description')}/><br/>
-                <input type='submit' value='Create Tour' onClick={this.props.submitNewTour.bind(this, this.state)}/>
+                <input type='submit' value='Create Tour' onClick={()=>{this.handleTourSubmission()}}/>
               </form>
             </div>
           </Modal.Body>
