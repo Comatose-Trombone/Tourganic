@@ -7,7 +7,7 @@ export default class SearchBar extends React.Component {
 		this.state = {
         name: "",
         city: "",
-        price: "$$$$"
+        price: ""
     }
 	}
 
