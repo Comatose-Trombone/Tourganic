@@ -1,6 +1,7 @@
  import React from 'react'
  import SearchBar from './SearchBar'
  import SearchList from './SearchList'
+ import SearchMap from './SearchMap'
  import {Link} from 'react-router'
  import $ from 'jquery'
 
@@ -11,7 +12,9 @@
 		this.state = {
       tours: [],
       notFound: false
+      showMap: false
     };
+
 
 	}
 
@@ -20,12 +23,15 @@
 	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
-	  .done(data => {
-	  	if (data.length === 0) {
+
+	  .done(tours => {
+	  	//checks if the tours is empty array
+	  	if (tours.length === 0) {
 	  		this.setState ({
 	  			notFound: true
 	  		})
 	  	} else {
+	  	//when it finds, changes back to false so it is not shown	
 	  		this.setState ({
 	  			notFound: false
 	  		})
@@ -33,7 +39,19 @@
 	   
 	  	this.setState ({
 	  			tours: data,
+			// Only show map if a search has been entered and there are more than 0 results
+	  	if (tours.length > 0) {
+	   		this.setState({
+	  			tours: tours,
+	  			showMap: true
 	  		})
+	  	} else {
+	  		this.setState({
+	  			tours: [],
+	  			showMap: false
+	  		})
+	  	}
+	  })
 	  })
 	  .fail(({responseJSON}) => {
 	  	console.log("insideerror")
@@ -60,6 +78,7 @@
 				<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 				<SearchList tours={this.state.tours}/>
 				{this.state.notFound ? place : null}
+				{this.state.showMap ? <SearchMap tours={this.state.tours}/> : null}
 			</div>
 		)
 	}

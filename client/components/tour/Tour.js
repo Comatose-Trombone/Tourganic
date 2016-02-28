@@ -6,9 +6,11 @@ export default class Tour extends React.Component {
     super(props);
 
     this.state = {
-      name : "",
-      location : "",
-      price : "",
+      name: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      price: "",
       date : "",
       description: "",
       createdBy: "",
@@ -32,7 +34,9 @@ export default class Tour extends React.Component {
     // Change state properties to equal fetched tour data so page renders with correct information
       this.setState({
         name : data.name,
-        location : data.location,
+        streetAddress: data.streetAddress,
+        city: data.city,
+        state: data.state,        
         price : data.price,
         date : date,
         description: data.description,
@@ -69,7 +73,9 @@ export default class Tour extends React.Component {
       <div className='tourContainer'>
         <ul>
           <li>{this.state.name}</li>
-          <li>{this.state.location }</li>
+          <li>{this.state.streetAddress }</li>
+          <li>{this.state.city }</li>
+          <li>{this.state.state }</li>
           <li>${this.state.price}</li>
            <li>{this.state.date}</li>
           <li>{this.state.description}</li>
