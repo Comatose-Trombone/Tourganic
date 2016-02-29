@@ -121,25 +121,18 @@ module.exports = function(app) {
       if (err) {
         res.send(err);
       } else {
-        // Find the specified tour, given its ID
-        Tour.findOne({_id: req.body.data}, function(err, tour) {
-          if (err) {
-            res.send(err);
+        user.attendingTours.push(req.body.data);
+        user.save(function(err, user) {
+          if(err) {
+            return next(err);
           } else {
-            user.attendingTours.push(tour._id);
-            user.save(function(err, user) {
-              if(err) {
-                return next(err);
-              } else {
-                console.log(user);
-                res.send(user);
-              }
-            });
+            console.log('successfully joined tour!');
+            res.send(user);
           }
-        })
+        });
       }
     })
-  })
+  });
 
   app.get('/profile', restrict, function(req,res) {
     User.findOne({_id: req.session.userId}, function(err, data){
