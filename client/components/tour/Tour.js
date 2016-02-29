@@ -21,12 +21,8 @@ export default class Tour extends React.Component {
 
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-    console.log('this.props.closeTourModal', this.props.closeTourModal);
     $.post('http://localhost:8080/joinTour', {data: this.getID()})
       .done( (data) => {
-        // show/hide state is controlled in profile or search. closeTourModal changes the state,
-        // then it inherits the state from profile or search through props.
-        this.props.closeTourModal();
         if (data.isAuth === false) {
           this.setState({
             isLoggedIn: false
@@ -35,7 +31,11 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-        } 
+        } else {
+          // show/hide state is controlled in profile or search. closeTourModal changes the state,
+          // then it inherits the state from profile or search through props.
+          this.props.closeTourModal();
+        }
       })
       .fail( (err) => {
         console.log('error joining tour');
@@ -43,10 +43,9 @@ export default class Tour extends React.Component {
   }
 
   render() {
-    var loginReminder = <div>Please signin first</div>
+    var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
     return (
       <div className='createTourForm'>
-          {this.state.isLoggedIn ? null : loginReminder}
         <Modal
           show={this.props.show}
           dialogClassName="custom-modal"
@@ -72,6 +71,7 @@ export default class Tour extends React.Component {
                                                 Join Tour
                                               </Button>
                                             : null }
+              {this.state.isLoggedIn ? null : loginReminder}
               
           </Modal.Body>
         </Modal>

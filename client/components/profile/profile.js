@@ -76,7 +76,6 @@ export default class Profile extends React.Component {
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
         <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
         <CreatedToursList {...createdTourListProps} />
-
      </div>
     );
 
