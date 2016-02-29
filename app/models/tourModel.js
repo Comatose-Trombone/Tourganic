@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var tourSchema = new Schema({
+ pictureUrl: String,
  name: String,
  createdBy: String,
  attendees: Number,
