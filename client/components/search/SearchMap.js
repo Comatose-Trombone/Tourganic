@@ -36,6 +36,29 @@ export default class SearchMap extends React.Component {
     });
   }
 
+  componentWillReceiveProps() {
+    var tours = this.props.tours;
+    var markers = [];
+    tours.forEach(function(tour) {
+      // Gives each marker Lat/Lng coordinates, a name, and a showInfo property set to false initially
+      var marker = {};
+      marker.name = tour.name;
+      marker.showInfo = false;
+      marker.position = {};
+      marker.position.lat = tour.LatLng[0];
+      marker.position.lng = tour.LatLng[1];
+      markers.push(marker);
+    })
+    // Set the defaultCenter of map to the coordinates for the first marker in the list
+    this.setState({
+      markers: markers,
+      defaultCenter: {
+        lat: markers[0].position.lat,
+        lng: markers[0].position.lng
+      }
+    });
+  }
+
   // If marker is clicked, its respective showInfo property is toggled, either showing or hiding the info
   handleMarkerClick(marker) {
     marker.showInfo = !marker.showInfo;
