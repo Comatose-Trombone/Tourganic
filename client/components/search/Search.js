@@ -73,7 +73,7 @@
 		
 			var noResultMessage = <p> Could not find the result, please try again </p>
 
- 			var tourProps = {page: 'search', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}
+			var tourProps = {page: 'search', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}
  			var searchListProps = {tours: this.state.tours, getTourInfo: this.getTourInfo.bind(this)}
 		return (
 			<div className="searchContainer">

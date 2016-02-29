@@ -67,7 +67,7 @@ body {
     .profilePicture {
       width: 250px;
       height: 250px;
-      border: 1px solid black;
+      border: 1px solid #B0B0B0;
       display: inline-block;
       vertical-align: top;
       background-size: 100%;
@@ -83,7 +83,7 @@ body {
 
     .aboutMe {
       width: 530px;
-      border: 1px solid black;
+      border: 1px solid #B0B0B0;
       height: 250px;
       display: inline-block;
       vertical-align: top;
@@ -117,7 +117,7 @@ body {
     .tourContainer {
       width: 780px;
       height: 150px;
-      border: 1px solid black;
+      border: 1px solid #B0B0B0;
       background-color: #F8F8F8;
       margin: 5px 5px;
       text-align: middle;
@@ -125,14 +125,6 @@ body {
 
 /*================ SEARCH PAGE ==================*/
 
-.searchTourEntry {
-  width: 150px;
-  height: 150px;
-  border: 1px solid black;
-  display: inline-block;
-  padding: 2.5px;
-  margin: 2.5px;
-}
 
 .searchContainer {
   overflow: hidden;
@@ -140,11 +132,12 @@ body {
 
 
 .searchMapContainer {
+  z-index: -1;
   display: inline;
-  float: right;
+  position: fixed;
   width: 49%;
   height: 650px;
-  margin-right: 1%;
+  margin-left: 50%;
 }
 
 .map {
@@ -167,9 +160,36 @@ body {
   margin-left: 1%;
 }
 
+.searchTourEntry {
+  width: 500px;
+  height: 163px;
+  border: 1px solid #B0B0B0;
+  display: inline-block;
+  margin: 2.5px;
+  position: relative;
+  background-size: 100%;
+  font-weight: bold;
+  color: white;
+}
+.searchListEntryName {
+  text-align: center;
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.25);
+
+}
+.searchListEntryPrice {
+  font-size: 15px;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding: 2.5px 7.5px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
 
 
-/*================ SIGN IN MODAL ==================*/
+
+
+/*================ MODAL ==================*/
 
 .modal-container {
   position: relative;

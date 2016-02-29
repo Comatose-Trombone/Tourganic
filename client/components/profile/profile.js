@@ -64,7 +64,7 @@ export default class Profile extends React.Component {
   }
 
   closeTourModal() {
-    console.log('closetourmodel in profile'); this.setState({showTourModal:false});
+    this.setState({showTourModal:false});
   };
 
   render() {
