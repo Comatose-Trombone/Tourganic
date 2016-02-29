@@ -132,7 +132,6 @@ body {
 
 
 .searchMapContainer {
-  z-index: -1;
   display: inline;
   position: fixed;
   width: 49%;
@@ -161,7 +160,7 @@ body {
 }
 
 .searchTourEntry {
-  width: 500px;
+  width: 98%;
   height: 163px;
   border: 1px solid #B0B0B0;
   display: inline-block;
