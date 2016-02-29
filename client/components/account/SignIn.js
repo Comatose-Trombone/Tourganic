@@ -34,7 +34,7 @@ export default class SignIn extends React.Component {
       return;
     }
 
-		$.post('http://localhost:8080/signin', {data: user})
+		$.post('https://localhost:8080/signin', {data: user})
 			.done(data => {
 				console.log('data', data);
 				//depending on the error, the server will respond with a given message.
@@ -51,7 +51,7 @@ export default class SignIn extends React.Component {
 				} 
 				else {
 					this.props.signIn();
-					window.location = 'http://localhost:8080/#/profile';
+					window.location = 'https://localhost:8080/#/profile';
 				}
 				this.setState({
 					show: false

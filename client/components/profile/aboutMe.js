@@ -15,7 +15,7 @@ export default class AboutMe extends React.Component {
   handleAboutMeEdit() {
     if (this.state.aboutMeEdit === true) {
       var aboutMe = this.refs.aboutMe.value;
-      $.post('http://localhost:8080/aboutMeEdit', {data: aboutMe})
+      $.post('https://localhost:8080/aboutMeEdit', {data: aboutMe})
         .done(data => {
           console.log('About me edited successfully');
           this.setState({
