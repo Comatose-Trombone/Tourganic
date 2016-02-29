@@ -22,7 +22,7 @@ export default class Navigation extends React.Component {
 	
 
 		handleProfileClick() {
-			$.get('http://localhost:8080/profile')
+			$.get('/profile')
 				.done( (data) => {
 					if (data.isAuth === false) {
 						this.setState({
@@ -36,13 +36,13 @@ export default class Navigation extends React.Component {
 						this.setState({
 							showLoginReminder: false
 						})
-						window.location = 'http://localhost:8080/#/profile';
+						window.location = '/#/profile';
 					}
 				})
 		};
 
 		componentWillMount() {
-			$.get('http://localhost:8080/session')
+			$.get('/session')
 				.done( (data) => {
 					if (data.isAuth === false) {
 						this.setState({
@@ -57,11 +57,11 @@ export default class Navigation extends React.Component {
 		};
 
 		endSession() {
-			$.get('http://localhost:8080/logout').done(() => {
+			$.get('/logout').done(() => {
 					this.setState({
 					signedIn: false
 				})
-				window.location = 'http://localhost:8080/#/welcome'
+				window.location = '/#/welcome'
 			})
 		};
 
