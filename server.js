@@ -16,17 +16,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-// var headers = defaultCorsHeaders;
-// var headers['Content-Type'] = "text/plain"
-
-// response.writehead(statusCode, headers);
-
-// var defaultCorsHeaders = {
-//  "access-control-allow-origin": "https://tour-allure.herokuapp.com/",
-//  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-//  "access-control-allow-headers": "content-type, accept",
-//  "access-control-max-age": 10 // Seconds.
-// };
 
 app.use(express.static(__dirname + '/public'));
 
