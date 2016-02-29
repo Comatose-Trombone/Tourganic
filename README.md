@@ -1,8 +1,9 @@
 # Tourganic
 
-> Pithy project description
+> A website meant to provide locals a way to become tour guides within their own city, offering a quick and easy way to create tours for tourist
+	or other interested locals to search and sign up for.
 
-## Team
+## Comatose Trombones
 
   - __Product Owner__: Hazal Ozcan
   - __Scrum Master__: Thomas Hoffmann
@@ -24,11 +25,9 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 5.4.1
+- MongoDB 3.2.3
+- 
 
 ## Development
 
@@ -44,7 +43,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/Comatose-Trombone/tour-allure/issues)
 
 
 ## Contributing
