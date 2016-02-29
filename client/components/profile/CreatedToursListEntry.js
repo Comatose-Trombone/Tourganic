@@ -35,11 +35,11 @@ export default class CreatedToursListEntry extends React.Component {
   render() {
     return (
        <div className='createTourForm'>
-            <div className='tourContainer' onClick={ () => this.props.getTourInfo(this.state.data) }>
-              <div> {this.state.name} </div>
-              <div> {this.state.city} </div>
-              <div> {this.state.date} </div>
-              <div> ${this.state.price} </div>
+            <div className='tourContainer'
+              onClick={ () => this.props.getTourInfo(this.state.data)}
+              style={{backgroundImage: 'url(' + this.state.data.pictureUrl + ')', backgroundRepeat: 'no-repeat', backgroundSize:'cover', backgroundPosition: 'center center'}} >
+              <div className='searchListEntryName'> {this.state.name} </div>
+              <div className='searchListEntryPrice'> ${this.state.price} </div>
             </div>
       </div>
 

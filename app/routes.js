@@ -71,7 +71,7 @@ module.exports = function(app) {
       if (error) {
         throw error;
       } else {
-        var pictures = ['brooklynSkyline.jpg', 'goldenGateBridge.jpg', 'Park2.JPG', 'Houses.jpg', 'Berkeley.jpg', 'Marina.jpg', 'Denver.jpg', 'OutdoorCafe.jpg', 'LosAngeles.jpg', 'Tahoe.jpg', 'cableCar.jpg'];
+        var pictures = ['pictures/brooklynSkyline.jpg', 'pictures/goldenGateBridge.jpg', 'pictures/Park2.JPG', 'pictures/Houses.jpg', 'pictures/Berkeley.jpg', 'pictures/Marina.jpg', 'pictures/Denver.jpg', 'pictures/OutdoorCafe.jpg', 'pictures/LosAngeles.jpg', 'pictures/Tahoe.jpg', 'pictures/cableCar.jpg'];
         var index = Math.floor(Math.random()*pictures.length);
         var pictureUrl = pictures[index];
         // Extract Lat/Lng coordinates from response body, and pass them to newTour object
@@ -80,7 +80,6 @@ module.exports = function(app) {
         var newTour = {
           pictureUrl: pictureUrl,
           name: req.body.name,
-          // createdBy: req.body.username,
           streetAddress: req.body.streetAddress,
           city: req.body.city,
           state: req.body.state,
