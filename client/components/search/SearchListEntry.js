@@ -6,13 +6,11 @@ export default class SearchListEntry extends React.Component {
 		super(props)
 	}
 
-	handleTourClick() {
-    window.location = 'http://localhost:8080/#/profile/' + this.props.tour._id;
-  }
-	render() {
 
+	render() {
 		return (
-			<div className='searchTourEntry' onClick={this.handleTourClick.bind(this)}>
+		//on click, will pass props, which contains the tour info, back up to Search.js
+			<div className='searchTourEntry' onClick={this.props.getTourInfo.bind(null, this.props.tour)}>
 				<div>Tour: {this.props.tour.name}</div>
 				<div>City: {this.props.tour.city}</div>
 				<div>Price: ${this.props.tour.price}</div>

@@ -59,7 +59,6 @@ body {
   padding: 5px;
   width: 850px;
   vertical-align: top;
-  border: 1px solid black;
 }
     .welcomeBackTitle {
       font-size: 25px;
@@ -79,12 +78,12 @@ body {
     .aboutMeContainer {
       vertical-align: top;
       display: inline-block;
+      margin-left: 10px;
     }
 
     .aboutMe {
       width: 530px;
       border: 1px solid black;
-      margin-left: 10px;
       height: 250px;
       display: inline-block;
       vertical-align: top;
@@ -92,6 +91,7 @@ body {
 
     .aboutMeSubmitButton {
       display: block;
+      margin-top: 5px;
     }
 
     .aboutMeForm {
@@ -118,7 +118,7 @@ body {
       width: 780px;
       height: 150px;
       border: 1px solid black;
-      /*display: inline-block;*/
+      background-color: #F8F8F8;
       margin: 5px 5px;
       text-align: middle;
     }

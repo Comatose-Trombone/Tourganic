@@ -1,21 +1,18 @@
 import React from 'react'
 import $ from 'jquery'
+
 export default class CreatedToursListEntry extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      data: "",
       name: "",
       city: "",
       date: "",
-      price: "",
+      price: ""
     }
 
-  }
-
-  // Redirect to unique tour page upon click, using tour's unique id
-  handleTourClick() {
-    window.location = 'http://localhost:8080/#/profile/' + this.props.tourId;
   }
 
   componentDidMount () {
@@ -23,6 +20,7 @@ export default class CreatedToursListEntry extends React.Component {
     .done( (data) => {
       var date = data.date.substring(0,10);
       this.setState({
+        data: data,
         name : data.name,
         city : data.city,
         date : date,
@@ -33,15 +31,18 @@ export default class CreatedToursListEntry extends React.Component {
       console.log('error getProfile', err);
     })
   }
-
+  
   render() {
     return (
-      <div className='tourContainer' onClick={ () => this.handleTourClick() }>
-        <div> {this.state.name} </div>
-        <div> {this.state.city} </div>
-        <div> {this.state.date} </div>
-        <div> ${this.state.price} </div>
+       <div className='createTourForm'>
+            <div className='tourContainer' onClick={ () => this.props.getTourInfo(this.state.data) }>
+              <div> {this.state.name} </div>
+              <div> {this.state.city} </div>
+              <div> {this.state.date} </div>
+              <div> ${this.state.price} </div>
+            </div>
       </div>
+
     )
   }
 

@@ -11,7 +11,7 @@ export default class SearchList extends React.Component {
 		return (
 			<div className="searchListContainer">
 				{this.props.tours.map(tour =>
-				<SearchListEntry tour={tour} />)}
+				<SearchListEntry tour={tour} getTourInfo={this.props.getTourInfo}/>)}
 			</div>
 		)
 	}

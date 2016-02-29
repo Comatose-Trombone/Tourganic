@@ -4,6 +4,7 @@ import CreatedToursList from './CreatedToursList'
 import $ from 'jquery'
 import {Link} from 'react-router'
 import CreateTourForm from './CreateTourForm'
+import Tour from '../Tour/Tour'
 
 
 export default class Profile extends React.Component {
@@ -15,7 +16,8 @@ export default class Profile extends React.Component {
       aboutMe: '',
       userMadeTours: [],
       showCreateForm: false,
-      showCreateFormButtonValue: 'Create a Tour'
+      currentTour: {name: 'default', location: 'default', price:'1', date:'1/1/1'},
+      showTourModal: false
     }
   }
 
@@ -53,24 +55,27 @@ export default class Profile extends React.Component {
     })
   }
 
-  toggleCreateForm() {
-    var currentStatus = this.state.showCreateForm;
-    var tempState = this.state.showCreateFormButtonValue === 'Create a Tour' ? 'Hide Form' : 'Create a Tour';
+  getTourInfo(tour) {
+    //props will be passed into here, which contains all of the tour information
     this.setState({
-      showCreateForm: !currentStatus,
-      showCreateFormButtonValue: tempState
+      currentTour: tour,
+      showTourModal: true
     })
   }
 
+  closeTourModal() {
+    console.log('closetourmodel in profile'); this.setState({showTourModal:false});
+  };
 
   render() {
-    console.log('re-rendering..')
+    var createdTourListProps = {tourIds: this.state.userMadeTours, getTourInfo: this.getTourInfo.bind(this)}
+    var TourModalProps = {page: 'profile', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}
     var profilePage = (
       <div className='profileMotherContainer'>
+        <Tour {...TourModalProps}/>
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
-        {/*<input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>*/}
         <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
-        <CreatedToursList tourIds={this.state.userMadeTours} />
+        <CreatedToursList {...createdTourListProps} />
 
      </div>
     );

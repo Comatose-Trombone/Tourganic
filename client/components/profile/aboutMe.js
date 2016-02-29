@@ -1,5 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
+import {Button} from 'react-bootstrap'
 
 export default class AboutMe extends React.Component {
   constructor(props) {
@@ -33,9 +34,11 @@ export default class AboutMe extends React.Component {
   }
 
   render() {
-    var aboutMeEdit = <form className="aboutMeForm" onSubmit={ () => this.handleAboutMeEdit() } >
+    var aboutMeEdit = <form className="aboutMeForm">
                         <textarea className="aboutMe" ref="aboutMe">{this.state.aboutMe}</textarea>
-                        <input className="aboutMeSubmitButton" type="submit" value="Save changes" />
+                        <Button className="aboutMeSubmitButton" onClick={() => this.handleAboutMeEdit()} bsSize='small' bsStye='defualt'>
+                          Save Changes
+                        </Button>
                       </form>
     var aboutMe = <div className="aboutMe" onClick={ () => this.handleAboutMeEdit() }>{this.state.aboutMe}</div>
     return (
