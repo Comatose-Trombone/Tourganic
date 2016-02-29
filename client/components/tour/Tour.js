@@ -35,14 +35,16 @@ export default class Tour extends React.Component {
         } else {
           // show/hide state is controlled in profile or search. closeTourModal changes the state,
           // then it inherits the state from profile or search through props.
-          this.props.closeTourModal();
+          // this.props.closeTourModal();
           console.log("successfully joined");
           this.setState({
             isJoined: true
+          }, function() {
+            setTimeout(function(){
+              window.location = 'http://localhost:8080/#/profile/';
+            }, 2000); 
           })
           //after the joined message, takes you back to profile page
-          setTimeout(function(){
-            window.location = 'http://localhost:8080/#/profile/'}, 1200); 
         }
       })
       .fail( (err) => {
@@ -52,11 +54,9 @@ export default class Tour extends React.Component {
 
   render() {
     var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
-    var joinedTour= <div> Successfully joined the tour </div>
+    var joinedTour= <div style={{marginTop: '5px'}}> Successfully joined the tour! </div>
     return (
       <div className='createTourForm'>
-          {this.state.isLoggedIn ? null : loginReminder}
-          {this.state.isJoined ? joinedTour : null}
         <Modal
           show={this.props.show}
           dialogClassName="custom-modal"
@@ -83,6 +83,8 @@ export default class Tour extends React.Component {
                                               </Button>
                                             : null }
               {this.state.isLoggedIn ? null : loginReminder}
+              {this.state.isJoined ? joinedTour : null}
+
               
           </Modal.Body>
         </Modal>
