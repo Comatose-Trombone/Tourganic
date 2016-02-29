@@ -21,7 +21,7 @@
 	}
 
 	getToursFromDatabase (options) {
-	  $.post('https://localhost:8080/search',
+	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
 	  .done(tours => {

@@ -24820,7 +24820,7 @@
 			value: function handleProfileClick() {
 				var _this2 = this;
 
-				_jquery2.default.get('https://localhost:8080/profile').done(function (data) {
+				_jquery2.default.get('http://localhost:8080/profile').done(function (data) {
 					if (data.isAuth === false) {
 						_this2.setState({
 							showLoginReminder: true
@@ -24833,7 +24833,7 @@
 						_this2.setState({
 							showLoginReminder: false
 						});
-						window.location = 'https://localhost:8080/#/profile';
+						window.location = 'http://localhost:8080/#/profile';
 					}
 				});
 			}
@@ -24842,7 +24842,7 @@
 			value: function componentWillMount() {
 				var _this3 = this;
 
-				_jquery2.default.get('https://localhost:8080/session').done(function (data) {
+				_jquery2.default.get('http://localhost:8080/session').done(function (data) {
 					if (data.isAuth === false) {
 						_this3.setState({
 							signedIn: false
@@ -24859,11 +24859,11 @@
 			value: function endSession() {
 				var _this4 = this;
 
-				_jquery2.default.get('https://localhost:8080/logout').done(function () {
+				_jquery2.default.get('http://localhost:8080/logout').done(function () {
 					_this4.setState({
 						signedIn: false
 					});
-					window.location = 'https://localhost:8080/#/welcome';
+					window.location = 'http://localhost:8080/#/welcome';
 				});
 			}
 		}, {
@@ -51912,7 +51912,7 @@
 					return;
 				}
 
-				_jquery2.default.post('https://localhost:8080/signin', { data: user }).done(function (data) {
+				_jquery2.default.post('http://localhost:8080/signin', { data: user }).done(function (data) {
 					console.log('data', data);
 					//depending on the error, the server will respond with a given message.
 					if (data === 'Username and/or password invalid.') {
@@ -51927,7 +51927,7 @@
 						return;
 					} else {
 						_this2.props.signIn();
-						window.location = 'https://localhost:8080/#/profile';
+						window.location = 'http://localhost:8080/#/profile';
 					}
 					_this2.setState({
 						show: false
@@ -52113,7 +52113,7 @@
 	        return;
 	      }
 
-	      _jquery2.default.post('https://localhost:8080/signup', { data: user }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/signup', { data: user }).done(function (data) {
 	        if (data === 'Account already exists.') {
 	          _this2.setState({
 	            showAccountExistsError: true
@@ -52124,7 +52124,7 @@
 	            }, 2000);
 	          });
 	        } else {
-	          window.location = 'https://localhost:8080/#/profile';
+	          window.location = 'http://localhost:8080/#/profile';
 	          _this2.setState({
 	            show: false
 	          });
@@ -52306,12 +52306,12 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      _jquery2.default.get('https://localhost:8080/profile').done(function (data) {
+	      _jquery2.default.get('http://localhost:8080/profile').done(function (data) {
 	        // if no session, restrict function will return {isAuth: false} in data
 	        // if this is true, we want to redirect to signin page
 	        if (data.isAuth === false) {
 	          console.log('please login first. redirecting..');
-	          window.location = 'https://localhost:8080/#/welcome';
+	          window.location = 'http://localhost:8080/#/welcome';
 	        } else {
 	          _this2.setState({
 	            showProfile: true,
@@ -52329,7 +52329,7 @@
 	    value: function submitNewTour(tourInfo) {
 	      var _this3 = this;
 
-	      _jquery2.default.post('https://localhost:8080/createTour', tourInfo).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/createTour', tourInfo).done(function (data) {
 	        _this3.setState({
 	          userMadeTours: data.createdTours
 	        });
@@ -52431,7 +52431,7 @@
 
 	      if (this.state.aboutMeEdit === true) {
 	        var aboutMe = this.refs.aboutMe.value;
-	        _jquery2.default.post('https://localhost:8080/aboutMeEdit', { data: aboutMe }).done(function (data) {
+	        _jquery2.default.post('http://localhost:8080/aboutMeEdit', { data: aboutMe }).done(function (data) {
 	          console.log('About me edited successfully');
 	          _this2.setState({
 	            aboutMeEdit: false,
@@ -52616,7 +52616,7 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      _jquery2.default.post('https://localhost:8080/fetchTourInfo', { data: this.props.tourId }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/fetchTourInfo', { data: this.props.tourId }).done(function (data) {
 	        var date = data.date.substring(0, 10);
 	        _this2.setState({
 	          data: data,
@@ -52912,7 +52912,7 @@
 			value: function getToursFromDatabase(options) {
 				var _this2 = this;
 
-				_jquery2.default.post('https://localhost:8080/search', { data: options }).done(function (tours) {
+				_jquery2.default.post('http://localhost:8080/search', { data: options }).done(function (tours) {
 					//checks if the tours is empty array
 					if (tours.length === 0) {
 						_this2.setState({
@@ -55053,7 +55053,7 @@
 	    value: function handleJoinTourClick() {
 	      var _this2 = this;
 
-	      _jquery2.default.post('https://localhost:8080/joinTour', { data: this.getID() }).done(function (data) {
+	      _jquery2.default.post('http://localhost:8080/joinTour', { data: this.getID() }).done(function (data) {
 	        if (data.isAuth === false) {
 	          _this2.setState({
 	            isLoggedIn: false
@@ -55070,7 +55070,7 @@
 	            isJoined: true
 	          }, function () {
 	            setTimeout(function () {
-	              window.location = 'https://localhost:8080/#/profile/';
+	              window.location = 'http://localhost:8080/#/profile/';
 	            }, 2000);
 	          });
 	          //after the joined message, takes you back to profile page

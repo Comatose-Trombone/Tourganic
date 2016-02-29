@@ -50,7 +50,7 @@ export default class SignUp extends React.Component {
       return;
     }
 
-		$.post('https://localhost:8080/signup', {data: user})
+		$.post('http://localhost:8080/signup', {data: user})
 			.done(data => {
         if (data === 'Account already exists.') {
           this.setState({
@@ -62,7 +62,7 @@ export default class SignUp extends React.Component {
             }, 2000);
           });
         } else {
-  				window.location = 'https://localhost:8080/#/profile';
+  				window.location = 'http://localhost:8080/#/profile';
   				this.setState({
   					show: false
   				})

@@ -22,13 +22,13 @@ export default class Profile extends React.Component {
   }
 
   componentWillMount () {
-    $.get('https://localhost:8080/profile')
+    $.get('http://localhost:8080/profile')
     .done( (data) => {
       // if no session, restrict function will return {isAuth: false} in data
       // if this is true, we want to redirect to signin page
       if (data.isAuth === false) {
         console.log('please login first. redirecting..');
-        window.location = 'https://localhost:8080/#/welcome'
+        window.location = 'http://localhost:8080/#/welcome'
       } else {
         this.setState({
           showProfile: true,
@@ -44,7 +44,7 @@ export default class Profile extends React.Component {
   }
 
   submitNewTour(tourInfo) {
-    $.post('https://localhost:8080/createTour', tourInfo)
+    $.post('http://localhost:8080/createTour', tourInfo)
     .done( (data) => {
       this.setState({
         userMadeTours: data.createdTours
