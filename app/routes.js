@@ -33,7 +33,7 @@ module.exports = function(app) {
         newObj[key] = inputObj[key]
       }
     }
-//setting up the price based on the $ amount
+//setting up the price based on the $ amount 
     if(newObj.price !== undefined) {
       if (newObj.price === "$") {
        newObj.price = {$lt: 26};
@@ -63,6 +63,7 @@ module.exports = function(app) {
 
  
   app.post('/createTour', function(req,res, next) {
+    //chose a random downloaded picture to add to the tour as a background image
     // Construct address and send request to google geocode api to fetch Lat/Lng coordinates for given address
     var address = req.body.streetAddress + ", " + req.body.city + ", " + req.body.state;
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=AIzaSyBTKobIvbTZTl469EUXd9iM6Mx_08kJAxM';
@@ -70,12 +71,15 @@ module.exports = function(app) {
       if (error) {
         throw error;
       } else {
+        var pictures = ['pictures/brooklynSkyline.jpg', 'pictures/goldenGateBridge.jpg', 'pictures/Park2.JPG', 'pictures/Houses.jpg', 'pictures/Berkeley.jpg', 'pictures/Marina.jpg', 'pictures/Denver.jpg', 'pictures/OutdoorCafe.jpg', 'pictures/LosAngeles.jpg', 'pictures/Tahoe.jpg', 'pictures/cableCar.jpg'];
+        var index = Math.floor(Math.random()*pictures.length);
+        var pictureUrl = pictures[index];
         // Extract Lat/Lng coordinates from response body, and pass them to newTour object
         var parsedResults = JSON.parse(body).results[0].geometry
         var LatLng = [parsedResults.location.lat, parsedResults.location.lng];
         var newTour = {
+          pictureUrl: pictureUrl,
           name: req.body.name,
-          createdBy: req.body.username,
           streetAddress: req.body.streetAddress,
           city: req.body.city,
           state: req.body.state,
@@ -161,6 +165,7 @@ module.exports = function(app) {
         } else {
           //if user does not exist, create and save the user:
           var newUser = User({
+              aboutMe: 'Tell us about yourself!',
               username: username,
               email: email,
               password: password,
