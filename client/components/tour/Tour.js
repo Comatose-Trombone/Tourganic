@@ -22,7 +22,7 @@ export default class Tour extends React.Component {
 
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-    $.post('http://localhost:8080/joinTour', {data: this.getID()})
+    $.post('/joinTour', {data: this.getID()})
       .done( (data) => {
         if (data.isAuth === false) {
           this.setState({
@@ -40,7 +40,7 @@ export default class Tour extends React.Component {
             isJoined: true
           }, function() {
             setTimeout(function(){
-              window.location = 'http://localhost:8080/#/profile/';
+              window.location = '/#/profile/';
             }, 2000); 
           })
           //after the joined message, takes you back to profile page

@@ -16,7 +16,7 @@ export default class CreatedToursListEntry extends React.Component {
   }
 
   componentDidMount () {
-    $.post('http://localhost:8080/fetchTourInfo', {data: this.props.tourId})
+    $.post('/fetchTourInfo', {data: this.props.tourId})
     .done( (data) => {
       var date = data.date.substring(0,10);
       this.setState({
