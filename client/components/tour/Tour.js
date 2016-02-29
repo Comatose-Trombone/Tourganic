@@ -1,20 +1,14 @@
 import React from 'react'
 import $ from 'jquery'
+import {Button, Modal} from 'react-bootstrap'
 
 export default class Tour extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
-      streetAddress: "",
-      city: "",
-      state: "",
-      price: "",
-      date : "",
-      description: "",
-      createdBy: "",
-      isLoggedIn: true
+      isLoggedIn: true,
+      show: false
     }
   }
 
@@ -25,28 +19,6 @@ export default class Tour extends React.Component {
     return id;
   }
 
-  // Fetch tour data from server using its ID, and setState to the correct tour information before initial render
-  componentWillMount() {
-    // Fetch specified tour data from server using its unique ID
-    $.post('http://localhost:8080/fetchTourInfo', {data: this.getID()})
-    .done( (data) => {
-    var date = data.date.substring(0,10);
-    // Change state properties to equal fetched tour data so page renders with correct information
-      this.setState({
-        name : data.name,
-        streetAddress: data.streetAddress,
-        city: data.city,
-        state: data.state,        
-        price : data.price,
-        date : date,
-        description: data.description,
-        createdBy: data.createdBy
-      })
-    })
-    .fail( (err) => {
-      console.log('error getProfile', err);
-    })
-  }
 
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
@@ -60,6 +32,8 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
+          //trigger this to change state up in search
+          this.props.close();
         } 
       })
       .fail( (err) => {
@@ -70,19 +44,34 @@ export default class Tour extends React.Component {
   render() {
     var loginReminder = <div>Please signin first</div>
     return (
-      <div className='tourContainer'>
-        <ul>
-          <li>{this.state.name}</li>
-          <li>{this.state.streetAddress }</li>
-          <li>{this.state.city }</li>
-          <li>{this.state.state }</li>
-          <li>${this.state.price}</li>
-           <li>{this.state.date}</li>
-          <li>{this.state.description}</li>
-          <li>{this.state.createdBy}</li>
-        </ul>
-        <input type="submit" value="Join Tour" onClick={ () => this.handleJoinTourClick() }/>
-        {this.state.isLoggedIn ? null : loginReminder}
+      <div className='createTourForm'>
+          {this.state.isLoggedIn ? null : loginReminder}
+        <Modal
+          show={this.props.show}
+          dialogClassName="custom-modal"
+          //this changes the state up in search, which will trickle down back to the state in tour
+          onHide={this.props.close}
+          container={this}
+          aria-labelledby='contained-modal-title'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.currentTour.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <ul>
+                <li>Address: {this.props.currentTour.streetAddress }</li>
+                <li>City: {this.props.currentTour.city }</li>
+                <li>State: {this.props.currentTour.state }</li>
+                <li>Price: ${this.props.currentTour.price}</li>
+                <li>Date: {this.props.currentTour.date.substring(0,10)}</li>
+                <li>Description: {this.props.currentTour.description}</li>
+                <li>The Host: {this.props.currentTour.createdBy}</li>
+              </ul>
+              <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
+                Join Tour
+              </Button>
+          </Modal.Body>
+        </Modal>
       </div>
     )
   }

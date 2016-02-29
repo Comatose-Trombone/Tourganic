@@ -4,6 +4,7 @@
  import SearchMap from './SearchMap'
  import {Link} from 'react-router'
  import $ from 'jquery'
+ import Tour from '../tour/Tour'
 
  export default class Search extends React.Component {
 	constructor(props) {
@@ -12,6 +13,8 @@
 		this.state = {
       tours: [],
       notFound: false,
+      currentTour: {name: 'default', location: 'default', price:'1', date:'1/1/1'},
+      show: false
     };
 
 
@@ -46,6 +49,20 @@
 	  });
 	};
 	
+	//this is passed down to SearchList, which is passed down to SearchListEntry
+	getTourInfo(tour) {
+		//props will be passed into here, which contains all of the tour information
+		this.setState({
+			currentTour: tour,
+			show: true
+		}, function() {console.log(this.state.currentTour, this.state.show)})
+		//then change the modal state to show.
+	}
+
+	//this is passed down to Tour.
+	close() {
+    this.setState({show:false});
+  };
 
 	changeFound () {
 		this.setState ({
@@ -57,13 +74,18 @@
 	render() {
 		
 			var place = <p> Could not find the result, please try again </p>
- 
+ 			var tourProps = {currentTour: this.state.currentTour, close: this.close.bind(this), show: this.state.show}
+ 			var searchListProps = {tours: this.state.tours, getTourInfo: this.getTourInfo.bind(this)}
 		return (
+
 			<div className="searchContainer">
+				<Tour {...tourProps} />
 				<div className="searchList-BarContainer">
+
 					<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
-					<SearchList tours={this.state.tours}/>
-				{this.state.notFound ? place : null}
+					<SearchList {...searchListProps}/>
+					{this.state.notFound ? place : null}
+
 				</div>
 				<div className='searchMapContainer'>
 				{this.state.tours.length > 0 ? <SearchMap tours={this.state.tours}/> : null}
@@ -72,3 +94,8 @@
 		)
 	}
 }
+
+
+
+
+

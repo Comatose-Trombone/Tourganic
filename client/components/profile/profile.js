@@ -64,11 +64,9 @@ export default class Profile extends React.Component {
 
 
   render() {
-    console.log('re-rendering..')
     var profilePage = (
       <div className='profileMotherContainer'>
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
-        {/*<input type='submit' value={this.state.showCreateFormButtonValue} onClick={this.toggleCreateForm.bind(this)}/>*/}
         <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
         <CreatedToursList tourIds={this.state.userMadeTours} />
 

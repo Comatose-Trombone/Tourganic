@@ -9,6 +9,7 @@ export default class CreatedToursListEntry extends React.Component {
       city: "",
       date: "",
       price: "",
+      show: false
     }
 
   }
@@ -34,14 +35,40 @@ export default class CreatedToursListEntry extends React.Component {
     })
   }
 
+  close() {
+    this.setState({show:false});
+  };
+
+  show() {
+    this.setState({
+      show:true
+    });
+  };
+  
   render() {
     return (
-      <div className='tourContainer' onClick={ () => this.handleTourClick() }>
-        <div> {this.state.name} </div>
-        <div> {this.state.city} </div>
-        <div> {this.state.date} </div>
-        <div> ${this.state.price} </div>
+       <div className='createTourForm'>
+        <Modal
+          show={this.state.show}
+          dialogClassName="custom-modal"
+          onHide={this.close.bind(this)}
+          container={this}
+          aria-labelledby='contained-modal-title'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Create a Tour</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className='tourContainer' onClick={ () => this.handleTourClick() }>
+              <div> {this.state.name} </div>
+              <div> {this.state.city} </div>
+              <div> {this.state.date} </div>
+              <div> ${this.state.price} </div>
+            </div>
+          </Modal.Body>
+        </Modal>
       </div>
+
     )
   }
 
