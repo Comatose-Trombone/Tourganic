@@ -44,6 +44,7 @@ export default class Profile extends React.Component {
   }
 
   submitNewTour(tourInfo) {
+    console.log('submitNewTourCalled in profile');
     $.post('http://localhost:8080/createTour', tourInfo)
     .done( (data) => {
       this.setState({
