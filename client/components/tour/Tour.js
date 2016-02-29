@@ -55,7 +55,6 @@ export default class Tour extends React.Component {
     var loginReminder = <div>Please signin first</div>
     var joinedTour= <div> Successfully joined the tour </div>
     return (
-<<<<<<< HEAD
       <div className='createTourForm'>
           {this.state.isLoggedIn ? null : loginReminder}
           {this.state.isJoined ? joinedTour : null}
