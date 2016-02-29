@@ -33,7 +33,7 @@ module.exports = function(app) {
         newObj[key] = inputObj[key]
       }
     }
-//setting up the price based on the $ amount
+//setting up the price based on the $ amount 
     if(newObj.price !== undefined) {
       if (newObj.price === "$") {
        newObj.price = {$lt: 26};
