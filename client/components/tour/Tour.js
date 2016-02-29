@@ -19,11 +19,14 @@ export default class Tour extends React.Component {
     return id;
   }
 
-
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
+    console.log('this.props.closeTourModal', this.props.closeTourModal);
     $.post('http://localhost:8080/joinTour', {data: this.getID()})
       .done( (data) => {
+        // show/hide state is controlled in profile or search. closeTourModal changes the state,
+        // then it inherits the state from profile or search through props.
+        this.props.closeTourModal();
         if (data.isAuth === false) {
           this.setState({
             isLoggedIn: false
@@ -32,8 +35,6 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-          //trigger this to change state up in search
-          this.props.close();
         } 
       })
       .fail( (err) => {
@@ -49,8 +50,7 @@ export default class Tour extends React.Component {
         <Modal
           show={this.props.show}
           dialogClassName="custom-modal"
-          //this changes the state up in search, which will trickle down back to the state in tour
-          onHide={this.props.close}
+          onHide={this.props.closeTourModal}
           container={this}
           aria-labelledby='contained-modal-title'
         >
@@ -67,9 +67,12 @@ export default class Tour extends React.Component {
                 <li>Description: {this.props.currentTour.description}</li>
                 <li>The Host: {this.props.currentTour.createdBy}</li>
               </ul>
-              <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
-                Join Tour
-              </Button>
+            {/* hide the 'Join Tour' button, if it's the profile page */}
+              {this.props.page === 'search' ? <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
+                                                Join Tour
+                                              </Button>
+                                            : null }
+              
           </Modal.Body>
         </Modal>
       </div>

@@ -14,8 +14,8 @@
       tours: [],
       notFound: false,
       currentTour: {name: 'default', location: 'default', price:'1', date:'1/1/1'},
-      show: false
-    };
+      showTourModal: false
+  };
 
 
 	}
@@ -24,7 +24,6 @@
 	  $.post('http://localhost:8080/search',
 	  	{data: options}
 	  )
-
 	  .done(tours => {
 	  	//checks if the tours is empty array
 	  	if (tours.length === 0) {
@@ -54,14 +53,13 @@
 		//props will be passed into here, which contains all of the tour information
 		this.setState({
 			currentTour: tour,
-			show: true
-		}, function() {console.log(this.state.currentTour, this.state.show)})
-		//then change the modal state to show.
+			showTourModal: true
+		})
 	}
 
 	//this is passed down to Tour.
-	close() {
-    this.setState({show:false});
+	closeTourModal() {
+    this.setState({showTourModal:false});
   };
 
 	changeFound () {
@@ -73,19 +71,17 @@
 
 	render() {
 		
-			var place = <p> Could not find the result, please try again </p>
- 			var tourProps = {currentTour: this.state.currentTour, close: this.close.bind(this), show: this.state.show}
+			var noResultMessage = <p> Could not find the result, please try again </p>
+
+ 			var tourProps = {page: 'search', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}
  			var searchListProps = {tours: this.state.tours, getTourInfo: this.getTourInfo.bind(this)}
 		return (
-
 			<div className="searchContainer">
 				<Tour {...tourProps} />
 				<div className="searchList-BarContainer">
-
 					<SearchBar getToursFromDatabase = {this.getToursFromDatabase.bind(this)} />
 					<SearchList {...searchListProps}/>
-					{this.state.notFound ? place : null}
-
+					{this.state.notFound ? noResultMessage : null}
 				</div>
 				<div className='searchMapContainer'>
 				{this.state.tours.length > 0 ? <SearchMap tours={this.state.tours}/> : null}
