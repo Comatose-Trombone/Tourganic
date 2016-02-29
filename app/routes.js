@@ -165,6 +165,7 @@ module.exports = function(app) {
         } else {
           //if user does not exist, create and save the user:
           var newUser = User({
+              aboutMe: 'Tell us about yourself!',
               username: username,
               email: email,
               password: password,

@@ -87,6 +87,8 @@ body {
       height: 250px;
       display: inline-block;
       vertical-align: top;
+      box-sizing: border-box;
+      padding: 5px;
     }
 
     .aboutMeSubmitButton {
