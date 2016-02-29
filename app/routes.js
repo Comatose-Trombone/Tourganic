@@ -121,6 +121,10 @@ module.exports = function(app) {
       if (err) {
         res.send(err);
       } else {
+        if (user.createdTours.indexOf(req.body.data) > -1) {
+          res.send('You cannot join your own tour.');
+          return;
+        }
         user.attendingTours.push(req.body.data);
         user.save(function(err, user) {
           if(err) {

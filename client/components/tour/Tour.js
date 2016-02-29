@@ -8,21 +8,18 @@ export default class Tour extends React.Component {
 
     this.state = {
       isLoggedIn: true,
-      show: false
-
+      show: false,
+      showCannotJoinOwnTourError: false,
+      isJoined: false
     }
   }
 
   // Isolate tour ID from the url
-  getID() {
-    var splitURL = window.location.href.split('/');
-    var id = splitURL[splitURL.length-1].split('?')[0];
-    return id;
-  }
+
 
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-    $.post('http://localhost:8080/joinTour', {data: this.getID()})
+    $.post('http://localhost:8080/joinTour', {data: this.props.currentTour._id})
       .done( (data) => {
         if (data.isAuth === false) {
           this.setState({
@@ -32,7 +29,20 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-        } else {
+        } 
+        else if (data === 'You cannot join your own tour.') {
+          //show error message, hide after 2 seconds
+          console.log('cannot join own tour');
+          this.setState({
+            showCannotJoinOwnTourError: true
+          }, function() {
+            setState = this.setState.bind(this);
+            setTimeout(function(){
+              setState({showCannotJoinOwnTourError: false})
+            }, 2000); 
+          })
+        }
+        else {
           // show/hide state is controlled in profile or search. closeTourModal changes the state,
           // then it inherits the state from profile or search through props.
           console.log("successfully joined");
@@ -43,7 +53,6 @@ export default class Tour extends React.Component {
               window.location = 'http://localhost:8080/#/profile/';
             }, 2000); 
           })
-          //after the joined message, takes you back to profile page
         }
       })
       .fail( (err) => {
@@ -53,6 +62,7 @@ export default class Tour extends React.Component {
 
   render() {
     var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
+    var cannotJoinOwnTourError = <div style={{marginTop: '5px'}}> You cannot join your own tour. </div>
     var joinedTour= <div style={{marginTop: '5px'}}> Successfully joined the tour! </div>
     return (
       <div className='createTourForm'>
@@ -81,6 +91,7 @@ export default class Tour extends React.Component {
                                             : null }
               {this.state.isLoggedIn ? null : loginReminder}
               {this.state.isJoined ? joinedTour : null}
+              {this.state.showCannotJoinOwnTourError ? cannotJoinOwnTourError: null}
 
               
           </Modal.Body>
