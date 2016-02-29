@@ -1,4 +1,5 @@
 import React from 'react'
+import {Button} from 'react-bootstrap'
 
 
 export default class SearchBar extends React.Component {
@@ -36,7 +37,9 @@ export default class SearchBar extends React.Component {
     				  <option>$$$</option>
     				  <option>$$$$</option>
 				    </select>
-		        <input className="searchInput" type="submit" value="Search" onClick = { (e) => this.props.getToursFromDatabase(this.state)}/>
+		        <Button bsStyle='default' bsSize='small' className="searchInput" onClick = { (e) => this.props.getToursFromDatabase(this.state) }>
+              Search
+            </Button>
 			  </form>
 			</div>
 		)

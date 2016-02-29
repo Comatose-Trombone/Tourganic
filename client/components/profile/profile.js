@@ -64,7 +64,7 @@ export default class Profile extends React.Component {
   }
 
   closeTourModal() {
-    console.log('closetourmodel in profile'); this.setState({showTourModal:false});
+    this.setState({showTourModal:false});
   };
 
   render() {
@@ -76,7 +76,6 @@ export default class Profile extends React.Component {
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
         <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
         <CreatedToursList {...createdTourListProps} />
-
      </div>
     );
 

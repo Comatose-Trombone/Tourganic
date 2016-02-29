@@ -22,12 +22,8 @@ export default class Tour extends React.Component {
 
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-    console.log('this.props.closeTourModal', this.props.closeTourModal);
     $.post('http://localhost:8080/joinTour', {data: this.getID()})
       .done( (data) => {
-        // show/hide state is controlled in profile or search. closeTourModal changes the state,
-        // then it inherits the state from profile or search through props.
-        this.props.closeTourModal();
         if (data.isAuth === false) {
           this.setState({
             isLoggedIn: false
@@ -37,13 +33,17 @@ export default class Tour extends React.Component {
             setState({isLoggedIn:true})
           }, 3000);
         } else {
+          // show/hide state is controlled in profile or search. closeTourModal changes the state,
+          // then it inherits the state from profile or search through props.
           console.log("successfully joined");
           this.setState({
             isJoined: true
+          }, function() {
+            setTimeout(function(){
+              window.location = 'http://localhost:8080/#/profile/';
+            }, 2000); 
           })
           //after the joined message, takes you back to profile page
-          setTimeout(function(){
-            window.location = 'http://localhost:8080/#/profile/'}, 1200); 
         }
       })
       .fail( (err) => {
@@ -52,12 +52,10 @@ export default class Tour extends React.Component {
   }
 
   render() {
-    var loginReminder = <div>Please signin first</div>
-    var joinedTour= <div> Successfully joined the tour </div>
+    var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
+    var joinedTour= <div style={{marginTop: '5px'}}> Successfully joined the tour! </div>
     return (
       <div className='createTourForm'>
-          {this.state.isLoggedIn ? null : loginReminder}
-          {this.state.isJoined ? joinedTour : null}
         <Modal
           show={this.props.show}
           dialogClassName="custom-modal"
@@ -68,21 +66,22 @@ export default class Tour extends React.Component {
           <Modal.Header closeButton>
             <Modal.Title>{this.props.currentTour.name}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-              <ul>
-                <li>Address: {this.props.currentTour.streetAddress }</li>
-                <li>City: {this.props.currentTour.city }</li>
-                <li>State: {this.props.currentTour.state }</li>
-                <li>Price: ${this.props.currentTour.price}</li>
-                <li>Date: {this.props.currentTour.date.substring(0,10)}</li>
-                <li>Description: {this.props.currentTour.description}</li>
-                <li>The Host: {this.props.currentTour.createdBy}</li>
-              </ul>
+          <Modal.Body style={{marginLeft: '15px'}}>
+                <div>Address: {this.props.currentTour.streetAddress }</div>
+                <div>City: {this.props.currentTour.city }</div>
+                <div>State: {this.props.currentTour.state }</div>
+                <div>Price: ${this.props.currentTour.price}</div>
+                <div>Date: {this.props.currentTour.date.substring(5,10) + '-' + this.props.currentTour.date.substring(0,4)}</div>
+                <div>Description: {this.props.currentTour.description}</div>
+                <div>The Host: {this.props.currentTour.createdBy}</div>
             {/* hide the 'Join Tour' button, if it's the profile page */}
               {this.props.page === 'search' ? <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
                                                 Join Tour
                                               </Button>
                                             : null }
+              {this.state.isLoggedIn ? null : loginReminder}
+              {this.state.isJoined ? joinedTour : null}
+
               
           </Modal.Body>
         </Modal>

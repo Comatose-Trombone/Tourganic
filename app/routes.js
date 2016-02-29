@@ -1,5 +1,5 @@
-var Tour = require('./models/tour.js');
-var User = require('./models/user.js');
+var Tour = require('./models/tourModel.js');
+var User = require('./models/userModel.js');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
