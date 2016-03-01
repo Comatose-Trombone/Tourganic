@@ -25,7 +25,10 @@ class App extends React.Component {
 	}
 }
 
+
 render((
+	// React Router allows user to access different pages, depending how
+	// the window location is set.
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute component={Welcome} />

@@ -42,17 +42,11 @@ export default class Tour extends React.Component {
           })
         }
         else {
-          // close the modal window.
           // show/hide state is controlled in profile or search. closeTourModal changes the state,
           // then it inherits the state from profile or search through props.
           console.log("successfully joined");
           this.setState({
             isJoined: true
-          }, function() {
-            setState = this.setState.bind(this);
-            setTimeout(function(){
-              setState({show: false});
-            }, 2000); 
           })
         }
       })
@@ -62,9 +56,12 @@ export default class Tour extends React.Component {
   }
 
   render() {
+
+    // Different error messages are defined here
     var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
     var cannotJoinOwnTourError = <div style={{marginTop: '5px'}}> You cannot join your own tour. </div>
     var joinedTour= <div style={{marginTop: '5px'}}> Successfully joined the tour! </div>
+
     return (
       <div className='createTourForm'>
         <Modal
@@ -85,16 +82,17 @@ export default class Tour extends React.Component {
                 <div>Date: {this.props.currentTour.date.substring(5,10) + '-' + this.props.currentTour.date.substring(0,4)}</div>
                 <div>Description: {this.props.currentTour.description}</div>
                 <div>The Host: {this.props.currentTour.createdBy}</div>
-            {/* hide the 'Join Tour' button, if it's the profile page */}
+                
+              {/* hide the 'Join Tour' button, if it's the profile page */}
               {this.props.page === 'search' ? <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
                                                 Join Tour
                                               </Button>
                                             : null }
+
+              {/*Error messages are loaded here conditionally*/}
               {this.state.isLoggedIn ? null : loginReminder}
               {this.state.isJoined ? joinedTour : null}
               {this.state.showCannotJoinOwnTourError ? cannotJoinOwnTourError: null}
-
-              
           </Modal.Body>
         </Modal>
       </div>
