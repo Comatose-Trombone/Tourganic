@@ -93,10 +93,10 @@ export default class SignIn extends React.Component {
 		        container={this}
 		        aria-labelledby='contained-modal-title'
 		      >
-		          <Modal.Header closeButton>
-		            <Modal.Title>Sign In Here</Modal.Title>
+		          <Modal.Header className='grey' closeButton>
+		            <Modal.Title >Sign In Here</Modal.Title>
 		          </Modal.Header>
-		          <Modal.Body >
+		          <Modal.Body className='grey'>
 		            <form className="sign-">
 							    <input ref="username" class="username" placeholder="username" type='text'/><br/>
 							    <input ref="password" class="password" placeholder="password" type="password"/><br/>

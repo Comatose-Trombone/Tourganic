@@ -78,7 +78,7 @@ export default class Navigation extends React.Component {
 		var profile = <NavItem href="#/profile">Profile</NavItem>
 		return (
 			<div>
-				<Navbar pullLeft={true}>
+				<Navbar bsStyle='inverse' pullLeft={true}>
 					<Navbar.Header>
 			      <Navbar.Brand>
 			        <a href="#">Tourganic</a>

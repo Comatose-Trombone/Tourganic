@@ -40,7 +40,7 @@ export default class CreateTourForm extends React.Component {
 
   render() {
     return (
-      <div className='createTourForm'>
+      <div className='createTourContainer'>
         <Button
           bsStyle='default'
           bsSize='small'
@@ -55,12 +55,12 @@ export default class CreateTourForm extends React.Component {
           container={this}
           aria-labelledby='contained-modal-title'
         >
-          <Modal.Header closeButton>
+          <Modal.Header className='grey' closeButton>
             <Modal.Title>Create a Tour</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='grey'>
             <div>
-              <form>
+              <form className='createTourForm'>
                 <input value={this.state.name} onChange={this.handleChange.bind(this, 'name')} placeholder='name' onClick={this.reset.bind(this, 'name')}/><br/>
                 <input value={this.state.streetAddress} onChange={this.handleChange.bind(this, 'streetAddress')} placeholder='street address' onClick={this.reset.bind(this, 'streetAddress')}/><br/>
                 <input value={this.state.city} onChange={this.handleChange.bind(this, 'city')} placeholder='city' onClick={this.reset.bind(this, 'city')}/><br/>
@@ -68,7 +68,9 @@ export default class CreateTourForm extends React.Component {
                 <input type='number' value={this.state.price} onChange={this.handleChange.bind(this, 'price')} placeholder='price' onClick={this.reset.bind(this, 'price')}/><br/>
                 <input value={this.state.date} onChange={this.handleChange.bind(this, 'date')} placeholder='date' onClick={this.reset.bind(this, 'date')}/><br/>
                 <textarea value={this.state.description} onChange={this.handleChange.bind(this, 'description')} placeholder='description' onClick={this.reset.bind(this, 'description')}/><br/>
-                <input type='submit' value='Create Tour' onClick={()=>{this.handleTourSubmission()}}/>
+                <Button onClick={ ()=>{this.handleTourSubmission()} } bsStyle='default' bsSize='small'>
+                  Create Tour
+                </Button>
               </form>
             </div>
           </Modal.Body>

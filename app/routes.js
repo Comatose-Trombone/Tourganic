@@ -219,7 +219,6 @@ module.exports = function(app) {
     var id = req.body.data;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       Tour.findOne({_id: id}, function(err, data) {
-        console.log("datainserver:", data);
         if (err) {
           throw err;
         } else {
