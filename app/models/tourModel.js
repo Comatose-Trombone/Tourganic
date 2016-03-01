@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// Schema for all user-created tours. Tours have no knowledge of their creator (other than name) or their attendees (other than how many)
 var tourSchema = new Schema({
  pictureUrl: String,
  name: String,
