@@ -14,15 +14,13 @@ export default class Tour extends React.Component {
     }
   }
 
-  // Isolate tour ID from the url
-
-
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-
     $.post('/joinTour', {data: this.props.currentTour._id})
 
       .done( (data) => {
+        // If the user is not authenticated, then show an error message that disappears after 
+        // 2 seconds
         if (data.isAuth === false) {
           this.setState({
             isLoggedIn: false
@@ -31,10 +29,9 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-        } 
+        }
         else if (data === 'You cannot join your own tour.') {
-          //show error message, hide after 2 seconds
-          console.log('cannot join own tour');
+        // If you join your own tour, show an error message notifying user, disappears in 2 seconds
           this.setState({
             showCannotJoinOwnTourError: true
           }, function() {
@@ -45,14 +42,16 @@ export default class Tour extends React.Component {
           })
         }
         else {
+          // close the modal window.
           // show/hide state is controlled in profile or search. closeTourModal changes the state,
           // then it inherits the state from profile or search through props.
           console.log("successfully joined");
           this.setState({
             isJoined: true
           }, function() {
+            setState = this.setState.bind(this);
             setTimeout(function(){
-              window.location = '/#/profile/';
+              setState({show: false});
             }, 2000); 
           })
         }
