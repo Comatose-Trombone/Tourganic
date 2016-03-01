@@ -12,12 +12,16 @@ export default class Profile extends React.Component {
     super(props);
     this.state = {
       showProfile: false,
+      toggleTourList: 'createdTours',
       user: '',
       aboutMe: '',
       userMadeTours: [],
       showCreateForm: false,
       currentTour: {name: 'default', location: 'default', price:'1', date:'1/1/1'},
-      showTourModal: false
+      showTourModal: false,
+      attendingTours: [],
+      createdToursBackground: '#C0C0C0',
+      attendingToursBackground: '#D8D8D8'
     }
   }
 
@@ -34,7 +38,8 @@ export default class Profile extends React.Component {
           showProfile: true,
           user : data.username,
           aboutMe : data.aboutMe,
-          userMadeTours : data.createdTours
+          userMadeTours : data.createdTours,
+          attendingTours: data.attendingTours
         })
       }
     })
@@ -68,14 +73,32 @@ export default class Profile extends React.Component {
     this.setState({showTourModal:false});
   };
 
+
   render() {
-    var createdTourListProps = {tourIds: this.state.userMadeTours, getTourInfo: this.getTourInfo.bind(this)}
+    //depending on whether toggleTourList is createdTours or attendingTours, 
+    //change the value of tourIds passed into createDTourListProps
+    var tourList;
+    if (this.state.toggleTourList === 'createdTours') {
+      tourList = this.state.userMadeTours;
+    } else {
+      tourList = this.state.attendingTours;
+    }
+    var createdTourListProps = {tourIds: tourList, getTourInfo: this.getTourInfo.bind(this)}
     var TourModalProps = {page: 'profile', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}
+
     var profilePage = (
       <div className='profileMotherContainer'>
         <Tour {...TourModalProps}/>
         <AboutMe user={this.state.user} aboutMe={this.state.aboutMe}/>
         <CreateTourForm submitNewTour={this.submitNewTour.bind(this)}/>
+        <div className='tourTitles'>
+          <div style={{backgroundColor: this.state.createdToursBackground}} 
+                onClick={() => { this.setState({toggleTourList: 'createdTours', createdToursBackground:'#C0C0C0', attendingToursBackground:'#D8D8D8'}) }}>
+                Hosting</div>
+          <div style={{backgroundColor: this.state.attendingToursBackground}} 
+                onClick={() => { this.setState({toggleTourList: 'attendingTours', createdToursBackground:'#D8D8D8', attendingToursBackground:'#C0C0C0'}) }}>
+                Attending</div>
+        </div>
         <CreatedToursList {...createdTourListProps} />
      </div>
     );

@@ -75,10 +75,10 @@ export default class Tour extends React.Component {
           container={this}
           aria-labelledby='contained-modal-title'
         >
-          <Modal.Header closeButton>
+          <Modal.Header className='grey' closeButton>
             <Modal.Title>{this.props.currentTour.name}</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{marginLeft: '15px'}}>
+          <Modal.Body className='grey' style={{marginLeft: '-15px'}}>
                 <div>Address: {this.props.currentTour.streetAddress }</div>
                 <div>City: {this.props.currentTour.city }</div>
                 <div>State: {this.props.currentTour.state }</div>
