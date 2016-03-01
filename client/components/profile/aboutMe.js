@@ -12,6 +12,7 @@ export default class AboutMe extends React.Component {
     }
   }
 
+  // If about me is being edited, will send post request to server to update user's aboutMe information
   handleAboutMeEdit() {
     if (this.state.aboutMeEdit === true) {
       var aboutMe = this.refs.aboutMe.value;

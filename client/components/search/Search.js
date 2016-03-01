@@ -15,30 +15,28 @@
       notFound: false,
       currentTour: {name: 'default', location: 'default', price:'1', date:'1/1/1'},
       showTourModal: false
-  };
-
-
+  	};
 	}
 
+	// Fetches all tours matching the passed-in search criteria (options)
 	getToursFromDatabase (options) {
 	  $.post('/search',
 	  	{data: options}
 	  )
 	  .done(tours => {
-	  	//checks if the tours is empty array
+	  	// Checks if the tours is empty array
 	  	if (tours.length === 0) {
 	  		this.setState ({
 	  			notFound: true,
 	  			tours: []
 	  		})
 	  	} else {
-	  	//when it finds, changes back to false so it is not shown	
+	  	// When it finds, changes back to false so it is not shown	
 	  		this.setState ({
 	  			notFound: false,
 	  			tours: []
 	  		})
 	  	}
-	   
 	  	this.setState ({
 	  			tours: tours
 	  	})
@@ -50,16 +48,16 @@
 	  });
 	};
 	
-	//this is passed down to SearchList, which is passed down to SearchListEntry
+	// This is passed down to SearchList, which is passed down to SearchListEntry
 	getTourInfo(tour) {
-		//props will be passed into here, which contains all of the tour information
+		// Props will be passed into here, which contains all of the tour information
 		this.setState({
 			currentTour: tour,
 			showTourModal: true
 		})
 	}
 
-	//this is passed down to Tour.
+	// This is passed down to Tour. Hides the Tour modal.
 	closeTourModal() {
     this.setState({showTourModal:false});
   };
@@ -70,7 +68,11 @@
   	})
 	};
 
-
+	/* <SearchMap/> renders correctly first time, but doesn't re-render with subsequent searches unless it is demounted first. To handle this,
+	*	 every time a search is made, the 'tours' state property is first set to an empty array (lines 31/37) so the <SearchMap/> will be demounted, 
+	*  then immediately afterward set to equal the tours returned from the post request to the server (line 41), so the <SearchMap/> is remounted
+	*	 with the new search results. 
+	*/
 	render() {
 		var noResultMessage = <p> Could not find the result, please try again </p>
 		var tourProps = {page: 'search', currentTour: this.state.currentTour, closeTourModal: this.closeTourModal.bind(this), show: this.state.showTourModal}

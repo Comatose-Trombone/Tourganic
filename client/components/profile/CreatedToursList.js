@@ -7,7 +7,6 @@ export default class CreatedToursList extends React.Component {
   }
 
   render() {
-
     if (typeof this.props.tourIds !== 'undefined') {
       var tourListEntries = this.props.tourIds.map(tourId =>
         <CreatedToursListEntry tourId={tourId} getTourInfo={this.props.getTourInfo}/>)

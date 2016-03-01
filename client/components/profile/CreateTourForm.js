@@ -10,29 +10,33 @@ export default class CreateTourForm extends React.Component {
     }
   };
 
+  // Sets state as input is entered
   handleChange(prop, e) {
     var newState = {};
     newState[prop] = e.target.value;
     this.setState(newState);
   };
 
+  // Clears input when box is clicked
   reset(prop, e) {
     var newState = {};
     newState[prop] = '';
     this.setState(newState);
   };
 
+  // Hides the modal window
   close() {
     this.setState({show:false});
   };
 
+  // Shows the modal window
   show() {
     this.setState({
       show:true
     });
   };
 
-  //closes the modal, and also submits the tour 
+  // Closes the modal, and also submits the tour 
   handleTourSubmission() {
     this.close.bind(this)();
     this.props.submitNewTour.bind(null, this.state)();

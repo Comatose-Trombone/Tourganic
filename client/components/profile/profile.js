@@ -25,13 +25,13 @@ export default class Profile extends React.Component {
     }
   }
 
+  // Fetches user info from DB before rendering so profiles renders with correct information
   componentWillMount () {
     $.get('/profile')
     .done( (data) => {
       // if no session, restrict function will return {isAuth: false} in data
       // if this is true, we want to redirect to signin page
       if (data.isAuth === false) {
-        console.log('please login first. redirecting..');
         window.location = '/#/welcome'
       } else {
         this.setState({
@@ -48,8 +48,8 @@ export default class Profile extends React.Component {
     })
   }
 
+  // Adds newly created tour to DB
   submitNewTour(tourInfo) {
-    console.log('submitNewTourCalled in profile');
     $.post('/createTour', tourInfo)
     .done( (data) => {
       this.setState({
@@ -61,14 +61,15 @@ export default class Profile extends React.Component {
     })
   }
 
+  // Fetches specified tour info from DB so modal Tour window displays proper data
   getTourInfo(tour) {
-    //props will be passed into here, which contains all of the tour information
     this.setState({
       currentTour: tour,
       showTourModal: true
     })
   }
 
+  // Hides the Tour modal window
   closeTourModal() {
     this.setState({showTourModal:false});
   };

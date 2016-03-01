@@ -15,6 +15,7 @@ export default class CreatedToursListEntry extends React.Component {
 
   }
 
+  // Fetches tour info from DB before rendering so component renders with correct information
   componentDidMount () {
     $.post('/fetchTourInfo', {data: this.props.tourId})
     .done( (data) => {
