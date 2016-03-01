@@ -151,12 +151,11 @@ body {
 
 
 .searchContainer {
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 
 .searchMapContainer {
-  display: inline;
   position: fixed;
   width: 49%;
   height: 650px;
@@ -220,8 +219,10 @@ body {
 
 .grey {
   /*background-color: #e1e3e4;*/
-  background-color: rgba(0,0,0, 0.06) ;
-
+  background-color: rgba(0,0,0, 0.06);
+}
+.grey > div {
+  margin-left: 15px;
 }
 
 .modal-container .modal, .modal-container .modal-backdrop {
