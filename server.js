@@ -5,7 +5,6 @@ var methodOverride = require('method-override');
 var mongoose = require("mongoose");
 var db = require('./config/db.js');
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
