@@ -14,15 +14,13 @@ export default class Tour extends React.Component {
     }
   }
 
-  // Isolate tour ID from the url
-
-
   // Add tour ID to user's attendingTours array if user is logged in
   handleJoinTourClick() {
-
     $.post('/joinTour', {data: this.props.currentTour._id})
 
       .done( (data) => {
+        // If the user is not authenticated, then show an error message that disappears after 
+        // 2 seconds
         if (data.isAuth === false) {
           this.setState({
             isLoggedIn: false
@@ -31,10 +29,9 @@ export default class Tour extends React.Component {
           setTimeout(function(){
             setState({isLoggedIn:true})
           }, 3000);
-        } 
+        }
         else if (data === 'You cannot join your own tour.') {
-          //show error message, hide after 2 seconds
-          console.log('cannot join own tour');
+        // If you join your own tour, show an error message notifying user, disappears in 2 seconds
           this.setState({
             showCannotJoinOwnTourError: true
           }, function() {
@@ -50,10 +47,6 @@ export default class Tour extends React.Component {
           console.log("successfully joined");
           this.setState({
             isJoined: true
-          }, function() {
-            setTimeout(function(){
-              window.location = '/#/profile/';
-            }, 2000); 
           })
         }
       })
@@ -63,9 +56,12 @@ export default class Tour extends React.Component {
   }
 
   render() {
+
+    // Different error messages are defined here
     var loginReminder = <div style={{marginTop: '5px'}}> Please sign in first.</div>
     var cannotJoinOwnTourError = <div style={{marginTop: '5px'}}> You cannot join your own tour. </div>
     var joinedTour= <div style={{marginTop: '5px'}}> Successfully joined the tour! </div>
+
     return (
       <div className='createTourForm'>
         <Modal
@@ -86,16 +82,17 @@ export default class Tour extends React.Component {
                 <div>Date: {this.props.currentTour.date.substring(5,10) + '-' + this.props.currentTour.date.substring(0,4)}</div>
                 <div>Description: {this.props.currentTour.description}</div>
                 <div>The Host: {this.props.currentTour.createdBy}</div>
-            {/* hide the 'Join Tour' button, if it's the profile page */}
+                
+              {/* hide the 'Join Tour' button, if it's the profile page */}
               {this.props.page === 'search' ? <Button  bsStyle='default' bsSize='small' onClick={ () => this.handleJoinTourClick() }>
                                                 Join Tour
                                               </Button>
                                             : null }
+
+              {/*Error messages are loaded here conditionally*/}
               {this.state.isLoggedIn ? null : loginReminder}
               {this.state.isJoined ? joinedTour : null}
               {this.state.showCannotJoinOwnTourError ? cannotJoinOwnTourError: null}
-
-              
           </Modal.Body>
         </Modal>
       </div>
