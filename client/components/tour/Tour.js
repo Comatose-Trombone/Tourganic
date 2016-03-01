@@ -78,7 +78,7 @@ export default class Tour extends React.Component {
           <Modal.Header className='grey' closeButton>
             <Modal.Title>{this.props.currentTour.name}</Modal.Title>
           </Modal.Header>
-          <Modal.Body className='grey' style={{marginLeft: '-15px'}}>
+          <Modal.Body className='grey'>
                 <div>Address: {this.props.currentTour.streetAddress }</div>
                 <div>City: {this.props.currentTour.city }</div>
                 <div>State: {this.props.currentTour.state }</div>
