@@ -16,6 +16,7 @@ export default class SignUp extends React.Component {
     this.close = this.close.bind(this);
 	}
 
+  // Uses regex to validate email entered
   validateEmail(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -27,7 +28,7 @@ export default class SignUp extends React.Component {
 			password: this.refs.password.value,
 			email: this.refs.email.value
 		};
-    //check to see if the form is completely filled
+    // Check to see if the form is completely filled
     if (!user.username || !user.password || !user.email) {
       this.setState({
         showInvalidFieldsError: true
@@ -39,8 +40,10 @@ export default class SignUp extends React.Component {
       });      
       return;
     }
-    //check to see if the form has a valid email address
+    // Check to see if the form has a valid email address
     if (!this.validateEmail(this.refs.email.value)) {
+
+      // Shows error message for 2 seconds, then removes it
       this.setState({showValidateEmailError:true}, function() {
         var setState = this.setState.bind(this);
         setTimeout(function() {
@@ -53,6 +56,8 @@ export default class SignUp extends React.Component {
 		$.post('/signup', {data: user})
 			.done(data => {
         if (data === 'Account already exists.') {
+
+          // Shows error message for 2 seconds, then removes it
           this.setState({
             showAccountExistsError: true
           }, function() {
@@ -66,7 +71,7 @@ export default class SignUp extends React.Component {
   				this.setState({
   					show: false
   				})
-  			//triggers the signIn function on navigation, which changes the signedIn state
+  			// Triggers the signIn function on navigation, which changes the signedIn state
   				this.props.signIn();
   			}
           
@@ -76,10 +81,12 @@ export default class SignUp extends React.Component {
 			});
 	}
 
+  // Hides the modal window
 	close() {
     this.setState({show:false});
   };
 
+  // Shows the modal window
   show() {
     console.log('foobar');
     console.log(this);

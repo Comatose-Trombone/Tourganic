@@ -22,6 +22,7 @@ export default class SignIn extends React.Component {
 			username: this.refs.username.value,
 			password: this.refs.password.value,
 		};
+		// If user didn't enter username or password, displays an error message for 2 seconds
 		if (!user.username || !user.password) {
       this.setState({
         showInvalidFieldsError: true
@@ -33,11 +34,10 @@ export default class SignIn extends React.Component {
       });      
       return;
     }
-
 		$.post('/signin', {data: user})
 			.done(data => {
 				console.log('data', data);
-				//depending on the error, the server will respond with a given message.
+				// Depending on the error, the server will respond with a given message.
 				if (data === 'Username and/or password invalid.') {
 			    this.setState({
 		        showInvalidUsernameOrPassword: true
@@ -48,11 +48,13 @@ export default class SignIn extends React.Component {
 		        }, 2000);
 		      }); 
 		      return;
-				} 
-				else {
+				} else {
 					this.props.signIn();
+					
+					// Changing the window.location allows the React-router to render the correct component
 					window.location = '/#/profile';
 				}
+				// Hides the modal window
 				this.setState({
 					show: false
 				})
@@ -62,10 +64,12 @@ export default class SignIn extends React.Component {
 	  });
 	}
 
+	// Hides the modal window
 	close() {
     this.setState({show:false});
   };
 
+  // Shows the modal window
   show() {
     this.setState({
       show:true

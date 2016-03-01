@@ -12,11 +12,14 @@ export default class SearchBar extends React.Component {
     }
 	}
 
+  // Sets the state as user inputs search
 	handleInputChange(prop, e) {
     var newState = {}
     newState[prop] = e.target.value;
     this.setState(newState);
   };
+
+  // Clears the inputs after search submission
   reset(prop, e) {
   var newState = {};
   newState[prop] = '';
