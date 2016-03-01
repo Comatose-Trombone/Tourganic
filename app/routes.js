@@ -12,7 +12,9 @@ module.exports = function(app) {
   app.use(session({ 
     secret: 'secret',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    duration: 30*60*1000,
+    activeDuration: 5*60*1000
   }));
 
   // Checks if there is a session currently active.  If so, allows routing process to continue.  Otherwise, ceases routing.
