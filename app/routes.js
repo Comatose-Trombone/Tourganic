@@ -57,6 +57,7 @@ module.exports = function(app) {
         console.log('error');
         res.send(err)
       } else {
+        console.log("data is :", data)
         res.send(data);
       }
     });
@@ -122,6 +123,7 @@ module.exports = function(app) {
 
   // Handles user joining a tour
   app.post('/joinTour', restrict, function(req, res) {
+    console.log("req is :", req)
     // Find the currently logged in user
     User.findOne({_id: req.session.userId}, function(err, user){
       if (err) {
@@ -133,11 +135,11 @@ module.exports = function(app) {
         }
         user.attendingTours.push(req.body.data);
         user.save(function(err, user) {
+          console.log("useris:", user)
           if(err) {
             return next(err);
           } else {
             // Stores the tour document's ID to the user's attendingTours array as a reference
-            user.attendingTours.push(tour._id);
             user.save(function(err, user) {
               if(err) {
                 return next(err);
